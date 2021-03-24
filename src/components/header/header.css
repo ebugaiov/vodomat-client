@@ -1,0 +1,13 @@
+.navbar {
+    background-color: #0f3057;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.logout-btn {
+    margin-left: 1%;
+    background-color: #008891;
+}
+
+.logout-btn:hover {
+    background-color:  #00587a;
+}

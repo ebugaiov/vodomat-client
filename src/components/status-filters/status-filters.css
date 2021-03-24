@@ -1,0 +1,18 @@
+.status-filters {
+    background-color: #00587a;
+    font-family: 'Montserrat', sans-serif;
+    padding: 1%;
+}
+
+.filter-header {
+    font-size: medium;
+}
+
+.error-button {
+    background-color: #008891;
+}
+
+.reset-filters-btn {
+    background-color: #0f3057;
+    margin-left: 10px;
+}

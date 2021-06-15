@@ -1,29 +1,34 @@
 import React from 'react'
+import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
 
-import Header from '../header'
-import ItemTable from '../item-table'
-import StatusFilters from '../status-filters'
-import ItemDetail from '../item-detail';
-import Footer from '../footer';
+import LoginPage from '../pages/login'
+import StatusPage from '../pages/status'
+import DepositPage from '../pages/deposit'
+import useToken from '../../custom-hooks/useToken'
 
 import './app.css'
 
-const App = () => {
+function App()  {
+
+    const {token, setToken} = useToken();
+
+    if (!token) {
+        return <LoginPage setToken={setToken} />
+    }
+
     return (
-        <div className="app">
-            <Header />
-
-            <div className="content row">
-                <div className="col-md-8">
-                    <StatusFilters />
-                    <ItemTable />
-                </div>
-                <div className="col-md-4">
-                    <ItemDetail />
-                </div>
-            </div>
-
-            <Footer />
+        <div>
+            <Router>
+                <Route path="/" exact>
+                    {<Redirect to="/status" />}
+                </Route>
+                <Route path="/status">
+                    {<StatusPage />}
+                </Route>
+                <Route path="/deposit">
+                    {<DepositPage />}
+                </Route>
+            </Router>
         </div>
     )
 }

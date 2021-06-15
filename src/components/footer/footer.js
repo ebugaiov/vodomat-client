@@ -9,7 +9,7 @@ const Footer = () => {
 
     return (
         <footer className="footer text-muted fixed-bottom">
-            <p>&#169; 1998-{currentYear} Gals</p>
+            <p>&#169; 1998 - {currentYear} Gals</p>
         </footer>
     )
 }

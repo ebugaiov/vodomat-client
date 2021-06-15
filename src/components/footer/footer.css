@@ -5,3 +5,9 @@
 .footer p {
     margin: 0;
 }
+
+@media (max-width: 1340px) {
+    .footer {
+        display: none;
+    }
+}

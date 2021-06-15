@@ -1,28 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './status-filters.css';
 
-const StatusFilters = () => {
+const StatusFilters = (props) => {
+
+    const [avtomatAddress, setAvtomatAddress] = useState('')
+
+    const onSearchByAddressChanged = (e) => {
+        const avtomatAddress = e.target.value
+        setAvtomatAddress(avtomatAddress)
+        props.onSearchByAddressChanged(avtomatAddress)
+    }
+
     return (
         <div className="status-filters navbar navbar-dark">
             <span className="filter-header navbar-brand">Manage <b>Status</b></span>
 
             <form className="form-inline">
-                <input className="form-control-sm" type="text" id="address" placeholder="Input Address or Number" />
-                <input className="form-control-sm" type="text" id="route" placeholder="Input Route" />
+                <input className="form-control-sm"
+                       onChange={onSearchByAddressChanged}
+                       value={avtomatAddress}
+                       type="text" id="address" placeholder="Address or Number" />
+                <input className="form-control-sm"
+                       
+                       type="text" id="route" placeholder="Route" />
+                
                 
                 <label className="error-button btn btn-dark btn-sm">
-                    <input type="checkbox" id="waterError"/> Low Water
+                    <input type="checkbox" id="error"/> Error
                 </label>
-                <label className="error-button btn btn-dark btn-sm">
-                    <input type="checkbox" id="billError"/> Bill
-                </label>
-                <label className="error-button btn btn-dark btn-sm">
-                    <input type="checkbox" id="voltError"/> Volt
-                </label>
-                <label className="error-button btn btn-dark btn-sm">
-                    <input type="checkbox" id="registerError"/> Register
-                </label>
+                
                 <button className="reset-filters-btn btn btn-dark btn-sm">Clear All</button>
             </form>
         </div>

@@ -48,6 +48,7 @@ export default class VodomatService {
     _transformStatus = (status) => {
         return {
             avtomatNumber: status.avtomat_number,
+            time: status.time,
             city: status.city,
             street: status.street,
             house: status.house,

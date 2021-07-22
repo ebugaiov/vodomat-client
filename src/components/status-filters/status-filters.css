@@ -1,4 +1,11 @@
-.status-filters {
+.card-header {
+    background-color: #00587A;
+    color: white
+}
+
+
+
+/* .status-filters {
     background-color: #00587a;
     font-family: 'Montserrat', sans-serif;
     padding: 1%;
@@ -15,4 +22,4 @@
 .reset-filters-btn {
     background-color: #0f3057;
     margin-left: 10px;
-}
+} */

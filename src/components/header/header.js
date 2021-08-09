@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 import './header.css'
 
-const Header = () => {
+const Header = ({ removeCookie }) => {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark">
 
@@ -23,7 +23,7 @@ const Header = () => {
                 </ul>
                 <span className="navbar-text">Username</span>
                 <button className="logout-btn btn btn-dark" onClick={() => {
-                    localStorage.removeItem('token');
+                    removeCookie("token");
                     window.location.reload();
                 }}>Logout
                 </button>

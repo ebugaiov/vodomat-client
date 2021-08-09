@@ -5,7 +5,7 @@ import './spinner.css';
 const Spinner = () => {
     return (
         <div className="text-center">
-            <div className="spinner spinner-border"></div>
+            <div className="spinner-grow spinner-grow-sm"></div>
         </div>
     )
 }

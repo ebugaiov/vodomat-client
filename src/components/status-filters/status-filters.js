@@ -51,7 +51,7 @@ export default class StatusFilters extends Component {
 
         const { minWaterButton, errorButton } = this.state;
         const buttonClassName = "btn btn-outline-secondary";
-        const activeButtonClassName = "btn btn-outline-secondary active";
+        const activeButtonClassName = buttonClassName + " active";
 
         const minWaterButtonClassName = minWaterButton ? activeButtonClassName : buttonClassName;
         const errorButtonClassName = errorButton ? activeButtonClassName : buttonClassName;

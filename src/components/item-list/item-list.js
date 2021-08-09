@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './item-list.css';
 
-const ItemList = ({ items, renderItem, onItemSelected }) => {
+import Spinner from '../spinner';
+
+const ItemList = ({ listHeader, items, loading, renderItem, onAutoupdateChange, onItemSelected }) => {
+
+    const [autoupdate, setAutoupdate] = useState(true)
+
+    const autoupdateSwitchChange = ({ target: {checked} }) => {
+        setAutoupdate(checked)
+        onAutoupdateChange(checked)
+    }
 
     const elements = items.map((item) => {
-
+        
         const { avtomatNumber } = item;
         const label = renderItem(item)
 
@@ -18,10 +27,27 @@ const ItemList = ({ items, renderItem, onItemSelected }) => {
         );
     })
 
+    const spinner = loading ? <Spinner /> : null;
+
     return (
-        <ul className="list-group item-list">
-            { elements }
-        </ul>
+
+        <div className="card">
+            <div className="card-header d-flex justify-content-between">
+                { listHeader }
+                { spinner }
+                <div className="custom-control custom-switch">
+                    <input type="checkbox"
+                           className="custom-control-input"
+                           id="autoupdateSwitch"
+                           checked={autoupdate}
+                           onChange={autoupdateSwitchChange} />
+                    <label className="custom-control-label" htmlFor="autoupdateSwitch">Autoupdate</label>
+                </div>
+            </div>
+            <ul className="list-group item-list">
+                { elements }
+            </ul>
+        </div>
     );
 }
 

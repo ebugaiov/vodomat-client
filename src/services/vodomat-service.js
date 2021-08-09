@@ -1,7 +1,10 @@
 export default class VodomatService {
 
-    tokenString = localStorage.getItem('token');
-    token = JSON.parse(this.tokenString)?.token;
+    getCookie = (name) => (
+        document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
+        )
+
+    token = this.getCookie('token')
 
     secureHeader = {
         headers: {
@@ -13,6 +16,15 @@ export default class VodomatService {
 
     getResource = async (url, options=this.secureHeader) => {
         const res = await fetch(`${this._apiBase}${url}`, options)
+
+        if ( res.status === 400) {
+            const error = await res.json()
+            if (error.error === 'wrong api key') {
+                window.location.reload()
+                return
+            }
+            throw new Error (`${error.error}`)
+        }
 
         if (!res.ok) {
             throw new Error(`Could not fetch ${url}, received ${res.status}`)
@@ -38,6 +50,7 @@ export default class VodomatService {
     getAllStatuses = async () => {
         const res = await this.getResource('/status')
         return res.statuses.map(this._transformStatus)
+                           .sort((a,b) => new Date(b.time) - new Date(a.time))
     }
 
     getStatus = async (id) => {

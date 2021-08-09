@@ -4,7 +4,6 @@ import VodomatService from '../../../services/vodomat-service';
 
 import Header from '../../header';
 import Footer from '../../footer';
-import Spinner from '../../spinner';
 import StatusFilters from '../../status-filters';
 import ItemList from '../../item-list';
 import ItemDetail from '../../item-detail';
@@ -14,7 +13,9 @@ import './status.css';
 export default class StatusPage extends Component {
 
     state = {
-        items: null,
+        items: [],
+        loading: true,
+        autoupdate: true,
         selectedAvtomatNumber: null,
         street: '',
         route: '',
@@ -24,16 +25,43 @@ export default class StatusPage extends Component {
     };
 
     vodomatService = new VodomatService();
+    updateInterval = 5 * 60 * 1000;  // 5 min
 
     componentDidMount() {
+        this.updateStatus()
+        if (this.state.autoupdate) {
+            this.intervalId = setInterval(this.updateStatus, this.updateInterval)
+        }
+        
+    }
+
+    componentDidUpdate(prevState) {
+        if (prevState.autoupdate !== this.state.autoupdate) {
+            clearInterval(this.intervalId)
+            if (this.state.autoupdate) {
+                this.intervalId = setInterval(this.updateStatus, this.updateInterval)
+            }
+        }
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.intervalId)
+    }
+ 
+    onItemsLoaded = (items) => {
+        this.setState({
+            items,
+            loading: false,
+            selectedAvtomatNumber: !this.state.selectedAvtomatNumber ?
+                                    items[0].avtomatNumber :
+                                    this.state.selectedAvtomatNumber
+        })
+    }
+
+    updateStatus = () => {
         this.vodomatService
             .getAllStatuses()
-            .then((items) => {
-                this.setState({
-                    items,
-                    selectedAvtomatNumber: items[0].avtomatNumber
-                })
-            });
+            .then(this.onItemsLoaded)
     }
 
     onStatusSelected = (avtomatNumber) => {
@@ -113,7 +141,15 @@ export default class StatusPage extends Component {
         }
     }
 
+    onAutoupdateChange = (state) => {
+        clearTimeout(this.timeoutId)
+        this.setState({
+            autoupdate: state
+        })
+    }
+
     renderStatusItem = (item) => {
+        const { time } = item;
         const { city, street, house } = item;
         const { lowWaterBalance, errorVolt, errorBill, errorCounter, errorRegister } = item;
 
@@ -128,7 +164,11 @@ export default class StatusPage extends Component {
                     <small className="pr-4">({city})</small>
                     <i className="fas fa-tint" style={waterIconColor}> {Math.round(item.water)}</i>
                 </div>
-                
+
+                <div>
+                    {time}
+                </div>
+
                 <div>{lowWaterBalance || errorVolt || errorBill || errorCounter || errorRegister ?
                        <span className="text-danger">Error</span> :
                        null}
@@ -141,46 +181,54 @@ export default class StatusPage extends Component {
 
         const { items, selectedAvtomatNumber, street, route, city, minWater, error } = this.state;
 
-        const cities = items ? [...new Set(items.map((item) => item.city))] : []
-        
+        const cities = items ? [...new Set(items.map((item) => item.city))].sort() : []
+
         const visibleItems = items ?
-                             <ItemList
-                                items={this.streetItems(
-                                            this.routeItems(
-                                                this.cityItems(
-                                                    this.minWaterItems(
-                                                        this.errorItems(items, error),
-                                                        minWater),
-                                                    city),
-                                                route),
-                                            street)}
-                                renderItem={this.renderStatusItem}
-                                onItemSelected={this.onStatusSelected}
-                             /> :
-                             <Spinner />;
+                             this.streetItems(
+                                 this.routeItems(
+                                     this.cityItems(
+                                         this.minWaterItems(
+                                             this.errorItems(items, error),
+                                             minWater),
+                                         city),
+                                     route),
+                                 street) :
+                             [];
 
         return (
-            <div className="statusPage">
-                <Header />
+            
+                <div className="statusPage">
+                    <Header removeCookie={this.props.removeCookie}/>
 
-                <div className="content row">
-                    <div className="col-md-8 pr-0">
-                        { visibleItems }
+                    <div className="content row">
+
+                        <div className="col-md-8 pr-0">
+                            <ItemList
+                                listHeader="Statuses"
+                                items={visibleItems}
+                                loading={this.state.loading}
+                                onAutoupdateChange={this.onAutoupdateChange}
+                                renderItem={this.renderStatusItem}
+                                onItemSelected={this.onStatusSelected}
+                            />
+                        </div>
+
+                        <div className="col-md-4">
+                            <StatusFilters
+                                onStreetChange={this.onStreetChange}
+                                onRouteChange={this.onRouteChange}
+                                onCityChange={this.onCityChange}
+                                onMinWaterClick={this.onMinWaterClick}
+                                onErrorClick={this.onErrorClick}
+                                cities={cities} />
+                            <ItemDetail avtomatNumber={selectedAvtomatNumber} />
+                        </div>
+
                     </div>
-                    <div className="col-md-4">
-                        <StatusFilters
-                            onStreetChange={this.onStreetChange}
-                            onRouteChange={this.onRouteChange}
-                            onCityChange={this.onCityChange}
-                            onMinWaterClick={this.onMinWaterClick}
-                            onErrorClick={this.onErrorClick}
-                            cities={cities} />
-                        <ItemDetail avtomatNumber={selectedAvtomatNumber} />
-                    </div>
+
+                    <Footer />
                 </div>
-
-                <Footer />
-            </div>
+            
         );
     }
 }

@@ -12,9 +12,10 @@ export default class VodomatService {
         }
     }
 
-    _apiBase = '/api/v2'
+    _apiBase = process.env.NODE_ENV !== 'production' ? 'http://localhost:8080/api/v2' : process.env.REACT_APP_API_URL
 
     getResource = async (url, options=this.secureHeader) => {
+
         const res = await fetch(`${this._apiBase}${url}`, options)
 
         if ( res.status === 400) {
@@ -40,7 +41,7 @@ export default class VodomatService {
         const options = {
             method: "POST",
             body: formData,
-            mode: "cors"
+            
         }
 
         const res = await this.getResource('/api_key', options)
@@ -69,6 +70,7 @@ export default class VodomatService {
             water: status.water / 100,
             money: status.money / 100,
             price: status.price / 100,
+            size: status.size,
             lowWaterBalance: status.low_water_balance,
             errorVolt: status.error_volt,
             errorBill: status.error_bill,

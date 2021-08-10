@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import VodomatService from '../../../services/vodomat-service';
 
-import Header from '../../header';
-import Footer from '../../footer';
 import StatusFilters from '../../status-filters';
 import ItemList from '../../item-list';
 import ItemDetail from '../../item-detail';
@@ -142,15 +140,14 @@ export default class StatusPage extends Component {
     }
 
     onAutoupdateChange = (state) => {
-        clearTimeout(this.timeoutId)
         this.setState({
             autoupdate: state
         })
     }
 
     renderStatusItem = (item) => {
-        const { time } = item;
         const { city, street, house } = item;
+        const { money, price, size } = item;
         const { lowWaterBalance, errorVolt, errorBill, errorCounter, errorRegister } = item;
 
         const waterIconColor = item.water > 50 ? {color: "#008891"} : {color: "tomato"}
@@ -162,11 +159,10 @@ export default class StatusPage extends Component {
                 <div className="flex-grow-1">
                     {`${street} ${house} `}
                     <small className="pr-4">({city})</small>
-                    <i className="fas fa-tint" style={waterIconColor}> {Math.round(item.water)}</i>
-                </div>
-
-                <div>
-                    {time}
+                    <i className="fas fa-tint" style={waterIconColor}>
+                        &nbsp;{Math.round(item.water)}
+                        &nbsp;<small>({size - Math.round(money/price)})</small>
+                    </i>
                 </div>
 
                 <div>{lowWaterBalance || errorVolt || errorBill || errorCounter || errorRegister ?
@@ -198,7 +194,6 @@ export default class StatusPage extends Component {
         return (
             
                 <div className="statusPage">
-                    <Header removeCookie={this.props.removeCookie}/>
 
                     <div className="content row">
 
@@ -226,7 +221,6 @@ export default class StatusPage extends Component {
 
                     </div>
 
-                    <Footer />
                 </div>
             
         );

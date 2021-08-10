@@ -41,7 +41,7 @@ const ItemList = ({ listHeader, items, loading, renderItem, onAutoupdateChange, 
                            id="autoupdateSwitch"
                            checked={autoupdate}
                            onChange={autoupdateSwitchChange} />
-                    <label className="custom-control-label" htmlFor="autoupdateSwitch">Autoupdate</label>
+                    <label className="custom-control-label" htmlFor="autoupdateSwitch"><small>Autoupdate</small></label>
                 </div>
             </div>
             <ul className="list-group item-list">

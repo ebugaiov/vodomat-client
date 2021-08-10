@@ -7,7 +7,7 @@ import './login.css';
 
 const TTL = 3600
 
-export default function LoginPage({setToken}) {
+export default function LoginPage({setCookie}) {
 
     const [username, setUserName] = useState()
     const [password, setPassword] = useState()
@@ -22,7 +22,8 @@ export default function LoginPage({setToken}) {
                 username,
                 password
             });
-            setToken("token", token, { path: "/", maxAge: TTL});
+            setCookie("token", token, { path: "/", maxAge: TTL});
+            setCookie("username", username, { path: "/"})
         } catch (error) {
             setError(error.message)
         }

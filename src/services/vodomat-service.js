@@ -3,6 +3,10 @@ export default class VodomatService {
     getCookie = (name) => (
         document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
         )
+    
+    deleteCookie = (name) => {
+        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
 
     token = this.getCookie('token')
 
@@ -21,6 +25,7 @@ export default class VodomatService {
         if ( res.status === 400) {
             const error = await res.json()
             if (error.error === 'wrong api key') {
+                this.deleteCookie('token')
                 window.location.reload()
                 return
             }

@@ -1,12 +1,12 @@
 import React from 'react';
 
-import './item-detail.css';
+import './status-detail.css';
 
 import VodomatService from '../../services/vodomat-service';
 
 import Spinner from '../spinner';
 
-export default class ItemDetail extends React.Component {
+export default class StatusDetail extends React.Component {
 
     vodomatService = new VodomatService()
 
@@ -21,6 +21,9 @@ export default class ItemDetail extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.avtomatNumber !== prevProps.avtomatNumber) {
+            this.setState({
+                loading: true
+            })
             this.updateStatus()
         }
     }
@@ -71,7 +74,7 @@ export default class ItemDetail extends React.Component {
 
 const CardBody = ({ statusDetail, errorsStr }) => {
 
-    const {city, street, house, avtomatNumber, time, carNumber, water, money, price} = statusDetail;
+    const {city, street, house, avtomatNumber, time, carNumber, water, size, money, price} = statusDetail;
 
     return (
         <React.Fragment>
@@ -83,6 +86,7 @@ const CardBody = ({ statusDetail, errorsStr }) => {
             </div>
             <ul className="list-group list-group-flush">
                 <li className="list-group-item">Water: {water}</li>
+                <li className="list-group-item">Size: {size}</li>
                 <li className="list-group-item">Money: {money}</li>
                 <li className="list-group-item">Price: {price}</li>
                 <li className="list-group-item">Errors: {!errorsStr ? 'No' : errorsStr}</li>

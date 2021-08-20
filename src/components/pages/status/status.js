@@ -4,7 +4,7 @@ import VodomatService from '../../../services/vodomat-service';
 
 import StatusFilters from '../../status-filters';
 import ItemList from '../../item-list';
-import ItemDetail from '../../item-detail';
+import StatusDetail from '../../status-detail';
 
 import './status.css';
 
@@ -33,7 +33,7 @@ export default class StatusPage extends Component {
         
     }
 
-    componentDidUpdate(prevState) {
+    componentDidUpdate(prevProps, prevState) {
         if (prevState.autoupdate !== this.state.autoupdate) {
             clearInterval(this.intervalId)
             if (this.state.autoupdate) {
@@ -146,8 +146,8 @@ export default class StatusPage extends Component {
     }
 
     renderStatusItem = (item) => {
-        const { city, street, house } = item;
-        const { money, price, size } = item;
+        const { city, street, house, size } = item;
+
         const { lowWaterBalance, errorVolt, errorBill, errorCounter, errorRegister } = item;
 
         const waterIconColor = item.water > 50 ? {color: "#008891"} : {color: "tomato"}
@@ -161,7 +161,7 @@ export default class StatusPage extends Component {
                     <small className="pr-4">({city})</small>
                     <i className="fas fa-tint" style={waterIconColor}>
                         &nbsp;{Math.round(item.water)}
-                        &nbsp;<small>({size - Math.round(money/price)})</small>
+                        &nbsp;<small>({size})</small>
                     </i>
                 </div>
 
@@ -197,7 +197,7 @@ export default class StatusPage extends Component {
 
                     <div className="content row">
 
-                        <div className="col-md-8 pr-0">
+                        <div className="col-md-7 pr-0 left-block">
                             <ItemList
                                 listHeader="Statuses"
                                 items={visibleItems}
@@ -208,7 +208,7 @@ export default class StatusPage extends Component {
                             />
                         </div>
 
-                        <div className="col-md-4">
+                        <div className="col-md-5 right-block">
                             <StatusFilters
                                 onStreetChange={this.onStreetChange}
                                 onRouteChange={this.onRouteChange}
@@ -216,7 +216,7 @@ export default class StatusPage extends Component {
                                 onMinWaterClick={this.onMinWaterClick}
                                 onErrorClick={this.onErrorClick}
                                 cities={cities} />
-                            <ItemDetail avtomatNumber={selectedAvtomatNumber} />
+                            <StatusDetail avtomatNumber={selectedAvtomatNumber} />
                         </div>
 
                     </div>

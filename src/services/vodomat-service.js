@@ -64,10 +64,22 @@ export default class VodomatService {
         return this._transformStatus(status)
     }
 
+    getDeposits = async (date) => {
+        const url = date ? `/deposit?date=${date}` : '/deposit'
+        const res = await this.getResource(url)
+        return res.map(this._transformDeposit)
+    }
+
+    getDepositByPurchaseId = async (purchaseId) => {
+        const deposit = await this.getResource(`/deposit/${purchaseId}`)
+        return this._transformDeposit(deposit)
+    }
+
     _transformStatus = (status) => {
         return {
+            id: status.avtomat_number,
             avtomatNumber: status.avtomat_number,
-            time: status.time,
+            time: status.time.replace('T', ' '),
             city: status.city,
             street: status.street,
             house: status.house,
@@ -82,5 +94,26 @@ export default class VodomatService {
             errorCounter: status.error_counter,
             errorRegister: status.error_register
         }
+    }
+
+    _transformDeposit = (deposit) => {
+        return {
+            id: deposit.purchase_id,
+            avtomatNumber: deposit.avtomat_number,
+            timeServer: deposit.time_server,
+            timePaymentGateway: deposit.time_payment_gateway,
+            city: deposit.city,
+            street: deposit.street,
+            house: deposit.house,
+            price: deposit.price ? deposit.price / 100 : null,
+            purchaseId: deposit.purchase_id,
+            serverId: deposit.server_id,
+            statusServer: deposit.status_server,
+            statusPaymentGateway: deposit.status_payment_gateway,
+            cardMask: deposit.card_mask,
+            billAmount: deposit.bill_amount,
+            gateType: deposit.gate_type
+        }
+
     }
 }

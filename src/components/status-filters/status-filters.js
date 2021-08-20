@@ -19,7 +19,7 @@ export default class StatusFilters extends Component {
         this.props.onStreetChange(event.target.value)
     }
 
-    onTermRouteChange = (event) => {
+    onTermRouteChange = (event) => {         // TODO insert '-' in car number
         this.setState({
             routeTerm: event.target.value
         });

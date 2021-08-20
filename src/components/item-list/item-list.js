@@ -15,13 +15,13 @@ const ItemList = ({ listHeader, items, loading, renderItem, onAutoupdateChange, 
 
     const elements = items.map((item) => {
         
-        const { avtomatNumber } = item;
+        const { id } = item;
         const label = renderItem(item)
 
         return (
-            <li key={avtomatNumber}
+            <li key={id}
                 className="list-group-item list-group-item-action"
-                onClick={() => onItemSelected(avtomatNumber)}>
+                onClick={() => onItemSelected(id)}>
                 { label }
             </li>
         );

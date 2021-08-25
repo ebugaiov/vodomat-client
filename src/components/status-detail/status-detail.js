@@ -59,7 +59,7 @@ export default class StatusDetail extends React.Component {
         const cardBody = !loading ? <CardBody statusDetail={statusDetail} errorsStr={errorsStr} /> : null;
 
         return (
-            <div className="item-detail">
+            <div className="status-detail">
                 <div className="card">
                     <div className="card-header d-flex justify-content-between">
                         Avtomat Details
@@ -79,16 +79,24 @@ const CardBody = ({ statusDetail, errorsStr }) => {
     return (
         <React.Fragment>
             <div className="card-body">
-                <h5 className="card-title">{street}, {house} <span className="small">({city})</span></h5>
-                <p className="card-text text-muted"><i className="card-icon fas fa-shopping-cart"></i>{avtomatNumber}</p>
-                <p className="card-text text-muted"><i className="card-icon fas fa-clock"></i>{time}</p>
-                <p className="card-text text-muted"><i className="card-icon fas fa-road"></i>{carNumber}</p>
+                <h6 className="card-title">{street}, {house} <span className="small">({city})</span></h6>
+                <p className="card-text text-muted">
+                    <i className="card-icon fas fa-shopping-cart"></i>&nbsp;{avtomatNumber}
+                </p>
+                <p className="card-text text-muted">
+                    <i className="card-icon fas fa-clock"></i>&nbsp;{time}
+                </p>
+                <p className="card-text text-muted">
+                    <i className="card-icon fas fa-road"></i>&nbsp;{carNumber}
+                </p>
             </div>
             <ul className="list-group list-group-flush">
                 <li className="list-group-item">Water: {water}</li>
                 <li className="list-group-item">Size: {size}</li>
-                <li className="list-group-item">Money: {money}</li>
-                <li className="list-group-item">Price: {price}</li>
+                <li className="list-group-item d-flex justify-content-between">
+                    <span>Money: {money}</span>
+                    <span>Price: {price}</span>
+                </li>
                 <li className="list-group-item">Errors: {!errorsStr ? 'No' : errorsStr}</li>
             </ul>
         </React.Fragment>

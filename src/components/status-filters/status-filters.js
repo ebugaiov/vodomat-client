@@ -12,6 +12,20 @@ export default class StatusFilters extends Component {
         errorButton: false,
     }
 
+    componentDidMount() {
+        const screenHeight = window.innerHeight;
+        if (screenHeight < 900) {
+            const inputElements = document.getElementsByClassName('form-control')
+            const btnElements = document.getElementsByClassName('btn')
+            for (let i = 0; i < inputElements.length; i++) {
+                inputElements[i].classList.add('form-control-sm')
+            }
+            for (let j = 0; j < btnElements.length; j++) {
+                btnElements[j].classList.add('btn-sm')
+            }
+        }
+    }
+
     onTermStreetChange = (event) => {
         this.setState({
             streetTerm: event.target.value
@@ -57,7 +71,7 @@ export default class StatusFilters extends Component {
         const errorButtonClassName = errorButton ? activeButtonClassName : buttonClassName;
 
         return (
-            <div className="card status-filters mb-3">
+            <div className="status-filters card mb-3">
                 <div className="card-header">Filter Statuses</div>
                 <div className="card-body">
 
@@ -75,7 +89,7 @@ export default class StatusFilters extends Component {
                         </div>
                     </div>
 
-                    <select className="custom-select mb-3" value={this.state.cityTerm} onChange={this.onTermCityChange}>
+                    <select className="mb-3 form-control" value={this.state.cityTerm} onChange={this.onTermCityChange}>
                         <option value="all">All Cities</option>
                         { this.props.cities.map((city) => {
                             return (

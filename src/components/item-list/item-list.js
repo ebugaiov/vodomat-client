@@ -31,7 +31,7 @@ const ItemList = ({ listHeader, items, loading, renderItem, onAutoupdateChange, 
 
     return (
 
-        <div className="card">
+        <div className="item-list card">
             <div className="card-header d-flex justify-content-between">
                 { listHeader }
                 { spinner }
@@ -44,7 +44,7 @@ const ItemList = ({ listHeader, items, loading, renderItem, onAutoupdateChange, 
                     <label className="custom-control-label" htmlFor="autoupdateSwitch"><small>Autoupdate</small></label>
                 </div>
             </div>
-            <ul className="list-group item-list">
+            <ul className="list-group">
                 { elements }
             </ul>
         </div>

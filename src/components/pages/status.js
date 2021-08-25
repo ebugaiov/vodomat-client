@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 
-import VodomatService from '../../../services/vodomat-service';
+import VodomatService from '../../services/vodomat-service';
 
-import StatusFilters from '../../status-filters';
-import ItemList from '../../item-list';
-import StatusDetail from '../../status-detail';
-
-import './status.css';
+import Row from '../row';
+import StatusFilters from '../status-filters';
+import ItemList from '../item-list';
+import StatusDetail from '../status-detail';
 
 export default class StatusPage extends Component {
 
@@ -193,36 +192,30 @@ export default class StatusPage extends Component {
 
         return (
             
-                <div className="statusPage">
-
-                    <div className="content row">
-
-                        <div className="col-md-7 pr-0 left-block">
-                            <ItemList
-                                listHeader="Statuses"
-                                items={visibleItems}
-                                loading={this.state.loading}
-                                onAutoupdateChange={this.onAutoupdateChange}
-                                renderItem={this.renderStatusItem}
-                                onItemSelected={this.onStatusSelected}
-                            />
-                        </div>
-
-                        <div className="col-md-5 right-block">
-                            <StatusFilters
-                                onStreetChange={this.onStreetChange}
-                                onRouteChange={this.onRouteChange}
-                                onCityChange={this.onCityChange}
-                                onMinWaterClick={this.onMinWaterClick}
-                                onErrorClick={this.onErrorClick}
-                                cities={cities} />
-                            <StatusDetail avtomatNumber={selectedAvtomatNumber} />
-                        </div>
-
-                    </div>
-
-                </div>
-            
+            <Row
+                left={
+                    <ItemList
+                        listHeader="Statuses"
+                        items={visibleItems}
+                        loading={this.state.loading}
+                        onAutoupdateChange={this.onAutoupdateChange}
+                        renderItem={this.renderStatusItem}
+                        onItemSelected={this.onStatusSelected}
+                    />
+                }
+                right={
+                    <React.Fragment>
+                        <StatusFilters
+                            onStreetChange={this.onStreetChange}
+                            onRouteChange={this.onRouteChange}
+                            onCityChange={this.onCityChange}
+                            onMinWaterClick={this.onMinWaterClick}
+                            onErrorClick={this.onErrorClick}
+                            cities={cities} />
+                        <StatusDetail avtomatNumber={selectedAvtomatNumber} />
+                    </React.Fragment>
+                }
+            />
         );
     }
 }

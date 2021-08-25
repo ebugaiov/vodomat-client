@@ -20,25 +20,23 @@ function App()  {
     }
 
     return (
-        <div>
-            <Router>
-                <Header username={cookies.username} removeCookie={removeCookie}/>
+        <Router>
+            <Header username={cookies.username} removeCookie={removeCookie}/>
 
-                <Route path="/" exact>
-                    {<Redirect to="/status" />}
-                </Route>
+            <Route path="/" exact>
+                {<Redirect to="/status" />}
+            </Route>
 
-                <Route path="/status">
-                    {<StatusPage />}
-                </Route>
+            <Route path="/status">
+                {<StatusPage />}
+            </Route>
 
-                <Route path="/deposit">
-                    {<DepositPage />}
-                </Route>
+            <Route path="/deposit">
+                {<DepositPage />}
+            </Route>
 
-                <Footer />
-            </Router>
-        </div>
+            <Footer />
+        </Router>
     )
 }
 

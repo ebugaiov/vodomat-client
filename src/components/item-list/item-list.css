@@ -1,4 +1,9 @@
-.item-list {
+.item-list .card-header {
+    background-color: #00587A;
+    color: white;
+}
+
+.item-list ul {
     overflow-y: auto;
-    max-height: 82vh;
+    max-height: calc(100vh - 183px);
 }

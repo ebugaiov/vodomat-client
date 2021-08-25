@@ -128,22 +128,24 @@ const CardBody = ({depositDetail}) => {
     return (
         <React.Fragment>
             <div className="card-body">
-                <h5 className="card-title">{ address }</h5>
+                <h6 className="card-title">{ address }</h6>
                 <p className="card-text text-muted">
                     <i className="card-icon fas fa-shopping-cart"></i>
-                    {avtomatNumber}
+                    &nbsp;{avtomatNumber}
                 </p>
                 <p className="card-text text-muted">
                     <i className="card-icon fas fa-clock"></i>
-                    {timePaymentGateway}
+                    &nbsp;{timePaymentGateway}
                     &nbsp;{timeServerElement}
                 </p>
             </div>
             <ul className="list-group list-group-flush">
                 <li className="list-group-item">Purchase Id: {purchaseId}</li>
                 <li className="list-group-item">Server Id: {serverId}</li>
-                <li className="list-group-item">Money: {billAmount}</li>
-                <li className="list-group-item">Price: {price}</li>
+                <li className="list-group-item d-flex justify-content-between">
+                    <span>Money: {billAmount}</span>
+                    <span>Price: {price}</span>
+                </li>
                 <li className="list-group-item">Card Mask: {cardMask}</li>
                 <li className="list-group-item d-flex justify-content-between">
                     <span>Status Gateway: {statusPaymentGatewayElement}</span>

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-import VodomatService from '../../../services/vodomat-service';
-import ItemList from '../../item-list';
-import DepositFilters from '../../deposit-filters';
-import DepositDetail from '../../deposit-detail';
+import VodomatService from '../../services/vodomat-service';
 
-import './deposit.css';
+import Row from '../row';
+import ItemList from '../item-list';
+import DepositFilters from '../deposit-filters';
+import DepositDetail from '../deposit-detail';
 
 export default class DepositPage extends Component {
 
@@ -227,6 +227,38 @@ export default class DepositPage extends Component {
 
         const { items, avtomatNumber, street, purchaseId, errorsButton, returnButton } = this.state;
 
+        const sumOfDeposits = items.reduce((sum, item) => {
+            if (item.statusPaymentGateway === 'PAYED') {
+                sum += +item.billAmount
+            } else if (item.statusPaymentGateway === 'RETURN') {
+                sum -= +item.billAmount
+            }
+            return Math.round((sum + Number.EPSILON) * 100) / 100;
+        }, 0)
+
+        const averageDeposit = Math.round(
+            (items.reduce((sum, item) => {
+                if (item.statusPaymentGateway === 'PAYED') {
+                    sum += +item.billAmount;
+                }
+                return Math.round((sum + Number.EPSILON) * 100) / 100
+            }, 0) /
+            items.filter((item) => {
+                return item.statusPaymentGateway === 'PAYED'
+            }).length + Number.EPSILON) * 100) / 100
+
+        const countDeposits = items.filter((item) => {
+            return item.statusPaymentGateway === 'PAYED'
+        }).length
+        
+        const listHeader = <span>Deposits (
+                                 <small>
+                                     All: {sumOfDeposits},&nbsp;
+                                     Average: {averageDeposit ? averageDeposit : 0},&nbsp;
+                                     Count: {countDeposits}
+                                 </small>)
+                            </span>
+
         const visibleItems = items ? 
                              this.avtomatNumberItems(
                                  this.streetItems(
@@ -240,21 +272,20 @@ export default class DepositPage extends Component {
                              [];
 
         return (
-            <div className="depositPage">
-                <div className="content-deposit row">
-    
-                    <div className="col-md-7 pr-0">
-                        <ItemList
-                            listHeader="Deposits"
-                            items={visibleItems}
-                            loading={this.state.loading}
-                            onAutoupdateChange={this.onAutoupdateChange}
-                            renderItem={this.renderDepositItem}
-                            onItemSelected={this.onDepositSelected}
-                        />
-                    </div>
-
-                    <div className="col-md-5">
+            
+            <Row
+                left={
+                    <ItemList
+                        listHeader={listHeader}
+                        items={visibleItems}
+                        loading={this.state.loading}
+                        onAutoupdateChange={this.onAutoupdateChange}
+                        renderItem={this.renderDepositItem}
+                        onItemSelected={this.onDepositSelected}
+                    />
+                }
+                right={
+                    <React.Fragment>
                         <DepositFilters
                             onDateChange={this.onDateChange}
                             onAvtomatNumberChange={this.onAvtomatNumberChange}
@@ -264,11 +295,9 @@ export default class DepositPage extends Component {
                             onReturnButtonClick={this.onReturnButtonClick}
                         />
                         <DepositDetail purchaseId={this.state.selectedPurchaseId}/>
-                    </div>
-    
-                </div>
-    
-            </div>
+                    </React.Fragment>
+                }
+            />
         )
     }
 }

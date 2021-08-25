@@ -13,6 +13,20 @@ export default class DepositFilters extends Component {
         returnButton: false,
     }
 
+    componentDidMount() {
+        const screenHeight = window.innerHeight;
+        if (screenHeight < 900) {
+            const inputElements = document.getElementsByClassName('form-control')
+            const btnElements = document.getElementsByClassName('btn')
+            for (let i = 0; i < inputElements.length; i++) {
+                inputElements[i].classList.add('form-control-sm')
+            }
+            for (let j = 0; j < btnElements.length; j++) {
+                btnElements[j].classList.add('btn-sm')
+            }
+        }
+    }
+
     inputDateMinMax = () => {
         const today = new Date();
         const max = today.toISOString().slice(0, 10);
@@ -73,7 +87,7 @@ export default class DepositFilters extends Component {
         const returnButtonClassName = returnButton ? activeButtonClassName : buttonClassName;
 
         return (
-            <div className="card deposit-filters mb-3">
+            <div className="deposit-filters card mb-3">
                 <div className="card-header">Filter Deposits</div>
                 <div className="card-body">
 

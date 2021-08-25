@@ -1,13 +1,8 @@
-.item-detail {
-    /* border: 1px solid #00587a; */
-    font-family: 'Montserrat', sans-serif;
+.status-detail .card-header {
+    background-color: #00587A;
+    color: white
 }
 
-.card-icon {
-    color: #008891;
-    margin-right: 2%;
-}
-
-.spinner {
+.status-detail .card-icon {
     color: #008891;
 }

@@ -12,20 +12,6 @@ export default class StatusFilters extends Component {
         errorButton: false,
     }
 
-    componentDidMount() {
-        const screenHeight = window.innerHeight;
-        if (screenHeight < 900) {
-            const inputElements = document.getElementsByClassName('form-control')
-            const btnElements = document.getElementsByClassName('btn')
-            for (let i = 0; i < inputElements.length; i++) {
-                inputElements[i].classList.add('form-control-sm')
-            }
-            for (let j = 0; j < btnElements.length; j++) {
-                btnElements[j].classList.add('btn-sm')
-            }
-        }
-    }
-
     onTermStreetChange = (event) => {
         this.setState({
             streetTerm: event.target.value
@@ -62,6 +48,18 @@ export default class StatusFilters extends Component {
     }
 
     render() {
+
+        const screenHeight = window.innerHeight;
+        if (screenHeight < 900) {
+            const inputElements = document.getElementsByClassName('form-control')
+            const btnElements = document.getElementsByClassName('btn')
+            for (let i = 0; i < inputElements.length; i++) {
+                inputElements[i].classList.add('form-control-sm')
+            }
+            for (let j = 0; j < btnElements.length; j++) {
+                btnElements[j].classList.add('btn-sm')
+            }
+        }
 
         const { minWaterButton, errorButton } = this.state;
         const buttonClassName = "btn btn-outline-secondary";

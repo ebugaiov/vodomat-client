@@ -8,6 +8,7 @@ import Footer from '../footer';
 import LoginPage from '../pages/login';
 import StatusPage from '../pages/status';
 import DepositPage from '../pages/deposit';
+import IssuePage from '../pages/issue';
 
 import './app.css';
 
@@ -33,6 +34,10 @@ function App()  {
 
             <Route path="/deposit">
                 {<DepositPage />}
+            </Route>
+
+            <Route path="/issue">
+                {<IssuePage />}
             </Route>
 
             <Footer />

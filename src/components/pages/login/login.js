@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import VodomatService from '../../../services/vodomat-service';
+import BaseService from '../../../services/base-service';
 import Footer from '../../footer';
 
 import './login.css';
@@ -13,12 +13,12 @@ export default function LoginPage({setCookie}) {
     const [password, setPassword] = useState()
     const [error, setError] = useState()
 
-    const vodomatService = new VodomatService()
+    const baseService = new BaseService(process.env.REACT_APP_VODOMAT_API_URL)
 
     const handleSubmit = async e => {
         e.preventDefault()
         try {
-            const token = await vodomatService.getApiKey({
+            const token = await baseService.getApiKey({
                 username,
                 password
             });

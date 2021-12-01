@@ -66,7 +66,8 @@ export default class DepositFilters extends Component {
     render() {
 
         const screenHeight = window.innerHeight;
-        if (screenHeight < 900) {
+        const screenWidth = window.innerWidth;
+        if (screenHeight < 900 || screenWidth < 1200) {
             const inputElements = document.getElementsByClassName('form-control')
             const btnElements = document.getElementsByClassName('btn')
             for (let i = 0; i < inputElements.length; i++) {

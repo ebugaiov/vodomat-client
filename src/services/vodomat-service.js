@@ -1,56 +1,10 @@
-export default class VodomatService {
+import BaseService from "./base-service";
 
-    getCookie = (name) => (
-        document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
-        )
-    
-    deleteCookie = (name) => {
-        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    }
+export default class VodomatService extends BaseService {
 
-    token = this.getCookie('token')
-
-    secureHeader = {
-        headers: {
-            "HTTP-X-API-KEY": this.token
-        }
-    }
-
-    _apiBase = process.env.NODE_ENV !== 'production' ? 'http://localhost:8080/api/v2' : process.env.REACT_APP_API_URL
-
-    getResource = async (url, options=this.secureHeader) => {
-
-        const res = await fetch(`${this._apiBase}${url}`, options)
-
-        if ( res.status === 400) {
-            const error = await res.json()
-            if (error.error === 'wrong api key') {
-                this.deleteCookie('token')
-                window.location.reload()
-                return
-            }
-            throw new Error (`${error.error}`)
-        }
-
-        if (!res.ok) {
-            throw new Error(`Could not fetch ${url}, received ${res.status}`)
-        }
-        return await res.json()
-    }
-
-    getApiKey = async (credentials) => {
-        let formData = new FormData()
-        for (const name in credentials) {
-            formData.append(name, credentials[name])
-        }
-        const options = {
-            method: "POST",
-            body: formData,
-            
-        }
-
-        const res = await this.getResource('/api_key', options)
-        return res.api_key
+    constructor() {
+        super()
+        this._apiBase = process.env.REACT_APP_VODOMAT_API_URL;
     }
 
     getAllStatuses = async () => {
@@ -71,7 +25,7 @@ export default class VodomatService {
     }
 
     getDepositByPurchaseId = async (purchaseId) => {
-        const deposit = await this.getResource(`/deposit/${purchaseId}`)
+        const deposit = await this.getResource(`/deposit/purchase/${purchaseId}`)
         return this._transformDeposit(deposit)
     }
 

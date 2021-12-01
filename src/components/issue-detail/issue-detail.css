@@ -1,0 +1,13 @@
+.issue-detail .card-header {
+    background-color: #00587A;
+    color: white
+}
+
+.issue-detail .card-icon {
+    color: #008891;
+}
+
+.issue-detail ul {
+    overflow-y: auto;
+    max-height: calc(100vh - 565px);
+}

@@ -22,6 +22,9 @@ const Header = ({ username, removeCookie }) => {
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/deposit">Deposit</NavLink>
                         </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/issue">Issue</NavLink>
+                        </li>
                     </ul>
                     <span className="navbar-text">{ username }</span>
                     <button className="logout-btn btn btn-dark" onClick={() => {

@@ -3,16 +3,20 @@ import React, { Component } from 'react';
 import './deposit-detail.css';
 
 import VodomatService from '../../services/vodomat-service';
+import PayService from '../../services/pay-service';
 
 import Spinner from '../spinner';
 
 export default class DepositDetail extends Component {
 
     vodomatService = new VodomatService()
+    payService = new PayService()
 
     state = {
         depositDetail: {},
-        loading: true
+        loading: true,
+        address: '',
+        avtomatNumber: null
     }
 
     componentDidMount() {
@@ -29,10 +33,26 @@ export default class DepositDetail extends Component {
     } 
 
     onDepositLoading = (depositDetail) => {
-        this.setState({
-            depositDetail,
-            loading: false
-        })
+        if (!depositDetail.city) {
+            this.payService
+                .getPurchase(depositDetail.purchaseId)
+                .then((purchase) => {
+                    this.setState({
+                        depositDetail,
+                        loading: false,
+                        address: purchase.address,
+                        avtomatNumber: purchase.avtomatNumber
+                    })
+                })
+
+        } else {
+            this.setState({
+                depositDetail,
+                loading: false,
+                address: `${depositDetail.street}, ${depositDetail.house}`,
+                avtomatNumber: depositDetail.avtomatNumber
+            })
+        }
     }
 
     updateDeposit = () => {
@@ -45,12 +65,23 @@ export default class DepositDetail extends Component {
             .then(this.onDepositLoading)
     }
 
+    loadPurchase = (id) => {
+        this.payService
+            .getPurchase(id)
+            .then((purchase) => {
+                return purchase
+            })
+    }
+
     render() {
 
-        const { depositDetail, loading } = this.state;
+        const { depositDetail, loading, address, avtomatNumber } = this.state;
 
         const spinner = this.state.loading ? <Spinner /> : null;
-        const cardBody = !loading ? <CardBody depositDetail={depositDetail} /> : null
+        const cardBody = !loading ? <CardBody depositDetail={depositDetail}
+                                              address={address}
+                                              avtomatNumber={avtomatNumber}
+                                    /> : null
 
         return (
             <div className="deposit-detail">
@@ -66,15 +97,16 @@ export default class DepositDetail extends Component {
     }
 }
 
-const CardBody = ({depositDetail}) => {
+const CardBody = (props) => {
 
-    const { avtomatNumber, city, street, house } = depositDetail;
-    const { purchaseId, serverId } = depositDetail;
-    const { billAmount, price, timePaymentGateway, timeServer, gateType } = depositDetail;
-    const { cardMask } = depositDetail;
-    const { statusPaymentGateway, statusServer } = depositDetail;
+    const { city } = props.depositDetail;
+    const { purchaseId, serverId } = props.depositDetail;
+    const { billAmount, price, timePaymentGateway, timeServer, gateType } = props.depositDetail;
+    const { cardMask } = props.depositDetail;
+    const { statusPaymentGateway, statusServer } = props.depositDetail;
+    const { address, avtomatNumber } = props;
 
-    const address = city ? <span>{street}, {house} <span className="small">({city})</span></span> : null
+    const addressEl = city ? <span>{address} <span className="small">({city})</span></span> : <span>{ address }</span>
     const timeServerElement = timeServer ? <small>({timeServer.replace('T', ' ')})</small> : null
 
     let gateTypeIcon = null;
@@ -128,7 +160,7 @@ const CardBody = ({depositDetail}) => {
     return (
         <React.Fragment>
             <div className="card-body">
-                <h6 className="card-title">{ address }</h6>
+                <h6 className="card-title">{ addressEl }</h6>
                 <p className="card-text text-muted">
                     <i className="card-icon fas fa-shopping-cart"></i>
                     &nbsp;{avtomatNumber}

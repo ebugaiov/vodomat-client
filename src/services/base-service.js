@@ -37,6 +37,11 @@ export default class BaseService {
             }
             throw new Error (`${error.error}`)
         }
+
+        if (res.status === 404) {
+            return {}
+        }
+
         if (!res.ok) {
             throw new Error(`Could not fetch ${url}, received ${res.status}`)
         }

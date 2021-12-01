@@ -27,6 +27,11 @@ export default class PayService extends BaseService {
         return this._transformIssue(res)
     }
 
+    getPurchase = async (id) => {
+        const purchase = await this.getResource(`/purchase/${id}`)
+        return this._transformPurchase(purchase)
+    }
+
     _transformIssue = (issue) => {
         return {
             id: issue.id,
@@ -35,6 +40,20 @@ export default class PayService extends BaseService {
             address: issue.address,
             issue: issue.issue,
             comment: issue.comment 
+        }
+    }
+
+    _transformPurchase = (purchase) => {
+        return {
+            id: purchase.id,
+            createdAt: purchase.created_at,
+            avtomatNumber: purchase.avtomat_number,
+            address: purchase.address,
+            money: purchase.money,
+            status: purchase.status,
+            paymentGatewayId: purchase.payment_gateway_id,
+            depositId: purchase.deposit_id,
+            receiptUrl: purchase.receipt_url
         }
     }
 

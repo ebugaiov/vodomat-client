@@ -25,7 +25,6 @@ const Header = ({ username, removeCookie }) => {
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/issue">Issue</NavLink>
                         </li>
-                        
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
                                 Items
@@ -36,8 +35,6 @@ const Header = ({ username, removeCookie }) => {
                                 <li><NavLink className="dropdown-item" to="/city">City</NavLink></li>
                             </ul>
                         </li>
-          
-
                     </ul>
                     <span className="navbar-text">{ username }</span>
                     <button className="logout-btn btn btn-dark" onClick={() => {

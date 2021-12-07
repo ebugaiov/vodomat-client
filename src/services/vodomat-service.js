@@ -29,6 +29,11 @@ export default class VodomatService extends BaseService {
         return this._transformDeposit(deposit)
     }
 
+    getAllAvtomats = async () => {
+        const res = await this.getResource('/avtomat')
+        return res.avtomats.map(this._transformAvtomat)
+    }
+
     _transformStatus = (status) => {
         return {
             id: status.avtomat_number,
@@ -68,6 +73,25 @@ export default class VodomatService extends BaseService {
             billAmount: deposit.bill_amount,
             gateType: deposit.gate_type
         }
+    }
 
+    _transformAvtomat = (avtomat) => {
+        return {
+            id: avtomat.avtomat_number,
+            city: avtomat.city,
+            street: avtomat.street,
+            house: avtomat.house,
+            carNumber: avtomat.car_number,
+            latitude: avtomat.latitude,
+            longitude: avtomat.longitude,
+            searchRadius: avtomat.search_radius,
+            price: avtomat.price,
+            priceForApp: avtomat.price_for_app,
+            maxSum: avtomat.max_sum,
+            size: avtomat.size,
+            competitors: avtomat.competitors,
+            streetId: avtomat.street_id,
+            routeId: avtomat.route_id
+        }
     }
 }

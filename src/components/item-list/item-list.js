@@ -35,14 +35,17 @@ const ItemList = ({ listHeader, items, loading, renderItem, onAutoupdateChange, 
             <div className="card-header d-flex justify-content-between">
                 { listHeader }
                 { spinner }
-                <div className="custom-control custom-switch">
-                    <input type="checkbox"
-                           className="custom-control-input"
-                           id="autoupdateSwitch"
-                           checked={autoupdate}
-                           onChange={autoupdateSwitchChange} />
-                    <label className="custom-control-label" htmlFor="autoupdateSwitch"><small>Autoupdate</small></label>
-                </div>
+                { onAutoupdateChange ? 
+                    (<div className="custom-control custom-switch">
+                        <input type="checkbox"
+                            className="custom-control-input"
+                            id="autoupdateSwitch"
+                            checked={autoupdate}
+                            onChange={autoupdateSwitchChange}
+                        />
+                        <label className="custom-control-label" htmlFor="autoupdateSwitch"><small>Autoupdate</small></label>
+                    </div>)
+                 : <div></div> }
             </div>
             <ul className="list-group">
                 { elements }

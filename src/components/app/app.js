@@ -9,6 +9,7 @@ import LoginPage from '../pages/login';
 import StatusPage from '../pages/status';
 import DepositPage from '../pages/deposit';
 import IssuePage from '../pages/issue';
+import AvtomatPage from '../pages/avtomat';
 
 import './app.css';
 
@@ -38,6 +39,10 @@ function App()  {
 
             <Route path="/issue">
                 {<IssuePage />}
+            </Route>
+
+            <Route path="/avtomat">
+                {<AvtomatPage />}
             </Route>
 
             <Footer />

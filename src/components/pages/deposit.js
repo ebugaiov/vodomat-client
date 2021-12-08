@@ -81,7 +81,7 @@ export default class DepositPage extends Component {
 
     renderDepositItem = (item) => {
 
-        const { avtomatNumber, city, street, house } = item;
+        const { avtomatNumber, city, street, house, statusServer } = item;
         const { purchaseId, timePaymentGateway, billAmount, statusPaymentGateway } = item;
         let statusPaymentGatewayClass = 'pr-3';
 
@@ -102,11 +102,27 @@ export default class DepositPage extends Component {
                 statusPaymentGatewayClass += '';
         }
 
+        let statusServerElement = <span>{statusServer}</span>;
+        switch (statusServer) {
+            case 0:
+                statusServerElement = <span className="text-warning">WAIT</span>;
+                break;
+            case 1:
+                statusServerElement = <span className="text-success">DONE</span>;
+                break;
+            case 2:
+                statusServerElement = <span className="text-danger">FAIL</span>;
+                break;
+            default:
+                break;
+        }
+
         const avtomatDiv = city ? 
             (
                 <div>
                     <span className="pr-4">{avtomatNumber}</span>
-                    {`${street} ${house} `}
+                    <span className="pr-4">{`${street} ${house} `}</span>
+                    { statusServerElement }
                 </div>
             ) : <i className="fas fa-ban text-danger"></i>
 

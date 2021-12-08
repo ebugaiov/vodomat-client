@@ -97,7 +97,7 @@ export default class AvtomatFilters extends Component {
                                     className={appPayButtonClassName}
                                     onClick={this.onAppPayButtonClick}
                             >
-                                App Pay&nbsp;<i className="far fa-credit-card"></i>
+                                App Pay
                             </button>
                         </div>
                     </div>

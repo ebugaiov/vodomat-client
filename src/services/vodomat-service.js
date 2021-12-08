@@ -34,6 +34,21 @@ export default class VodomatService extends BaseService {
         return res.avtomats.map(this._transformAvtomat)
     }
 
+    getAvtomat = async (number) => {
+        const avtomat = await this.getResource(`/avtomat/${number}`)
+        return this._transformAvtomat(avtomat)
+    }
+
+    getAllCities = async () => {
+        const res = await this.getResource('/city')
+        return res.cities.map(this._transformCity)
+    }
+
+    getAllStreets = async () => {
+        const res = await this.getResource('/street')
+        return res.streets.map(this._transformStreet)
+    }
+
     _transformStatus = (status) => {
         return {
             id: status.avtomat_number,
@@ -92,6 +107,21 @@ export default class VodomatService extends BaseService {
             competitors: avtomat.competitors,
             streetId: avtomat.street_id,
             routeId: avtomat.route_id
+        }
+    }
+
+    _transformCity = (city) => {
+        return {
+            id: city.id,
+            city: city.city
+        }
+    }
+
+    _transformStreet = (street) => {
+        return {
+            id: street.id,
+            street: street.street,
+            cityId: street.city_id
         }
     }
 }

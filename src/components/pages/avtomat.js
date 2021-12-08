@@ -5,6 +5,7 @@ import VodomatService from '../../services/vodomat-service';
 import Row from '../row';
 import ItemList from '../item-list';
 import AvtomatFilters from '../avtomat-filters';
+import AvtomatDetail from '../avtomat-detail';
 
 export default class AvtomatPage extends Component {
     
@@ -53,32 +54,13 @@ export default class AvtomatPage extends Component {
         }
     }
 
-    renderAvtomatItem = (item) => {
-
-        const { id, city, street, house, priceForApp } = item;
-        
-        return (
-            <div className="d-flex justify-content-between">
-                <div>
-                    <span className="pr-4">{id}</span>
-                    <span>{street} {house}</span>&nbsp;
-                    <small>{city ? `(${city})` : ''}</small>&nbsp;
-                    {priceForApp ? <i className="far fa-credit-card"></i> : null}
-                </div>
-                <div>
-                    <a href="#!"><i className="fas fa-qrcode fa-lg"></i></a>
-                </div>
-            </div>
-        )
-    }
-
     onAvtomatSelected = (number) => {
         this.setState({
             selectedAvtomatNumber: number
         })
     }
 
-    onAvtomatUpdated = () => {
+    onUpdateAvtomat = () => {
         this.setState({ avtomatUpdated: true })
     }
 
@@ -117,9 +99,27 @@ export default class AvtomatPage extends Component {
         })
     }
 
+    renderAvtomatItem = (item) => {
+
+        const { id, city, street, house, priceForApp } = item;
+        
+        return (
+            <div className="d-flex justify-content-between">
+                <div>
+                    <span className="pr-4">{id}</span>
+                    <span>{street} {house}</span>&nbsp;
+                    <small>{city ? `(${city})` : ''}</small>&nbsp;
+                </div>
+                <div>
+                    {priceForApp ? <i className="far fa-credit-card"></i> : null}
+                </div>
+            </div>
+        )
+    }
+
     render() {
 
-        const { items, loading } = this.state;
+        const { items, loading, selectedAvtomatNumber } = this.state;
         const { number, street, city, route, appPayButtonPress } = this.state;
 
         const visibleItems = items ?
@@ -149,12 +149,17 @@ export default class AvtomatPage extends Component {
                     />
                 }
                 right={
-                    <AvtomatFilters
-                        cities={cities}
-                        routes={routes}
-                        onFieldChange={this.onFieldChange}
-                        onAppPayButtonClick={this.onAppPayButtonClick}
-                    />
+                    <React.Fragment>
+                        <AvtomatFilters
+                            cities={cities}
+                            routes={routes}
+                            onFieldChange={this.onFieldChange}
+                            onAppPayButtonClick={this.onAppPayButtonClick}
+                        />
+                        <AvtomatDetail
+                            avtomatNumber={selectedAvtomatNumber}
+                            onUpdateAvtomat={this.onUpdateAvtomat}/>
+                    </React.Fragment>
                 }
             />
         )

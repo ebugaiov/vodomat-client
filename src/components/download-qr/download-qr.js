@@ -1,40 +1,42 @@
-import React, { Component } from 'react';
+import React from 'react';
 import QRCode from 'qrcode.react';
 
 import './download-qr.css';
 
-export default class DownloadQR extends Component {
+const DownloadQR = ({id, paymentAppUrl}) => {
 
-    url  = 'https://pay.roganska.com'
-    elementId = `qrCode-${this.props.id}`;
+    const url = `http://${paymentAppUrl}`;
 
-    downloadQR = () => {
-        const canvas = document.getElementById(this.elementId);
+    const htmlElementId = `qrCode-${id}`;
+
+    const downloadQR = () => {
+        const canvas = document.getElementById(htmlElementId);
         const pngUrl = canvas
             .toDataURL("image/png")
             .replace("image/png", "image/octet-stream");
         let downloadLink = document.createElement("a");
         downloadLink.href = pngUrl;
-        downloadLink.download = `${this.elementId}.png`;
+        downloadLink.download = `${htmlElementId}.png`;
         document.body.appendChild(downloadLink);
         downloadLink.click();
         document.body.removeChild(downloadLink);
     }
 
-    render() {
-        return (
-            <div>
-                <div hidden>
-                    <QRCode
-                        id={this.elementId}
-                        value={`${this.url}/${this.props.id}`}
-                        size={256}
-                    />
-                </div>
-                <button type="button" className="btn btn-link p-0 qrButton" onClick={this.downloadQR}>
-                    <i className="fas fa-qrcode fa-lg"></i>
-                </button>
+    return (
+        <div>
+            <div hidden>
+                <QRCode
+                    id={htmlElementId}
+                    value={`${url}?id=${id}`}
+                    size={420}
+                    includeMargin={true}
+                />
             </div>
-        )
-    }
+            <button type="button" className="btn btn-link p-0 qrButton" onClick={downloadQR}>
+                <i className="fas fa-qrcode fa-lg"></i>
+            </button>
+        </div>
+    )
 }
+
+export default DownloadQR;

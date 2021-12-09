@@ -134,8 +134,8 @@ export default class AvtomatPage extends Component {
                                 appPayButtonPress)
                              : []
         
-        const cities = items ? [...new Set(items.map((item) => item.city))].sort() : []
-        const routes = items ? [...new Set(items.map((item) => item.carNumber))].sort() : []
+        const cities = items ? [...new Set(items.map((item) => item.city))].sort() : [];
+        const routes = items ? [...new Set(items.map((item) => item.carNumber))].sort() : [];
 
         return (
             <Row

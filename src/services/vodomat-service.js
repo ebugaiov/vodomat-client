@@ -39,6 +39,12 @@ export default class VodomatService extends BaseService {
         return this._transformAvtomat(avtomat)
     }
 
+    deleteAvtomat = async (number) => {
+        const options = this.createOptionsForRequest('DELETE', null, this.secureHeader)
+        const resp = await this.getResource(`/avtomat/${number}`, options)
+        return resp
+    }
+
     getAllCities = async () => {
         const res = await this.getResource('/city')
         return res.cities.map(this._transformCity)
@@ -47,6 +53,7 @@ export default class VodomatService extends BaseService {
     getAllStreets = async () => {
         const res = await this.getResource('/street')
         return res.streets.map(this._transformStreet)
+                          .sort((a,b) => a.street > b.street ? 1 : -1)
     }
 
     _transformStatus = (status) => {
@@ -102,6 +109,7 @@ export default class VodomatService extends BaseService {
             searchRadius: avtomat.search_radius,
             price: avtomat.price,
             priceForApp: avtomat.price_for_app,
+            paymentAppUrl: avtomat.payment_app_url,
             maxSum: avtomat.max_sum,
             size: avtomat.size,
             competitors: avtomat.competitors,

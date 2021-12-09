@@ -4,6 +4,7 @@ import VodomatService from '../../services/vodomat-service';
 
 import Spinner from '../spinner';
 import DownloadQR from '../download-qr';
+import AvtomatDelete from '../avtomat-delete';
 
 import './avtomat-detail.css';
 
@@ -13,9 +14,8 @@ export default class AvtomatDetail extends Component {
 
     state = {
         avtomatDetail: {},
-        cities: [],
         streets: [],
-        loading: true,
+        loading: true
     }
 
     onAvtomatLoaded = (avtomatDetail) => {
@@ -35,16 +35,6 @@ export default class AvtomatDetail extends Component {
             .then(this.onAvtomatLoaded)
     }
 
-    downloadCities = () => {
-        this.vodomatService
-            .getAllCities()
-            .then((cities) => {
-                this.setState({
-                    cities
-                })
-            })
-    }
-
     downloadStreets = () => {
         this.vodomatService
             .getAllStreets()
@@ -56,7 +46,6 @@ export default class AvtomatDetail extends Component {
     }
 
     componentDidMount() {
-        this.downloadCities()
         this.downloadStreets()
         this.updateAvtomat()
     }
@@ -82,19 +71,19 @@ export default class AvtomatDetail extends Component {
 
     cardBody = () => {
 
-        const { id } = this.state.avtomatDetail;
+        const { id, paymentAppUrl } = this.state.avtomatDetail;
 
         return (
             <div className="card-body">
-                <p className="card-text text-muted d-flex justify-content-between">
+                <div className="card-text text-muted d-flex justify-content-between mb-3">
                     <div>
                         <i className="card-icon fas fa-shopping-cart"></i>
-                        <span className="h6 ml-2">{ id }</span>
+                        <span className="h5 ml-2">{ id }</span>
                     </div>
                     <div>
-                        <DownloadQR id={this.props.avtomatNumber} />
+                        <DownloadQR id={id} paymentAppUrl={paymentAppUrl} />
                     </div>
-                </p>
+                </div>
                 { this.updateForm() }
             </div>
         )
@@ -102,29 +91,29 @@ export default class AvtomatDetail extends Component {
 
     updateForm = () => {
 
-        const { city, street, house } = this.state.avtomatDetail;
-        const { cities, streets } = this.state;
+        const { street, house } = this.state.avtomatDetail;
+        const { streets } = this.state;
 
         return (
             <form onSubmit={this.onSubmitUpdateForm}>
                 <div className="row">
-                    <div className="col-lg-6">
-                        <select className="form-control mb-3" value={city} onChange={() => this.onChangeFormField('city')}>
-                            { cities.map((city) => {
-                                return <option key={city.id} value={city.city}>{city.city}</option>
-                            }) }
-                        </select>
-                    </div>
-                    <div className="col-lg-6">
+                    <div className="col-lg-8">
                         <select className="form-control mb-3" value={street} onChange={() => this.onChangeFormField('street')}>
                             { streets.map((street) => {
                                 return <option key={street.id} value={street.street}>{street.street}</option>
                             })}
                         </select>
                     </div>
+                    <div className="col-lg-4">
+                        <input type="text" className="form-control mb-3" value={house}
+                               onChange={() => this.onChangeFormField('house')}
+                        />
+                    </div>
                 </div>
-                <input type="text" className="form-control mb-3" value={house} onChange={() => this.onChangeFormField('house')} />
-                <button type="submit" className="btn btn-outline-secondary">Update</button>
+                <div className="d-flex justify-content-between">
+                    <button type="submit" className="btn btn-outline-secondary" disabled>Update</button>
+                    <AvtomatDelete avtomatNumber={this.props.avtomatNumber} />
+                </div>
             </form>
         )
     }

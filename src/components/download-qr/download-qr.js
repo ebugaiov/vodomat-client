@@ -5,7 +5,7 @@ import './download-qr.css';
 
 const DownloadQR = ({id, paymentAppUrl}) => {
 
-    const url = `http://${paymentAppUrl}`;
+    const url = `https://${paymentAppUrl}`;
 
     const htmlElementId = `qrCode-${id}`;
 

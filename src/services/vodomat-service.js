@@ -56,6 +56,20 @@ export default class VodomatService extends BaseService {
                           .sort((a,b) => a.street > b.street ? 1 : -1)
     }
 
+    updateCity = async (id, city) => {
+        const body = JSON.stringify({'city': city})
+        const options = this.createOptionsForRequest('PUT', body, this.secureHeader)
+        const res = await this.getResource(`/city/${id}`, options)
+        return this._transformCity(res)
+    }
+
+    createCity = async (city) => {
+        const body = JSON.stringify({'city': city})
+        const options = this.createOptionsForRequest('POST', body, this.secureHeader)
+        const res = await this.getResource('/city', options)
+        return {city: res.city}
+    } 
+
     _transformStatus = (status) => {
         return {
             id: status.avtomat_number,

@@ -10,6 +10,7 @@ import StatusPage from '../pages/status';
 import DepositPage from '../pages/deposit';
 import IssuePage from '../pages/issue';
 import AvtomatPage from '../pages/avtomat';
+import CityPage from '../pages/city';
 
 import './app.css';
 
@@ -43,6 +44,10 @@ function App()  {
 
             <Route path="/avtomat">
                 {<AvtomatPage />}
+            </Route>
+
+            <Route path="/city">
+                {<CityPage />}
             </Route>
 
             <Footer />

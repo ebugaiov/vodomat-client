@@ -94,6 +94,9 @@ export default class VodomatService extends BaseService {
     _transformDeposit = (deposit) => {
         return {
             id: deposit.purchase_id,
+            purchaseId: deposit.purchase_id,
+            serverId: deposit.server_id,
+            paymentGatewayId: deposit.bill_id,
             avtomatNumber: deposit.avtomat_number,
             timeServer: deposit.time_server,
             timePaymentGateway: deposit.time_payment_gateway,
@@ -101,8 +104,6 @@ export default class VodomatService extends BaseService {
             street: deposit.street,
             house: deposit.house,
             price: deposit.price ? deposit.price / 100 : null,
-            purchaseId: deposit.purchase_id,
-            serverId: deposit.server_id,
             statusServer: deposit.status_server,
             statusPaymentGateway: deposit.status_payment_gateway,
             cardMask: deposit.card_mask,

@@ -65,14 +65,6 @@ export default class DepositDetail extends Component {
             .then(this.onDepositLoading)
     }
 
-    loadPurchase = (id) => {
-        this.payService
-            .getPurchase(id)
-            .then((purchase) => {
-                return purchase
-            })
-    }
-
     render() {
 
         const { depositDetail, loading, address, avtomatNumber } = this.state;
@@ -100,7 +92,7 @@ export default class DepositDetail extends Component {
 const CardBody = (props) => {
 
     const { city } = props.depositDetail;
-    const { purchaseId, serverId } = props.depositDetail;
+    const { purchaseId, serverId, paymentGatewayId } = props.depositDetail;
     const { billAmount, price, timePaymentGateway, timeServer, gateType } = props.depositDetail;
     const { cardMask } = props.depositDetail;
     const { statusPaymentGateway, statusServer } = props.depositDetail;
@@ -173,7 +165,10 @@ const CardBody = (props) => {
             </div>
             <ul className="list-group list-group-flush">
                 <li className="list-group-item">Purchase Id: {purchaseId}</li>
-                <li className="list-group-item">Server Id: {serverId}</li>
+                <li className="list-group-item d-flex justify-content-between">
+                    <span>Server Id: {serverId}</span>
+                    <span>PG Id: {paymentGatewayId}</span>
+                </li>
                 <li className="list-group-item d-flex justify-content-between">
                     <span>Money: {billAmount}</span>
                     <span>Price: {price}</span>

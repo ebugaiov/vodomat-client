@@ -5,12 +5,12 @@ import './deposit-filters.css';
 export default class DepositFilters extends Component {
 
     state = {
-        dateTerm: new Date().toISOString().substring(0, 10),
-        avtomatNumberTerm: null,
-        streetTerm: '',
-        purchaseIdTerm: '',
+        date: new Date().toISOString().substring(0, 10),
+        avtomatNumber: null,
+        street: '',
         errorsButton: false,
         returnButton: false,
+        purchaseId: ''
     }
 
     inputDateMinMax = () => {
@@ -21,32 +21,9 @@ export default class DepositFilters extends Component {
         return [min, max];
     }
 
-    onDateTermChange = (event) => {
-        this.setState({
-            dateTerm: event.target.value
-        })
-        this.props.onDateChange(event.target.value)
-    }
-
-    onAvtomatNumberTermChange = (event) => {
-        this.setState({
-            avtomatNumberTerm: event.target.value
-        })
-        this.props.onAvtomatNumberChange(event.target.value)
-    }
-
-    onStreetTermChange = (event) => {
-        this.setState({
-            streetTerm: event.target.value
-        })
-        this.props.onStreetChange(event.target.value)
-    }
-
-    onPurchaseIdTermChange = (event) => {
-        this.setState({
-            purchaseIdTerm: event.target.value
-        })
-        this.props.onPurchaseIdChange(event.target.value)
+    onFieldChange = (event, field) => {
+        this.setState({[field]: event.target.value})
+        this.props.onFieldChange(field, event.target.value)
     }
 
     onErrorsClick = () => {
@@ -61,6 +38,21 @@ export default class DepositFilters extends Component {
             this.props.onReturnButtonClick(!returnButton)
             return { returnButton: !returnButton }
         })
+    }
+
+    onPurchaseIdChange = (event) => {
+        this.setState({
+            purchaseId: event.target.value
+        })
+    }
+
+    onSubmitPurchaseIdForm = (event) => {
+        event.preventDefault()
+        const { purchaseId } = this.state;
+        if (purchaseId.length > 35) {
+            this.props.onDepositSelected(purchaseId)
+            this.setState({purchaseId: ''})
+        }
     }
 
     render() {
@@ -92,36 +84,29 @@ export default class DepositFilters extends Component {
 
                     <div className="mb-3">
                         <input type="date" className="form-control"
-                               value={this.state.dateTerm}
+                               value={this.state.date}
                                min={this.inputDateMinMax()[0]}
                                max={this.inputDateMinMax()[1]}
-                               onChange={this.onDateTermChange}>
+                               onChange={(event) => this.onFieldChange(event, 'date')}>
                         </input>
                     </div>
 
                     <div className="row mb-3">
                         <div className="col">
                             <input type="text" className="form-control" placeholder="Input Number"
-                                   value={this.state.numberTerm}
-                                   onChange={this.onAvtomatNumberTermChange}>
+                                   value={this.state.avtomatNumber}
+                                   onChange={(event) => this.onFieldChange(event, 'avtomatNumber')}>
                             </input>
                         </div>
                         <div className="col">
                             <input type="text" className="form-control" placeholder="Input Street"
-                                   value={this.state.streetTerm}
-                                   onChange={this.onStreetTermChange}>
+                                   value={this.state.street}
+                                   onChange={(event) => this.onFieldChange(event, 'street')}>
                             </input>
                         </div>
                     </div>
 
-                    <div className="mb-3">
-                        <input type="text" className="form-control" placeholder="Input Purchase Id"
-                               value={this.state.purchaseIdTerm}
-                               onChange={this.onPurchaseIdTermChange}>
-                        </input>
-                    </div>
-
-                    <div className="btn-group d-flex">
+                    <div className="btn-group d-flex mb-3">
                         <button type="button"
                                 className={errorsButtonClassName}
                                 onClick={this.onErrorsClick}>
@@ -133,6 +118,20 @@ export default class DepositFilters extends Component {
                                     Return
                         </button>
                     </div>
+
+                    <form onSubmit={this.onSubmitPurchaseIdForm}>
+                        <div class="input-group">
+                            <input type="text" className="form-control" placeholder="Input Purchase Id"
+                                value={this.state.purchaseId}
+                                onChange={this.onPurchaseIdChange}
+                            />
+                            <div className="input-group-append">
+                                <button className="btn btn-outline-secondary" type="submit">
+                                    <i className="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
 
                 </div>
             </div>

@@ -27,7 +27,7 @@ const DownloadQR = ({id, paymentAppUrl}) => {
             <div hidden>
                 <QRCode
                     id={htmlElementId}
-                    value={`${url}?id=${id}`}
+                    value={`${url}?vodomat_id=${id}`}
                     size={420}
                     includeMargin={true}
                 />

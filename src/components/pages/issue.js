@@ -73,15 +73,17 @@ export default class IssuePage extends Component {
 
     renderIssueItem = (item) => {
 
-        const { avtomatNumber, address, issue, comment } = item;
+        const { avtomatNumber, address, createdAt, issue, comment } = item;
         const processedIcon = comment ? <i className="fas fa-check"></i> : null;
         const issueStr = issue.length > 20 ? `${issue.slice(0, 20)} ...` : issue;
+        const createdAtStr = createdAt.split(' ')[4]
 
         return (
             <div className="d-flex justify-content-between">
                 <div>
-                    <span className="pr-4">{avtomatNumber}</span>
-                    <span>{ address }</span>
+                    <span className="pr-4 text-info">{avtomatNumber}</span>
+                    <span className="pr-4">{ address }</span>
+                    <small>{createdAtStr}</small>
                 </div>
                 <div>
                     <span>{ processedIcon } { issueStr }</span>

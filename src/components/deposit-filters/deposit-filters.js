@@ -6,7 +6,7 @@ export default class DepositFilters extends Component {
 
     state = {
         date: new Date().toISOString().substring(0, 10),
-        avtomatNumber: null,
+        avtomatNumber: '',
         street: '',
         errorsButton: false,
         returnButton: false,
@@ -120,7 +120,7 @@ export default class DepositFilters extends Component {
                     </div>
 
                     <form onSubmit={this.onSubmitPurchaseIdForm}>
-                        <div class="input-group">
+                        <div className="input-group">
                             <input type="text" className="form-control" placeholder="Input Purchase Id"
                                 value={this.state.purchaseId}
                                 onChange={this.onPurchaseIdChange}

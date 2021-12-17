@@ -39,6 +39,7 @@ export default class PayService extends BaseService {
             avtomatNumber: issue.avtomat_number,
             address: issue.address,
             issue: issue.issue,
+            email: issue.email,
             comment: issue.comment 
         }
     }

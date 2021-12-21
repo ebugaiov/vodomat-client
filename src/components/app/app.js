@@ -11,6 +11,7 @@ import DepositPage from '../pages/deposit';
 import IssuePage from '../pages/issue';
 import AvtomatPage from '../pages/avtomat';
 import CityPage from '../pages/city';
+import StreetPage from '../pages/street';
 
 import './app.css';
 
@@ -48,6 +49,10 @@ function App()  {
 
             <Route path="/city">
                 {<CityPage />}
+            </Route>
+
+            <Route path="/street">
+                {<StreetPage />}
             </Route>
 
             <Footer />

@@ -45,15 +45,29 @@ export default class VodomatService extends BaseService {
         return resp
     }
 
-    getAllCities = async () => {
-        const res = await this.getResource('/city')
-        return res.cities.map(this._transformCity)
-    }
-
     getAllStreets = async () => {
         const res = await this.getResource('/street')
         return res.streets.map(this._transformStreet)
                           .sort((a,b) => a.street > b.street ? 1 : -1)
+    }
+
+    updateStreet = async (cityId, street, streetId) => {
+        const body = JSON.stringify({'city_id': cityId, 'street': street})
+        const options = this.createOptionsForRequest('PUT', body, this.secureHeader)
+        const res = await this.getResource(`/street/${streetId}`, options)
+        return this._transformStreet(res)
+    }
+
+    createStreet = async (cityId, street) => {
+        const body = JSON.stringify({'city_id': cityId, 'street': street})
+        const options = this.createOptionsForRequest('POST', body, this.secureHeader)
+        const res = await this.getResource('/street', options)
+        return {cityId: res.city_id, street: res.street}
+    }
+
+    getAllCities = async () => {
+        const res = await this.getResource('/city')
+        return res.cities.map(this._transformCity)
     }
 
     updateCity = async (id, city) => {
@@ -144,7 +158,8 @@ export default class VodomatService extends BaseService {
         return {
             id: street.id,
             street: street.street,
-            cityId: street.city_id
+            cityId: street.city_id,
+            city: street.city
         }
     }
 }

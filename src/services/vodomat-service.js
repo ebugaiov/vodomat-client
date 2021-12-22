@@ -59,10 +59,10 @@ export default class VodomatService extends BaseService {
     }
 
     createStreet = async (cityId, street) => {
-        const body = JSON.stringify({'city_id': cityId, 'street': street})
+        const body = JSON.stringify({'city_id': cityId, 'name': street})
         const options = this.createOptionsForRequest('POST', body, this.secureHeader)
         const res = await this.getResource('/street', options)
-        return {cityId: res.city_id, street: res.street}
+        return this._transformStreet(res)
     }
 
     getAllCities = async () => {

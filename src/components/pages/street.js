@@ -115,7 +115,11 @@ export default class StreetPage extends Component {
                             onStreetUpdated={this.onStreetUpdated}
                             vodomatService={this.vodomatService}
                         />
-                        {/* <CreateStreetForm cities={cities} /> */}
+                        <CreateStreetForm
+                            cities={cities}
+                            vodomatService={this.vodomatService}
+                            onStreetUpdated={this.onStreetUpdated}
+                        />
                     </React.Fragment>
                 }
             />
@@ -182,15 +186,38 @@ const UpdateStreetForm = ({selectedStreet, cities, onStreetUpdated, vodomatServi
     )
 }
 
-const CreateStreetForm = ({cities}) => {
+const CreateStreetForm = ({cities, onStreetUpdated, vodomatService}) => {
+
     const [street, setStreet] = useState('');
     const [cityId, setCityId] = useState('');
+
+    const onSubmitForm = (event) => {
+        event.preventDefault()
+        vodomatService
+            .createStreet(cityId, street)
+            .then((street) => setTimeout(onStreetUpdated, 1000))
+    }
+
+    const btnClassName = 'btn btn-outline-secondary';
+    const enabledBtnClassName = street && cityId ? btnClassName : btnClassName + ' disabled';
 
     return (
         <div className="card mb-3">
             <div className="card-header" style={{backgroundColor: '#00587A', color: 'white'}}>Create Street</div>
             <div className="card-body">
-
+                <form onSubmit={onSubmitForm}>
+                    <select className="form-control mb-3" required onChange={(e) => setCityId(e.target.value)}>
+                        <option>Select City</option>
+                        {cities.map((city) => {
+                            return <option key={city.cityId} value={city.cityId}>{city.city}</option>
+                        })}
+                    </select>
+                    <input type="text" className="form-control mb-3" required
+                        value={street}
+                        onChange={(e) => setStreet(e.target.value)}
+                    />
+                    <button type="submit" className={enabledBtnClassName}>Create</button>
+                </form>
             </div>
         </div>
     )

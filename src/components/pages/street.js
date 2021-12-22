@@ -20,8 +20,7 @@ export default class StreetPage extends Component {
     onItemsLoaded = (items) => {
         this.setState({
            items,
-           loading: false,
-           selectedStreet: items[0]
+           loading: false
         })
     }
 
@@ -173,6 +172,7 @@ const UpdateStreetForm = ({selectedStreet, cities, onStreetUpdated, vodomatServi
                         value={street} onChange={(e) => setStreet(e.target.value)}
                     />
                     <select className="form-control mb-3" value={cityId} onChange={(e) => setCityId(e.target.value)}>
+                        <option></option>
                         {
                             cities.map((city) => {
                                 return <option key={city.cityId} value={city.cityId}>{city.city}</option>

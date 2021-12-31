@@ -7,11 +7,32 @@ export default class PayService extends BaseService {
         this._apiBase = process.env.REACT_APP_PAY_API_URL;
     }
 
+    getDateRange = (startDate, endDate) => {
+        let dateRange = [];
+        let currentDate = new Date(startDate);
+        while (currentDate <= new Date(endDate)) {
+            dateRange.push(currentDate.toISOString().substring(0,10))
+            currentDate.setDate(currentDate.getDate() + 1)
+        }
+        return dateRange;
+    }
+
     getIssues = async (date) => {
         const url = date ? `/issue?created_at=${date}` : '/issue';
         const res = await this.getResource(url);
         return res.issues.map(this._transformIssue)
                          .sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))
+    }
+
+    getIssuesPeriod = async (startDate, endDate) => {
+        let res = [];
+        const dateRange = this.getDateRange(startDate, endDate);
+        for (let i=0; i < dateRange.length; i++) {
+            let url = `/issue?created_at=${dateRange[i]}`
+            let resp = await this.getResource(url)
+            res = [...res, ...resp.issues.map(this._transformIssue)]
+        }
+        return res.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))
     }
 
     getIssue = async (id) => {

@@ -5,7 +5,8 @@ import './issue-filters.css';
 export default class IssueFilters extends Component {
     
     state = {
-        date: new Date().toISOString().substring(0, 10),
+        startPeriod: this.props.startPeriod,
+        endPeriod: this.props.endPeriod,
         address: '',
         avtomatNumber: '',
     }
@@ -40,20 +41,27 @@ export default class IssueFilters extends Component {
             }
         }
         
-        const { date, address, avtomatNumber } = this.state;
+        const { startPeriod, endPeriod, address, avtomatNumber } = this.state;
 
         return (
             <div className="issue-filters card mb-3">
                 <div className="card-header">Filter Issues</div>
                 <div className="card-body">
 
-                    <div className="mb-3">
+                    <div className="input-group mb-3">
                         <input type="date" className="form-control"
-                               value={date}
+                               value={startPeriod}
                                min={this.inputDateMinMax()[0]}
                                max={this.inputDateMinMax()[1]}
-                               onChange={(event) => this.onFieldChange(event, 'date')}>
+                               onChange={(event) => this.onFieldChange(event, 'startPeriod')}>
                         </input>
+                        <input type="date" className="form-control"
+                               value={endPeriod}
+                               min={this.inputDateMinMax()[0]}
+                               max={this.inputDateMinMax()[1]}
+                               onChange={(event) => this.onFieldChange(event, 'endPeriod')}>
+                        </input>
+                        
                     </div>
 
                     <div className="mb-3">

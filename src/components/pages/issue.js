@@ -108,21 +108,9 @@ export default class IssuePage extends Component {
         this.setState({commented: true})
     }
 
-    onDateChange = (date) => {
+    onFieldChange = (field, value) => {
         this.setState({
-            date
-        })
-    }
-
-    onAddressChange = (address) => {
-        this.setState({
-            address
-        })
-    }
-
-    onAvtomatNumberChange = (avtomatNumber) => {
-        this.setState({
-            avtomatNumber
+            [field]: value
         })
     }
 
@@ -172,11 +160,7 @@ export default class IssuePage extends Component {
                 }
                 right={
                     <React.Fragment>
-                        <IssueFilters
-                            onDateChange={this.onDateChange}
-                            onAddressChange={this.onAddressChange}
-                            onAvtomatNumberChange={this.onAvtomatNumberChange}
-                        />
+                        <IssueFilters onFieldChange={this.onFieldChange} />
                         <IssueDetail issueId={this.state.selectedIssueId} onCommented={this.onCommented} />
                     </React.Fragment>
                 }

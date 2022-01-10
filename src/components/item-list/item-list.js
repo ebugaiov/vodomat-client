@@ -13,6 +13,14 @@ const ItemList = ({ listHeader, items, loading, renderItem, onAutoupdateChange, 
         onAutoupdateChange(checked)
     }
 
+    const onItemClick = (event, id) => {
+        onItemSelected(id)
+        if (document.querySelector('.item-list ul li.selected-item') !== null ) {
+            document.querySelector('.item-list ul li.selected-item').classList.remove('selected-item')
+        } 
+        event.target.closest('li').classList.add('selected-item')
+    }
+
     const elements = items.map((item) => {
         
         const { id } = item;
@@ -21,7 +29,7 @@ const ItemList = ({ listHeader, items, loading, renderItem, onAutoupdateChange, 
         return (
             <li key={id}
                 className="list-group-item list-group-item-action"
-                onClick={() => onItemSelected(id)}>
+                onClick={(event) => onItemClick(event, id)}>
                 { label }
             </li>
         );

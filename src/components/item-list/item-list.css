@@ -8,6 +8,6 @@
     max-height: calc(100vh - 183px);
 }
 
-.selected-item {
+.selected-item, .selected-item:hover {
     background-color: #E7E7DE;
 }

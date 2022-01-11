@@ -18,8 +18,8 @@ export default class VodomatService extends BaseService {
         return this._transformStatus(status)
     }
 
-    getDeposits = async (date) => {
-        const url = date ? `/deposit?date=${date}` : '/deposit'
+    getDepositsPortmone = async (date) => {
+        const url = date ? `/deposit_portmone?date=${date}` : '/deposit_portmone'
         const res = await this.getResource(url)
         return res.map(this._transformDeposit)
     }

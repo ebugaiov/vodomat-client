@@ -70,7 +70,7 @@ export default class DepositPage extends Component {
 
     updateDeposit = () => {
         this.vodomatService
-            .getDeposits(this.state.date)
+            .getDepositsPortmone(this.state.date)
             .then(this.onItemsLoaded)
     }
 

@@ -8,6 +8,7 @@ import Footer from '../footer';
 import LoginPage from '../pages/login';
 import StatusPage from '../pages/status';
 import DepositPage from '../pages/deposit';
+import OrdersPage from '../pages/orders';
 import IssuePage from '../pages/issue';
 import AvtomatPage from '../pages/avtomat';
 import CityPage from '../pages/city';
@@ -37,6 +38,10 @@ function App()  {
 
             <Route path="/deposit">
                 {<DepositPage />}
+            </Route>
+
+            <Route path="/order">
+                {<OrdersPage />}
             </Route>
 
             <Route path="/issue">

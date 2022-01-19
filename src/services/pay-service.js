@@ -53,6 +53,13 @@ export default class PayService extends BaseService {
         return this._transformPurchase(purchase)
     }
 
+    getOrders = async (date) => {
+        const url = date ? `/orders?date=${date}` : '/orders';
+        const res = await this.getResource(url);
+        return res.orders.map(this._transformOrder)
+                         .sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))
+    }
+
     _transformIssue = (issue) => {
         return {
             id: issue.id,
@@ -76,6 +83,30 @@ export default class PayService extends BaseService {
             paymentGatewayId: purchase.payment_gateway_id,
             depositId: purchase.deposit_id,
             receiptUrl: purchase.receipt_url
+        }
+    }
+
+    _transformOrder = (order) => {
+        return {
+            id: order.id_payment_gateway,
+            appId: order.id_purchase,
+            serverId: order.id_server,
+            createdAt: order.created_at,
+            payGateTime: order.time_payment_gateway,
+            serverTime: order.time_server,
+            appStatus: order.status_purchase,
+            payGateStatus: order.status_payment_gateway,
+            serverStatus: order.status_server,
+            appMoney: order.money_purchase,
+            payGateMoney: order.money_payment_gateway,
+            serverMoney: order.money_server,
+            price: order.price,
+            avtomatNumber: order.avtomat_number,
+            address: order.address,
+            cardMask: order.card_mask,
+            gateType: order.gate_type,
+            transaction: order.transaction,
+            error: order.error
         }
     }
 

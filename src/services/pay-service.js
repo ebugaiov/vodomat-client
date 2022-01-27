@@ -60,6 +60,11 @@ export default class PayService extends BaseService {
                          .sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))
     }
 
+    getOrder = async (id) => {
+        const order = await this.getResource(`/order/${id}`)
+        return this._transformOrder(order)
+    }
+
     _transformIssue = (issue) => {
         return {
             id: issue.id,

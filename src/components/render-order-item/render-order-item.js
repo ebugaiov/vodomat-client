@@ -90,15 +90,17 @@ const RenderOrderItem = (order) => {
                 <span><i className="fas fa-coins"></i>&nbsp;{payGateMoney}</span>&nbsp;
                 <small className='mr-3'>{ serverMoney ? `(${serverMoney})` : null }</small>
             </div>
-            <span><span className='font-weight-bold'>ID:</span>&nbsp;{ id }</span>
+            <div>
+                <span className='font-weight-bold'>ID:</span>&nbsp;{ id }&nbsp;
+            </div>
         </div>
     )
 
     return (
         <div className={order.error ? 'row text-danger' : 'row'}>
             <div className='col-md-4'>{ leftDiv }</div>
-            <div className='col-md-4'>{ centerDiv }</div>
-            <div className='col-md-4'>{ rightDiv }</div>
+            <div className='col-md-3'>{ centerDiv }</div>
+            <div className='col-md-5'>{ rightDiv }</div>
         </div>
     )
 }

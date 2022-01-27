@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 
+import OrderModal from '../order-modal';
+
+import PayService from '../../services/pay-service';
+
 export default class OrderFilters extends Component {
+
+    payService = new PayService();
 
     state = {
         date: new Date().toISOString().substring(0, 10),
         avtomatNumber: '',
         address: '',
+        id: '',
         errorButton: false,
         returnButton: false,
-        purchaseId: ''
+        showModal: false
     }
 
     inputDateMinMax = () => {
@@ -38,9 +45,25 @@ export default class OrderFilters extends Component {
         })
     }
 
+    showOrderModal = () => {
+        if (this.state.id.length < 10) {
+            return
+        }
+        this.setState({
+            showModal: true
+        })
+    }
+
+    closeOrderModal = () => {
+        this.setState({
+            showModal: false,
+            id: ''
+        })
+    }
+
     render() {
 
-        const { date, avtomatNumber, address } = this.state;
+        const { date, avtomatNumber, address, id } = this.state;
         const {errorButton, returnButton } = this.state;
 
         const buttonClassName = "btn btn-outline-secondary";
@@ -84,14 +107,24 @@ export default class OrderFilters extends Component {
                            onChange={(event) => this.onFieldChange(event, 'address')}
                     />
                 </div>
+
                 <div className='col input-group'>
-                    <input type="text" className="form-control" placeholder='Pay Gate ID' />
+                    <input type="text" className="form-control" placeholder='Pay Gate or App ID'
+                        value={id}
+                        onChange={(event) => this.onFieldChange(event, 'id')}
+                    />
                     <div className='input-group-append'>
-                        <button className="btn btn-outline-secondary" type='submit' disabled>
+                        <button className="btn btn-outline-secondary" type='button'
+                            onClick={this.showOrderModal}
+                        >
                             <i className="fas fa-search"></i>
                         </button>
                     </div>
                 </div>
+                { this.state.showModal ?
+                    <OrderModal id={this.state.id} closeOrderModal={this.closeOrderModal} /> :
+                null }
+
             </div>
         )
     }

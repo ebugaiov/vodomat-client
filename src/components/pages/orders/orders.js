@@ -121,6 +121,12 @@ export default class OrdersPage extends Component {
     render() {
         const { items, loading, avtomatNumber, address, errorButton, returnButton } = this.state;
 
+        const countOrders = items.filter((item) => {
+            return item.payGateStatus === 'PAYED'
+        }).length
+
+        const listHeader = <span>Orders<span className='badge badge-light ml-2'>{countOrders}</span></span>
+
         const visibleItems = items ?
                              this.avtomatNumberItems(
                                  this.addressItems(
@@ -140,7 +146,7 @@ export default class OrdersPage extends Component {
                     onButtonClick={this.onButtonClick}
                 />
                 <ItemList
-                    listHeader="Orders"
+                    listHeader={listHeader}
                     items={visibleItems}
                     loading={loading}
                     onAutoupdateChange={this.onAutoupdateChange}

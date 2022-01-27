@@ -31,16 +31,13 @@ const Header = ({ username, removeCookie }) => {
                             <NavLink className="nav-link" to="/status">Status</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/deposit">Deposit</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/order">Order<small>(test)</small></NavLink>
+                            <NavLink className="nav-link" to="/order">Order</NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/issue">Issue</NavLink>
                         </li>
                         <li className="nav-item dropdown" id="itemsDropdown">
-                            <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">
+                            <a className="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
                                 Items
                             </a>
                             <ul className="dropdown-menu">

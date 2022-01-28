@@ -109,7 +109,7 @@ export default class OrderFilters extends Component {
                 </div>
 
                 <div className='col input-group'>
-                    <input type="text" className="form-control" placeholder='Pay Gate or App ID'
+                    <input type="text" className="form-control" placeholder='Pay Gate ID'
                         value={id}
                         onChange={(event) => this.onFieldChange(event, 'id')}
                     />

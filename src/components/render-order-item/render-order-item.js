@@ -1,7 +1,5 @@
 import React from 'react';
 
-import ReturnButton from '../return-button';
-
 import './render-order-item.css';
 
 const RenderOrderItem = (order) => {
@@ -79,7 +77,6 @@ const RenderOrderItem = (order) => {
             {statusAppSpan}&nbsp;
             {statusPayGateSpan}&nbsp;
             {statusServerSpan}
-            {order.error && !serverId ? <ReturnButton id={id} money={appMoney} /> : null}
         </div>
     )
 

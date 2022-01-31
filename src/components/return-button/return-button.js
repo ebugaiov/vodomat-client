@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 
-const ReturnButton = ({ id, money }) => {
+import Spinner from '../spinner';
 
-    const [showReturnModal, setShowReturnModal] = useState(false)
-    const [showAfterReturnModal, setShowAfterReturnModal] = useState(false)
+const ReturnButton = ({ itemsToReturn }) => {
+
+    const [showReturnModal, setShowReturnModal] = useState(false);
+    const [showAfterReturnModal, setShowAfterReturnModal] = useState(false);
+    const [loader, setLoader] = useState(false);
+    const [success, setSuccess] = useState(false)
+
+    const sumForReturn = itemsToReturn.reduce((sum, item) => sum + item.appMoney, 0)
 
     const returnOrder = async (id) => {
         const rawResponse = await fetch(`${process.env.REACT_APP_PAY_DOMAIN}/payment/portmone/return`, {
@@ -16,10 +22,28 @@ const ReturnButton = ({ id, money }) => {
         })
         const content = await rawResponse.json();
         if (content[id] === 'success') {
-            setShowAfterReturnModal(true)
+            return true;
         } else {
-            return
+            return false;
         }
+    }
+
+    const returnAllOrders = async () => {
+        setLoader(true)
+        for (let i = 0; i < itemsToReturn.length; i++) {
+            if (await returnOrder(itemsToReturn[i].id)) {
+                continue
+            } else {
+                setLoader(false)
+                setShowReturnModal(false)
+                setShowAfterReturnModal(true)
+                return;
+            }
+        }
+        setLoader(false)
+        setSuccess(true);
+        setShowReturnModal(false);
+        setShowAfterReturnModal(true);
     }
 
     const returnModal = () => {
@@ -27,17 +51,16 @@ const ReturnButton = ({ id, money }) => {
             <div className="modal" style={{display: 'block'}}>
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title">Return Order {id}</h5>
-                        </div>
-                        <div className='modal-body'>
-                            <p className='text-dark'>Money: {money}</p>
+                        <div className="modal-header text-danger d-flex justify-content-between">
+                            <h5 className="modal-title">Return Error Orders?</h5>
+                            {loader ? <Spinner /> : null}
                         </div>
                         <div className="modal-footer d-flex justify-content-between">
-                            <button type="button" className="btn btn-danger" onClick={() => returnOrder(id)}>
+                            <button type="button" className="btn btn-danger" disabled={loader}
+                                    onClick={() => returnAllOrders()}>
                                 Return
                             </button>
-                            <button type="button" className="btn btn-secondary"
+                            <button type="button" className="btn btn-secondary" disabled={loader}
                                     onClick={() => setShowReturnModal(false)}>
                                 Cancel
                             </button>
@@ -54,7 +77,12 @@ const ReturnButton = ({ id, money }) => {
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title">Order {id} was returned</h5>
+                            {
+                                success ?
+                                    <h5 className="modal-title text-success">All successfully returned</h5>
+                                :
+                                    <h5 className="modal-title text-danger">Something went wrong!</h5>
+                            }
                         </div>
                         <div className="modal-footer d-flex justify-content-between">
                             <button type="button" className="btn btn-secondary"
@@ -73,8 +101,9 @@ const ReturnButton = ({ id, money }) => {
 
     return (
         <React.Fragment>
-            <button type='button' className="badge badge-danger" onClick={() => setShowReturnModal(true)}>
-                Return Order !
+            <button type='button' className="badge badge-danger" disabled={sumForReturn > 0 ? false : true}
+                    onClick={() => setShowReturnModal(true)}>
+                {sumForReturn}&nbsp;Return
             </button>
             { showReturnModal ? returnModal() : null }
             { showAfterReturnModal ? afterReturnModal() : null}

@@ -5,6 +5,7 @@ import './orders.css';
 import OrderFilters from '../../order-filters';
 import ItemList from '../../item-list';
 import RenderOrderItem from '../../render-order-item';
+import ReturnButton from '../../return-button';
 
 import PayService from '../../../services/pay-service';
 
@@ -125,7 +126,17 @@ export default class OrdersPage extends Component {
             return item.payGateStatus === 'PAYED'
         }).length
 
-        const listHeader = <span>Orders<span className='badge badge-light ml-2'>{countOrders}</span></span>
+        const errorOrders = items.filter((item) => {
+            return item.payGateStatus === 'PAYED' && (item.appStatus === 0 || item.appStatus === 5)
+        })
+
+        const listHeader = (
+            <span>
+                Orders
+                <span className='badge badge-light ml-2 mr-2'>{countOrders}</span>
+                <ReturnButton itemsToReturn={errorOrders}/>
+            </span>
+        )
 
         const visibleItems = items ?
                              this.avtomatNumberItems(

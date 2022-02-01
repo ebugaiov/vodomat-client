@@ -9,7 +9,10 @@ const ReturnButton = ({ itemsToReturn }) => {
     const [loader, setLoader] = useState(false);
     const [success, setSuccess] = useState(false)
 
-    const sumForReturn = itemsToReturn.reduce((sum, item) => sum + item.appMoney, 0)
+    const sumForReturn = Math.round(
+                            (itemsToReturn.reduce((sum, item) => sum + item.appMoney, 0) + Number.EPSILON)
+                            * 100)
+                            / 100
 
     const returnOrder = async (id) => {
         const rawResponse = await fetch(`${process.env.REACT_APP_PAY_DOMAIN}/payment/portmone/return`, {
@@ -103,7 +106,7 @@ const ReturnButton = ({ itemsToReturn }) => {
         <React.Fragment>
             <button type='button' className="badge badge-danger" disabled={sumForReturn > 0 ? false : true}
                     onClick={() => setShowReturnModal(true)}>
-                {sumForReturn}&nbsp;Return
+                Return&nbsp;{sumForReturn}
             </button>
             { showReturnModal ? returnModal() : null }
             { showAfterReturnModal ? afterReturnModal() : null}

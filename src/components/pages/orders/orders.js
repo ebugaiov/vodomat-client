@@ -18,7 +18,7 @@ export default class OrdersPage extends Component {
         items: [],
         loading: true,
         autoupdate: true,
-        date: '',
+        date: new Date().toISOString().substring(0, 10),
         avtomatNumber: '',
         address: '',
         errorButton: false,
@@ -120,11 +120,25 @@ export default class OrdersPage extends Component {
     }
 
     render() {
-        const { items, loading, avtomatNumber, address, errorButton, returnButton } = this.state;
+        const { items, loading, avtomatNumber, address, errorButton, returnButton, date } = this.state;
 
         const countOrders = items.filter((item) => {
             return item.payGateStatus === 'PAYED'
         }).length
+
+        const sumPayGate = items.reduce((sum, item) => {
+            if (item.payGateStatus === 'PAYED' && item.serverStatus !== 2) {
+                sum += item.payGateMoney
+            }
+            return Math.round((sum + Number.EPSILON) * 100) / 100;
+        }, 0)
+
+        const sumServer = items.reduce((sum, item) => {
+            if (item.serverStatus === 1) {
+                sum += item.serverMoney
+            }
+            return Math.round((sum + Number.EPSILON) * 100) / 100;
+        }, 0)
 
         const errorOrders = items.filter((item) => {
             return item.payGateStatus === 'PAYED' && (item.appStatus === 0 || item.appStatus === 5)
@@ -133,7 +147,9 @@ export default class OrdersPage extends Component {
         const listHeader = (
             <span>
                 Orders
-                <span className='badge badge-light ml-2 mr-2'>{countOrders}</span>
+                <span className='badge badge-light ml-2 mr-2'>Count&nbsp;{countOrders}</span>
+                <span className='badge badge-light mr-2'>Sum PayGate&nbsp;{sumPayGate}</span>
+                <span className='badge badge-light mr-2'>Sum Server&nbsp;{sumServer}</span>
                 <ReturnButton itemsToReturn={errorOrders}/>
             </span>
         )

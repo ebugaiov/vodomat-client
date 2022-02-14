@@ -141,7 +141,7 @@ export default class OrdersPage extends Component {
         }, 0)
 
         const errorOrders = items.filter((item) => {
-            return item.payGateStatus === 'PAYED' && (item.appStatus === 0 || item.appStatus === 5)
+            return item.error
         })
 
         const listHeader = (

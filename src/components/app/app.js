@@ -6,8 +6,7 @@ import Header from '../header';
 import Footer from '../footer';
 
 import LoginPage from '../pages/login';
-import StatusPage from '../pages/status';
-import DepositPage from '../pages/deposit';
+import StatusesPage from '../pages/statuses'
 import OrdersPage from '../pages/orders';
 import IssuePage from '../pages/issue';
 import AvtomatPage from '../pages/avtomat';
@@ -33,11 +32,7 @@ function App()  {
             </Route>
 
             <Route path="/status">
-                {<StatusPage />}
-            </Route>
-
-            <Route path="/deposit">
-                {<DepositPage />}
+                {<StatusesPage />}
             </Route>
 
             <Route path="/order">

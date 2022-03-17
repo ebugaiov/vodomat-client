@@ -1,3 +1,3 @@
-import StatusFilters from './status-filters';
+import StatusFilters from "./status-filters";
 
 export default StatusFilters;

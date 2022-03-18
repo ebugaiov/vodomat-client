@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 
+import './status-filters.css';
+
 export default class StatusFilters extends Component {
 
     state = {
         errorButton: false,
         lowWaterButton: false,
+        noConnectionButton: false,
         avtomatNumber: '',
         street: '',
         city: '',
@@ -16,44 +19,47 @@ export default class StatusFilters extends Component {
         this.props.onFieldChange(field, event.target.value)
     }
 
-    onErrorButtonClick = () => {
-        this.setState(({errorButton}) => {
-            this.props.onButtonClick('errorButton', !errorButton)
-            return { errorButton: !errorButton }
-        })
-    }
-
-    onLowWaterButtonClick = () => {
-        this.setState(({lowWaterButton}) => {
-            this.props.onButtonClick('lowWaterButton', !lowWaterButton)
-            return { lowWaterButton: !lowWaterButton }
+    onButtonClick = (buttonName) => {
+        this.setState((state, props) => {
+            this.props.onButtonClick(buttonName, !state[buttonName])
+            return { [buttonName]: !state[buttonName] }
         })
     }
 
     render() {
 
         const { avtomatNumber, street, city, carNumber } = this.state;
-        const {errorButton, lowWaterButton } = this.state;
+        const { errorButton, lowWaterButton, noConnectionButton } = this.state;
 
         const buttonClassName = "btn btn-outline-secondary";
         const activeButtonClassName = buttonClassName + ' active';
         const errorButtonClassName = errorButton ? activeButtonClassName : buttonClassName;
         const lowWaterButtonClassName = lowWaterButton ? activeButtonClassName : buttonClassName;
+        const noConnectionButtonClassName = noConnectionButton ? activeButtonClassName : buttonClassName;
 
         return (
             <div className="form-row mb-2 ml-2 mr-2">
-                <div className='col btn-group'>
+                <div className='col btn-group status-errors-button'>
                     <button type='button'
                             className={errorButtonClassName}
-                            onClick={this.onErrorButtonClick}
+                            onClick={() => this.onButtonClick('errorButton')}
+                            data-toggle="tooltip" title="With Errors"
                     >
-                        With Errors
+                        <i className="fas fa-exclamation-triangle"></i>
                     </button>
                     <button type='button'
                             className={lowWaterButtonClassName}
-                            onClick={this.onLowWaterButtonClick}
+                            onClick={() => this.onButtonClick('lowWaterButton')}
+                            data-toggle="tooltip" title="Low Water Balance"
                     >
-                        Low Water
+                        <i className="fas fa-tint-slash"></i>
+                    </button>
+                    <button type='button'
+                        className={noConnectionButtonClassName}
+                        onClick={() => this.onButtonClick('noConnectionButton')}
+                        data-toggle="tooltip" title="No Data from Avtomat"
+                    >
+                        <i className="fas fa-bell-slash"></i>
                     </button>
                 </div>
                 <div className='col'>

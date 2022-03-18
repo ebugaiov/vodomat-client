@@ -19,6 +19,7 @@ export default class StatusesPage extends Component {
         autoupdate: true,
         errorButton: false,
         lowWaterButton: false,
+        noConnectionButton: false,
         avtomatNumber: '',
         street: '',
         city: '',
@@ -108,9 +109,19 @@ export default class StatusesPage extends Component {
         })
     }
 
+    noConnectionItems = (items, state) => {
+        if (!state) {
+            return items;
+        }
+        return items.filter((item) => {
+            const now = new Date()
+            return new Date(item.time).getTime() < now.setHours(now.getHours() - 1)
+        })
+    }
+
     render() {
         const { items, loading } = this.state;
-        const { errorButton, lowWaterButton } = this.state;
+        const { errorButton, lowWaterButton, noConnectionButton } = this.state;
         const { avtomatNumber, street, city, carNumber } = this.state;
 
         const visibleItems = items ?
@@ -119,7 +130,10 @@ export default class StatusesPage extends Component {
                                     this.inputFieldItems(
                                         this.inputFieldItems(
                                             this.errorItems(
-                                                this.lowWaterItems(items, lowWaterButton),
+                                                this.lowWaterItems(
+                                                    this.noConnectionItems(items, noConnectionButton),
+                                                    lowWaterButton
+                                                    ),
                                                 errorButton
                                             ),
                                         'carNumber', carNumber

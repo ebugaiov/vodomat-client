@@ -23,7 +23,8 @@ export default class StatusesPage extends Component {
         avtomatNumber: '',
         street: '',
         city: '',
-        carNumber: ''
+        carNumber: '',
+        withCarCheckBox: true
     }
 
     componentDidMount() {
@@ -119,9 +120,19 @@ export default class StatusesPage extends Component {
         })
     }
 
+    withCarItems = (items, state) => {
+        if (!state) {
+            return items;
+        }
+        return items.filter((item) => {
+            return item.carNumber;
+        })
+    }
+
     render() {
         const { items, loading } = this.state;
         const { errorButton, lowWaterButton, noConnectionButton } = this.state;
+        const { withCarCheckBox } = this.state;
         const { avtomatNumber, street, city, carNumber } = this.state;
 
         const carNumbers = items ? [...new Set(items.map((item) => item.carNumber))].sort() : [];
@@ -133,7 +144,10 @@ export default class StatusesPage extends Component {
                                         this.inputFieldItems(
                                             this.errorItems(
                                                 this.lowWaterItems(
-                                                    this.noConnectionItems(items, noConnectionButton),
+                                                    this.noConnectionItems(
+                                                        this.withCarItems(items, withCarCheckBox),
+                                                        noConnectionButton
+                                                        ),
                                                     lowWaterButton
                                                     ),
                                                 errorButton

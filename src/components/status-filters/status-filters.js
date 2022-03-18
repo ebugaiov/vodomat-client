@@ -11,7 +11,8 @@ export default class StatusFilters extends Component {
         avtomatNumber: '',
         street: '',
         city: '',
-        carNumber: ''
+        carNumber: '',
+        withCarCheckBox: true
     }
 
     onFieldChange = (event, field) => {
@@ -30,6 +31,7 @@ export default class StatusFilters extends Component {
 
         const { avtomatNumber, street, city, carNumber } = this.state;
         const { errorButton, lowWaterButton, noConnectionButton } = this.state;
+        const { withCarCheckBox } = this.state;
         const { carNumbers } = this.props;
 
         const buttonClassName = "btn btn-outline-secondary";
@@ -81,8 +83,8 @@ export default class StatusFilters extends Component {
                         onChange={(event) => this.onFieldChange(event, 'city')}
                     />
                 </div>
-                <div className='col'>
-                    <select className="form-control"
+                <div className='col input-group'>
+                    <select className="custom-select"
                             value={carNumber}
                             onChange={(event) => this.onFieldChange(event, 'carNumber')}
                     >
@@ -91,6 +93,15 @@ export default class StatusFilters extends Component {
                             return <option key={carNumber} value={carNumber}>{carNumber}</option>
                         }) }
                     </select>
+                    <div className="input-group-append">
+                        <div className='input-group-text'>
+                            <input type="checkbox"
+                                checked={withCarCheckBox}
+                                onChange={() => this.onButtonClick('withCarCheckBox')}
+                            />&nbsp;
+                            <label className="form-check-label">With Car</label>
+                        </div>
+                    </div>
                 </div>
             </div>
         )

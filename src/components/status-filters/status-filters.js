@@ -30,6 +30,7 @@ export default class StatusFilters extends Component {
 
         const { avtomatNumber, street, city, carNumber } = this.state;
         const { errorButton, lowWaterButton, noConnectionButton } = this.state;
+        const { carNumbers } = this.props;
 
         const buttonClassName = "btn btn-outline-secondary";
         const activeButtonClassName = buttonClassName + ' active';
@@ -81,10 +82,15 @@ export default class StatusFilters extends Component {
                     />
                 </div>
                 <div className='col'>
-                    <input type="text" className="form-control" placeholder="Car Number"
-                        value={carNumber}
-                        onChange={(event) => this.onFieldChange(event, 'carNumber')}
-                    />
+                    <select className="form-control"
+                            value={carNumber}
+                            onChange={(event) => this.onFieldChange(event, 'carNumber')}
+                    >
+                        <option value="">All Cars</option>
+                        { carNumbers.map((carNumber) => {
+                            return <option key={carNumber} value={carNumber}>{carNumber}</option>
+                        }) }
+                    </select>
                 </div>
             </div>
         )

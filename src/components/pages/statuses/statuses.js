@@ -124,6 +124,8 @@ export default class StatusesPage extends Component {
         const { errorButton, lowWaterButton, noConnectionButton } = this.state;
         const { avtomatNumber, street, city, carNumber } = this.state;
 
+        const carNumbers = items ? [...new Set(items.map((item) => item.carNumber))].sort() : [];
+
         const visibleItems = items ?
                              this.avtomatNumberItems(
                                  this.inputFieldItems(
@@ -170,6 +172,7 @@ export default class StatusesPage extends Component {
                 <StatusFilters
                     onFieldChange={this.onFieldChange}
                     onButtonClick={this.onButtonClick}
+                    carNumbers={carNumbers}
                 />
                 
                 <ItemList

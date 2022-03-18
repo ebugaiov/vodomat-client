@@ -21,10 +21,10 @@ const ItemList = ({ listHeader, items, loading, renderItem, onAutoupdateChange, 
         event.target.closest('li').classList.add('selected-item')
     }
 
-    const elements = items.map((item) => {
+    const elements = items.map((item, index) => {
         
         const { id } = item;
-        const label = renderItem(item)
+        const label = renderItem(item, index)
 
         return (
             <li key={id}

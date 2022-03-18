@@ -2,7 +2,7 @@ import React from 'react';
 
 import './render-status-item.css';
 
-const RenderStatusItem = (status) => {
+const RenderStatusItem = (status, index) => {
 
     const { avtomatNumber, city, street, house, size } = status;
     const { carNumber } = status;
@@ -20,10 +20,11 @@ const RenderStatusItem = (status) => {
 
     const addressDiv = (
         <div>
-            <span className='mr-3 text-info'>{ avtomatNumber }</span>
+            <span className="mr-2">{index + 1}.</span>
             <span className='mr-3'>
                 { street }, { house } <small>{city ? `(${city})` : ''}</small>
             </span>
+            <span className='text-info'>{ avtomatNumber }</span>
         </div>
     )
 

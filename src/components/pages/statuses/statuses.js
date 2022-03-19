@@ -17,6 +17,7 @@ export default class StatusesPage extends Component {
         items: [],
         loading: true,
         autoupdate: true,
+        noErrorButton: false,
         errorButton: false,
         lowWaterButton: false,
         noLowWaterButton: false,
@@ -93,6 +94,15 @@ export default class StatusesPage extends Component {
         this.setState({[buttonName]: state})
     }
 
+    noErrorItems = (items, state) => {
+        if (!state) {
+            return items;
+        }
+        return items.filter((item) => {
+            return !item.errorVolt && !item.errorBill && !item.errorCounter && !item.errorRegister;
+        })
+    }
+
     errorItems = (items, state) => {
         if (!state) {
             return items;
@@ -141,7 +151,7 @@ export default class StatusesPage extends Component {
 
     render() {
         const { items, loading } = this.state;
-        const { errorButton, lowWaterButton, noLowWaterButton } = this.state;
+        const { noErrorButton, errorButton, lowWaterButton, noLowWaterButton } = this.state;
         const { noConnectionButton } = this.state;
         const { withCarCheckBox } = this.state;
         const { avtomatNumber, street, city, carNumber } = this.state;
@@ -154,26 +164,29 @@ export default class StatusesPage extends Component {
                                  this.inputFieldItems(
                                     this.inputFieldItems(
                                         this.inputFieldItems(
-                                            this.errorItems(
-                                                this.lowWaterItems(
-                                                    this.noLowWaterItems(
-                                                        this.noConnectionItems(
-                                                            this.withCarItems(items, withCarCheckBox),
-                                                            noConnectionButton
+                                            this.noErrorItems(
+                                                this.errorItems(
+                                                    this.lowWaterItems(
+                                                        this.noLowWaterItems(
+                                                            this.noConnectionItems(
+                                                                this.withCarItems(items, withCarCheckBox),
+                                                                noConnectionButton
+                                                                ),
+                                                            noLowWaterButton
                                                             ),
-                                                        noLowWaterButton
+                                                        lowWaterButton
                                                         ),
-                                                    lowWaterButton
+                                                    errorButton
                                                     ),
-                                                errorButton
+                                                noErrorButton   
+                                                ),
+                                            'carNumber', carNumber
                                             ),
-                                        'carNumber', carNumber
+                                        'city', city
                                         ),
-                                    'city', city
+                                    'street', street
                                     ),
-                                 'street', street
-                                 ),
-                             avtomatNumber
+                                avtomatNumber
                              ) : []
 
         const countLowWaterItems = items.filter((item) => {

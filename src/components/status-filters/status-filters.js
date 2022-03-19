@@ -5,6 +5,7 @@ import './status-filters.css';
 export default class StatusFilters extends Component {
 
     state = {
+        noErrorButton: false,
         errorButton: false,
         lowWaterButton: false,
         noLowWaterButton: false,
@@ -21,17 +22,25 @@ export default class StatusFilters extends Component {
         this.props.onFieldChange(field, event.target.value)
     }
 
-    onButtonClick = (buttonName) => {
-        this.setState((state, props) => {
-            this.props.onButtonClick(buttonName, !state[buttonName])
-            return { [buttonName]: !state[buttonName] }
+    onButtonClick = (clickedButtonName, otherButtonName=null) => {
+        this.setState((state) => {
+            this.props.onButtonClick(clickedButtonName, !state[clickedButtonName])
+            if (!otherButtonName || !state[otherButtonName]) {
+                return { [clickedButtonName]: !state[clickedButtonName] }
+            } else if (!state[clickedButtonName] && state[otherButtonName]) {
+                this.props.onButtonClick(otherButtonName, false)
+                return {
+                    [clickedButtonName]: true,
+                    [otherButtonName]: false
+                }
+            }
         })
     }
 
     render() {
 
         const { avtomatNumber, street, city, carNumber } = this.state;
-        const { errorButton, lowWaterButton, noLowWaterButton } = this.state;
+        const { noErrorButton, errorButton, lowWaterButton, noLowWaterButton } = this.state;
         const { noConnectionButton } = this.state;
         const { withCarCheckBox } = this.state;
         const { carNumbers, cities } = this.props;
@@ -44,23 +53,30 @@ export default class StatusFilters extends Component {
         return (
             <div className="form-row mb-2 ml-2 mr-2">
                 <div className='col btn-group status-errors-button'>
+                    <button type="button"
+                        className={setButtonClassName(noErrorButton)}
+                        onClick={() => this.onButtonClick('noErrorButton', 'errorButton')}
+                        data-toggle="tooltip" title="No Errors"
+                    >
+                        <i className="fas fa-exclamation-triangle text-success"></i>
+                    </button>
                     <button type='button'
                         className={setButtonClassName(errorButton)}
-                        onClick={() => this.onButtonClick('errorButton')}
+                        onClick={() => this.onButtonClick('errorButton', 'noErrorButton')}
                         data-toggle="tooltip" title="With Errors"
                     >
-                        <i className="fas fa-exclamation-triangle"></i>
+                        <i className="fas fa-exclamation-triangle text-danger"></i>
                     </button>
                     <button type='button'
                         className={setButtonClassName(lowWaterButton)}
-                        onClick={() => this.onButtonClick('lowWaterButton')}
+                        onClick={() => this.onButtonClick('lowWaterButton', 'noLowWaterButton')}
                         data-toggle="tooltip" title="Low Water Balance"
                     >
                         <i className="fas fa-tint-slash"></i>
                     </button>
                     <button type="button"
                         className={setButtonClassName(noLowWaterButton)}
-                        onClick={() => this.onButtonClick('noLowWaterButton')}
+                        onClick={() => this.onButtonClick('noLowWaterButton', 'lowWaterButton')}
                         data-toggle="tooltip" title="Not Low Water Balance"
                     >
                         <i className="fas fa-tint"></i>

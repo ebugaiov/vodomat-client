@@ -7,6 +7,7 @@ export default class StatusFilters extends Component {
     state = {
         errorButton: false,
         lowWaterButton: false,
+        noLowWaterButton: false,
         noConnectionButton: false,
         avtomatNumber: '',
         street: '',
@@ -30,35 +31,42 @@ export default class StatusFilters extends Component {
     render() {
 
         const { avtomatNumber, street, city, carNumber } = this.state;
-        const { errorButton, lowWaterButton, noConnectionButton } = this.state;
+        const { errorButton, lowWaterButton, noLowWaterButton } = this.state;
+        const { noConnectionButton } = this.state;
         const { withCarCheckBox } = this.state;
-        const { carNumbers } = this.props;
+        const { carNumbers, cities } = this.props;
 
-        const buttonClassName = "btn btn-outline-secondary";
-        const activeButtonClassName = buttonClassName + ' active';
-        const errorButtonClassName = errorButton ? activeButtonClassName : buttonClassName;
-        const lowWaterButtonClassName = lowWaterButton ? activeButtonClassName : buttonClassName;
-        const noConnectionButtonClassName = noConnectionButton ? activeButtonClassName : buttonClassName;
+        const setButtonClassName = (buttonState) => {
+            const buttonClassName = "btn btn-outline-secondary"
+            return !buttonState ? buttonClassName : buttonClassName + " active"
+        }
 
         return (
             <div className="form-row mb-2 ml-2 mr-2">
                 <div className='col btn-group status-errors-button'>
                     <button type='button'
-                            className={errorButtonClassName}
-                            onClick={() => this.onButtonClick('errorButton')}
-                            data-toggle="tooltip" title="With Errors"
+                        className={setButtonClassName(errorButton)}
+                        onClick={() => this.onButtonClick('errorButton')}
+                        data-toggle="tooltip" title="With Errors"
                     >
                         <i className="fas fa-exclamation-triangle"></i>
                     </button>
                     <button type='button'
-                            className={lowWaterButtonClassName}
-                            onClick={() => this.onButtonClick('lowWaterButton')}
-                            data-toggle="tooltip" title="Low Water Balance"
+                        className={setButtonClassName(lowWaterButton)}
+                        onClick={() => this.onButtonClick('lowWaterButton')}
+                        data-toggle="tooltip" title="Low Water Balance"
                     >
                         <i className="fas fa-tint-slash"></i>
                     </button>
+                    <button type="button"
+                        className={setButtonClassName(noLowWaterButton)}
+                        onClick={() => this.onButtonClick('noLowWaterButton')}
+                        data-toggle="tooltip" title="Not Low Water Balance"
+                    >
+                        <i className="fas fa-tint"></i>
+                    </button>
                     <button type='button'
-                        className={noConnectionButtonClassName}
+                        className={setButtonClassName(noConnectionButton)}
                         onClick={() => this.onButtonClick('noConnectionButton')}
                         data-toggle="tooltip" title="No Data from Avtomat"
                     >
@@ -78,10 +86,15 @@ export default class StatusFilters extends Component {
                     />
                 </div>
                 <div className="col">
-                    <input type="text" className="form-control" placeholder="City"
+                    <select className='custom-select'
                         value={city}
                         onChange={(event) => this.onFieldChange(event, 'city')}
-                    />
+                    >
+                        <option value="">All Cities</option>
+                        { cities.map((city) => {
+                            return <option key={city} value={city}>{city}</option>
+                        }) }
+                    </select>
                 </div>
                 <div className='col input-group'>
                     <select className="custom-select"

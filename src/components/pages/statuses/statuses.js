@@ -19,6 +19,7 @@ export default class StatusesPage extends Component {
         autoupdate: true,
         errorButton: false,
         lowWaterButton: false,
+        noLowWaterButton: false,
         noConnectionButton: false,
         avtomatNumber: '',
         street: '',
@@ -110,6 +111,15 @@ export default class StatusesPage extends Component {
         })
     }
 
+    noLowWaterItems = (items, state) => {
+        if (!state) {
+            return items;
+        }
+        return items.filter((item) => {
+            return !item.lowWaterBalance;
+        })
+    }
+
     noConnectionItems = (items, state) => {
         if (!state) {
             return items;
@@ -131,11 +141,13 @@ export default class StatusesPage extends Component {
 
     render() {
         const { items, loading } = this.state;
-        const { errorButton, lowWaterButton, noConnectionButton } = this.state;
+        const { errorButton, lowWaterButton, noLowWaterButton } = this.state;
+        const { noConnectionButton } = this.state;
         const { withCarCheckBox } = this.state;
         const { avtomatNumber, street, city, carNumber } = this.state;
 
         const carNumbers = items ? [...new Set(items.map((item) => item.carNumber))].sort() : [];
+        const cities = items ? [...new Set(items.map((item) => item.city))].sort() : [];
 
         const visibleItems = items ?
                              this.avtomatNumberItems(
@@ -144,9 +156,12 @@ export default class StatusesPage extends Component {
                                         this.inputFieldItems(
                                             this.errorItems(
                                                 this.lowWaterItems(
-                                                    this.noConnectionItems(
-                                                        this.withCarItems(items, withCarCheckBox),
-                                                        noConnectionButton
+                                                    this.noLowWaterItems(
+                                                        this.noConnectionItems(
+                                                            this.withCarItems(items, withCarCheckBox),
+                                                            noConnectionButton
+                                                            ),
+                                                        noLowWaterButton
                                                         ),
                                                     lowWaterButton
                                                     ),
@@ -187,6 +202,7 @@ export default class StatusesPage extends Component {
                     onFieldChange={this.onFieldChange}
                     onButtonClick={this.onButtonClick}
                     carNumbers={carNumbers}
+                    cities={cities}
                 />
                 
                 <ItemList

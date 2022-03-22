@@ -120,7 +120,7 @@ export default class OrdersPage extends Component {
     }
 
     render() {
-        const { items, loading, avtomatNumber, address, errorButton, returnButton, date } = this.state;
+        const { items, loading, avtomatNumber, address, errorButton, returnButton } = this.state;
 
         const countOrders = items.filter((item) => {
             return item.payGateStatus === 'PAYED'

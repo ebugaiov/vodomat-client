@@ -10,11 +10,14 @@ export default class StatusFilters extends Component {
         lowWaterButton: false,
         noLowWaterButton: false,
         noConnectionButton: false,
+        waterLevelUp: false,
+        waterLevelDown: false,
         avtomatNumber: '',
         street: '',
         city: '',
         carNumber: '',
-        withCarCheckBox: true
+        withCarCheckBox: true,
+        waterLevel: ''
     }
 
     onFieldChange = (event, field) => {
@@ -43,6 +46,7 @@ export default class StatusFilters extends Component {
         const { noErrorButton, errorButton, lowWaterButton, noLowWaterButton } = this.state;
         const { noConnectionButton } = this.state;
         const { withCarCheckBox } = this.state;
+        const { waterLevel, waterLevelDown, waterLevelUp } = this.state;
         const { carNumbers, cities } = this.props;
 
         const setButtonClassName = (buttonState) => {
@@ -52,6 +56,7 @@ export default class StatusFilters extends Component {
 
         return (
             <div className="form-row mb-2 ml-2 mr-2">
+                {/* Errors Buttons Panel */}
                 <div className='col btn-group status-errors-button'>
                     <button type="button"
                         className={setButtonClassName(noErrorButton)}
@@ -77,7 +82,7 @@ export default class StatusFilters extends Component {
                     <button type="button"
                         className={setButtonClassName(noLowWaterButton)}
                         onClick={() => this.onButtonClick('noLowWaterButton', 'lowWaterButton')}
-                        data-toggle="tooltip" title="Not Low Water Balance"
+                        data-toggle="tooltip" title="Normal Water Balance"
                     >
                         <i className="fas fa-tint"></i>
                     </button>
@@ -89,29 +94,30 @@ export default class StatusFilters extends Component {
                         <i className="fas fa-bell-slash"></i>
                     </button>
                 </div>
-                <div className='col'>
-                    <input type="text" className="form-control" placeholder="Avtomat Number"
-                           value={avtomatNumber}
-                           onChange={(event) => this.onFieldChange(event, 'avtomatNumber')}
+                {/* Set Min/Max in Litres */}
+                <div className="col input-group">
+                    <input type="number" className='form-control' placeholder='Litres'
+                        value={waterLevel}
+                        onChange={(event) => this.onFieldChange(event, 'waterLevel')}
                     />
+                    <div className='input-group-append'>
+                        <button type="button"
+                            className={setButtonClassName(waterLevelUp)}
+                            onClick={() => this.onButtonClick('waterLevelUp', 'waterLevelDown')}
+                            data-toggle="tooltip" title='More than Inputed'
+                        >
+                            <i className="fas fa-arrow-up"></i>
+                        </button>
+                        <button type="button"
+                            className={setButtonClassName(waterLevelDown)}
+                            onClick={() => this.onButtonClick('waterLevelDown', 'waterLevelUp')}
+                            data-toggle="tooltip" title='Less than Inputed'
+                        >
+                            <i className="fas fa-arrow-down"></i>
+                        </button>
+                    </div>
                 </div>
-                <div className='col'>
-                    <input type="text" className="form-control" placeholder="Street"
-                           value={street}
-                           onChange={(event) => this.onFieldChange(event, 'street')}
-                    />
-                </div>
-                <div className="col">
-                    <select className='custom-select'
-                        value={city}
-                        onChange={(event) => this.onFieldChange(event, 'city')}
-                    >
-                        <option value="">All Cities</option>
-                        { cities.map((city) => {
-                            return <option key={city} value={city}>{city}</option>
-                        }) }
-                    </select>
-                </div>
+                {/* Select Avtomats by Car Number */}
                 <div className='col input-group'>
                     <select className="custom-select"
                             value={carNumber}
@@ -128,9 +134,35 @@ export default class StatusFilters extends Component {
                                 checked={withCarCheckBox}
                                 onChange={() => this.onButtonClick('withCarCheckBox')}
                             />&nbsp;
-                            <label className="form-check-label">With Car</label>
+                            <label className="form-check-label">
+                                With <i className="fas fa-car"></i>
+                            </label>
                         </div>
                     </div>
+                </div>
+                {/* Search Avtomat by Number, Stree, City */}
+                <div className='col'>
+                    <input type="number" className="form-control" placeholder="Avtomat Number"
+                        value={avtomatNumber}
+                        onChange={(event) => this.onFieldChange(event, 'avtomatNumber')}
+                    />
+                </div>
+                <div className='col'>
+                    <input type="text" className="form-control" placeholder="Street"
+                        value={street}
+                        onChange={(event) => this.onFieldChange(event, 'street')}
+                    />
+                </div>
+                <div className="col">
+                    <select className='custom-select'
+                        value={city}
+                        onChange={(event) => this.onFieldChange(event, 'city')}
+                    >
+                        <option value="">All Cities</option>
+                        { cities.map((city) => {
+                            return <option key={city} value={city}>{city}</option>
+                        }) }
+                    </select>
                 </div>
             </div>
         )

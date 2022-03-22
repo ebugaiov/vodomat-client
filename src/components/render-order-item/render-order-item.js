@@ -4,9 +4,9 @@ import './render-order-item.css';
 
 const RenderOrderItem = (order) => {
 
-    const { appId, avtomatNumber, address, appMoney, appStatus, createdAt } = order;
+    const { avtomatNumber, address, appStatus } = order;
     const { id, payGateMoney, payGateStatus, payGateTime } = order;
-    const { serverId, serverTime, serverStatus, serverMoney } = order;
+    const { serverTime, serverStatus, serverMoney } = order;
 
     let statusAppSpan = <span>{appStatus}</span>
     switch (appStatus) {

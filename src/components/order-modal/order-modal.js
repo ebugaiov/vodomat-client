@@ -24,7 +24,7 @@ const OrderModal = ({ id, closeOrderModal }) => {
         return () => cancelled = true;
     }, [id])
 
-    const { appStatus, payGateStatus, serverStatus, gateType } = order;
+    const { appStatus, payGateStatus, serverStatus } = order;
 
     let statusAppSpan = <span>{appStatus}</span>
     switch (appStatus) {

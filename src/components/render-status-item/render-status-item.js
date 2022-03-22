@@ -18,6 +18,10 @@ const RenderStatusItem = (status, index) => {
         }
     }
 
+    const now = new Date();
+    const isOld = new Date(time).getTime() < now.setHours(now.getHours() - 2);
+    const timeClassName = isOld ? 'text-danger' : null;
+
     const addressDiv = (
         <div>
             <span className="mr-2">{index + 1}.</span>
@@ -46,7 +50,9 @@ const RenderStatusItem = (status, index) => {
 
     const paramDiv = (
         <div className='d-flex justify-content-between'>
-            <span><i className="fas fa-hourglass"></i>&nbsp;{ time.slice(2) }</span>
+            <span className={timeClassName}>
+                <i className="fas fa-hourglass"></i>&nbsp;{ time.slice(2) }
+            </span>
             <span><i className="fas fa-water text-info"></i>&nbsp;
                 { water }&nbsp;<small>({size})</small>
             </span>

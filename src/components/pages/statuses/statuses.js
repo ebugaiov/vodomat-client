@@ -22,6 +22,7 @@ export default class StatusesPage extends Component {
         lowWaterButton: false,
         noLowWaterButton: false,
         noConnectionButton: false,
+        connectionButton: false,
         waterLevelUp: false,
         waterLevelDown: false,
         avtomatNumber: '',
@@ -138,8 +139,18 @@ export default class StatusesPage extends Component {
             return items;
         }
         return items.filter((item) => {
-            const now = new Date()
-            return new Date(item.time).getTime() < now.setHours(now.getHours() - 1)
+            const now = new Date();
+            return new Date(item.time).getTime() < now.setHours(now.getHours() - 2);
+        })
+    }
+
+    connectionItems = (items, state) => {
+        if (!state) {
+            return items;
+        }
+        return items.filter((item) => {
+            const now = new Date();
+            return new Date(item.time).getTime() > now.setHours(now.getHours() - 8);
         })
     }
 
@@ -171,7 +182,7 @@ export default class StatusesPage extends Component {
     render() {
         const { items, loading } = this.state;
         const { noErrorButton, errorButton, lowWaterButton, noLowWaterButton } = this.state;
-        const { noConnectionButton } = this.state;
+        const { noConnectionButton, connectionButton } = this.state;
         const { withCarCheckBox } = this.state;
         const { avtomatNumber, street, city, carNumber } = this.state;
         const { waterLevel, waterLevelUp, waterLevelDown } = this.state;
@@ -189,9 +200,12 @@ export default class StatusesPage extends Component {
                                                     this.lowWaterItems(
                                                         this.noLowWaterItems(
                                                             this.noConnectionItems(
-                                                                this.withCarItems(
-                                                                    this.waterLevelItems(items, waterLevel, waterLevelUp, waterLevelDown),
-                                                                    withCarCheckBox
+                                                                this.connectionItems(
+                                                                    this.withCarItems(
+                                                                        this.waterLevelItems(items, waterLevel, waterLevelUp, waterLevelDown),
+                                                                        withCarCheckBox
+                                                                        ),
+                                                                    connectionButton
                                                                     ),
                                                                 noConnectionButton
                                                                 ),

@@ -10,6 +10,7 @@ export default class StatusFilters extends Component {
         lowWaterButton: false,
         noLowWaterButton: false,
         noConnectionButton: false,
+        connectionButton: false,
         waterLevelUp: false,
         waterLevelDown: false,
         avtomatNumber: '',
@@ -44,7 +45,7 @@ export default class StatusFilters extends Component {
 
         const { avtomatNumber, street, city, carNumber } = this.state;
         const { noErrorButton, errorButton, lowWaterButton, noLowWaterButton } = this.state;
-        const { noConnectionButton } = this.state;
+        const { noConnectionButton, connectionButton } = this.state;
         const { withCarCheckBox } = this.state;
         const { waterLevel, waterLevelDown, waterLevelUp } = this.state;
         const { carNumbers, cities } = this.props;
@@ -88,10 +89,17 @@ export default class StatusFilters extends Component {
                     </button>
                     <button type='button'
                         className={setButtonClassName(noConnectionButton)}
-                        onClick={() => this.onButtonClick('noConnectionButton')}
+                        onClick={() => this.onButtonClick('noConnectionButton', 'connectionButton')}
                         data-toggle="tooltip" title="No Data from Avtomat"
                     >
                         <i className="fas fa-bell-slash"></i>
+                    </button>
+                    <button
+                        className={setButtonClassName(connectionButton)}
+                        onClick={() => this.onButtonClick('connectionButton', 'noConnectionButton')}
+                        data-toggle="tooltip" title="Avtomat Online"
+                    >
+                        <i className="fas fa-bell"></i>
                     </button>
                 </div>
                 {/* Set Min/Max in Litres */}

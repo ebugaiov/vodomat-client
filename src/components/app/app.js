@@ -6,7 +6,8 @@ import Header from '../header';
 import Footer from '../footer';
 
 import LoginPage from '../pages/login';
-import StatusesPage from '../pages/statuses'
+import StatusesPage from '../pages/statuses';
+import CollectionsPage from '../pages/collections';
 import OrdersPage from '../pages/orders';
 import IssuePage from '../pages/issue';
 import AvtomatPage from '../pages/avtomat';
@@ -33,6 +34,10 @@ function App()  {
 
             <Route path="/status">
                 {<StatusesPage />}
+            </Route>
+
+            <Route path="/collection">
+                {<CollectionsPage />}
             </Route>
 
             <Route path="/order">

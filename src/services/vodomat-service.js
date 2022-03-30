@@ -28,6 +28,23 @@ export default class VodomatService extends BaseService {
         return this._transformStatus(status)
     }
 
+    getCollections = async (date) => {
+        const url = date ? `/statistic/collections?date=${date}` : '/statistic/collections'
+        const res = await this.getResource(url)
+        return res.collections.map(this._transformStatistic)
+                              .sort((a, b) => {
+                                  const addressA = `${a.street} ${a.house}`;
+                                  const addressB = `${b.street} ${b.house}`;
+                                  if (addressA < addressB) {
+                                      return -1
+                                  }
+                                  if (addressA > addressB) {
+                                      return 1
+                                  }
+                                  return 0
+                              })
+    }
+
     getDepositsPortmone = async (date) => {
         const url = date ? `/deposit_portmone?date=${date}` : '/deposit_portmone'
         const res = await this.getResource(url)
@@ -170,6 +187,33 @@ export default class VodomatService extends BaseService {
             street: street.street,
             cityId: street.city_id,
             city: street.city
+        }
+    }
+
+    _transformStatistic = (statistic) => {
+        return {
+            id: statistic.id,
+            avtomatNumber: statistic.avtomat_number,
+            city: statistic.city,
+            street: statistic.street,
+            house: statistic.house,
+            carNumber: statistic.car_number,
+            time: statistic.time.replace('T', ' '),
+            water: statistic.water / 100,
+            money: statistic.money / 100,
+            moneyApp: statistic.money_app / 100,
+            price: statistic.price / 100,
+            billNotWork: statistic.bill_not_work,
+            coinNotWork: statistic.coin_not_work,
+            timeToBlock: statistic.time_to_block,
+            lowWaterBalance: statistic.low_water_balance,
+            errorVolt: statistic.error_volt,
+            errorBill: statistic.error_bill,
+            errorCounter: statistic.error_counter,
+            errorRegister: statistic.error_register,
+            cashBox: statistic.cash_box,
+            gsm: statistic.gsm,
+            event: statistic.event
         }
     }
 }

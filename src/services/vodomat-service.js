@@ -45,6 +45,21 @@ export default class VodomatService extends BaseService {
                               })
     }
 
+    getStatisticLines = async (avtomatNumber, startPeriod, endPeriod) => {
+        const url = `/statistic/${avtomatNumber}?start_period=${startPeriod}&end_period=${endPeriod}`;
+        const res = await this.getResource(url);
+        const statisticLines = res.statistic_lines;
+        for (let i = 1; i < statisticLines.length; i++) {
+            if (statisticLines[i].water !== statisticLines[i - 1].water) {
+                statisticLines[i].isModified = true;
+            }
+        }
+        return statisticLines.map(this._transformStatistic)
+                                 .sort((a, b) => {
+                                     return new Date(b.time) - new Date(a.time)
+                                 })
+    }
+
     getDepositsPortmone = async (date) => {
         const url = date ? `/deposit_portmone?date=${date}` : '/deposit_portmone'
         const res = await this.getResource(url)
@@ -194,15 +209,14 @@ export default class VodomatService extends BaseService {
         return {
             id: statistic.id,
             avtomatNumber: statistic.avtomat_number,
-            city: statistic.city,
-            street: statistic.street,
-            house: statistic.house,
-            carNumber: statistic.car_number,
             time: statistic.time.replace('T', ' '),
             water: statistic.water / 100,
+            isModified: statistic.isModified,
             money: statistic.money / 100,
             moneyApp: statistic.money_app / 100,
             price: statistic.price / 100,
+            grn: statistic.grn,
+            kop: statistic.kop,
             billNotWork: statistic.bill_not_work,
             coinNotWork: statistic.coin_not_work,
             timeToBlock: statistic.time_to_block,

@@ -20,14 +20,56 @@ const RenderStatisticLine = (statisticLine, index) => {
     let eventBadge
 
     switch(event) {
+        case 1:
+            eventBadge = <span className="badge badge-danger">No Water</span>;
+            break;
+        case 2:
+            eventBadge = <span className="badge badge-danger">No Volt</span>;
+            break;
         case 3:
             eventBadge = <span className="badge badge-warning">Collection</span>;
             break;
+        case 5:
+            eventBadge = <span className="badge badge-warning">Low Water</span>;
+            break;    
         case 6:
             eventBadge = <span className="badge badge-secondary">Send Data</span>;
             break;
+        case 7:
+            eventBadge = <span className="badge badge-danger">Bill Error</span>;
+            break;
+        case 8:
+            eventBadge = <span className="badge badge-danger">Register not Work</span>;
+            break;
+        case 9:
+            eventBadge = <span className="badge badge-warning">Power On or Restart</span>;
+            break;
+        case 10:
+            eventBadge = <span className="badge badge-warning">Service On</span>;
+            break;
+        case 11:
+            eventBadge = <span className="badge badge-warning">Service Off</span>;
+            break;
+        case 12:
+            eventBadge = <span className="badge badge-warning">Service Open</span>;
+            break;
+        case 13:
+            eventBadge = <span className="badge badge-danger">Register can not send Data</span>;
+            break;
+        case 14:
+            eventBadge = <span className="badge badge-success">Register is Ready</span>;
+            break;
+        case 15:
+            eventBadge = <span className="badge badge-secondary">App Order is finished</span>;
+            break;
+        case 17:
+            eventBadge = <span className="badge badge-warning">Not Use Pay(cash)</span>;
+            break;
+        case 18:
+            eventBadge = <span className="badge badge-warning">Not Use Pay(app)</span>;
+            break;
         default:
-            eventBadge = <span className="badge badge-danger">{event}</span>;
+            eventBadge = <span className="badge badge-info">{event}</span>;
     }
 
     const timeDiv = (
@@ -51,7 +93,7 @@ const RenderStatisticLine = (statisticLine, index) => {
         <div className="d-flex justify-content-between">
             <span>
                 {
-                    isModified ?
+                    isModified && event !== 3 ?
                     <i className="fas fa-shopping-cart text-primary"></i>
                     : <i className="fas fa-water text-info"></i>
                 }

@@ -5,7 +5,9 @@ export default class StatisticLinesFilters extends Component {
     state = {
         avtomatNumber: '',
         startPeriod: new Date().toISOString().substring(0, 10),
-        endPeriod: new Date().toISOString().substring(0, 10)
+        endPeriod: new Date().toISOString().substring(0, 10),
+        collectionsButton: false,
+        eventsButton: false
     }
 
     inputDateMinMax = () => {
@@ -21,6 +23,13 @@ export default class StatisticLinesFilters extends Component {
         this.props.onFieldChange(field, event.target.value)
     }
 
+    onButtonClick = (buttonName) => {
+        this.setState((state) => {
+            this.props.onButtonClick(buttonName, !state[buttonName])
+            return {[buttonName]: !state[buttonName]}
+        })
+    }
+
     onSelectButtonClick = () => {
         if (this.state.avtomatNumber) {
             this.props.onFieldChange('updateData', true)
@@ -29,10 +38,33 @@ export default class StatisticLinesFilters extends Component {
 
     render() {
 
-        const { avtomatNumber, startPeriod, endPeriod } = this.state
+        const { avtomatNumber, startPeriod, endPeriod } = this.state;
+        const { collectionsButton, eventsButton } = this.state;
+
+        const setButtonClassName = (buttonState) => {
+            const buttonClassName = "btn btn-outline-secondary"
+            return !buttonState ? buttonClassName : buttonClassName + " active"
+        }
 
         return (
             <div className="form-row mb-2 ml-2 mr-2">
+                <div className='col-auto btn-group'>
+                    <button type='button'
+                        className={setButtonClassName(collectionsButton)}
+                        onClick={() => this.onButtonClick('collectionsButton')}
+                        data-toggle="tooltip" title="Collections"
+                    >
+                        <i className='fas fa-coins text-warning'></i>
+                    </button>
+                    <button type='button'
+                        className={setButtonClassName(eventsButton)}
+                        onClick={() => this.onButtonClick('eventsButton')}
+                        data-toggle="tooltip" title='Other Events'
+                    >
+                        <i className="fas fa-bell text-info"></i>
+                    </button>
+                </div>
+
                 <div className="col input-group">
                     <div className='input-group-prepend'>
                         <span className='input-group-text'>Start Period</span>
@@ -57,12 +89,14 @@ export default class StatisticLinesFilters extends Component {
                     >
                     </input>
                 </div>
-                <div className='col'>
+
+                <div className='col-auto'>
                     <input type="number" className="form-control" placeholder="Avtomat Number"
                         value={avtomatNumber}
                         onChange={(event) => this.onFieldChange(event, 'avtomatNumber')}
                     />
                 </div>
+
                 <button type="submit" className="btn btn-outline-secondary"
                     onClick={this.onSelectButtonClick}
                 >

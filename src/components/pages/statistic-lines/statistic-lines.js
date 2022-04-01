@@ -20,6 +20,8 @@ export default class StatisticLinesPage extends Component {
         avtomatNumber: '',
         startPeriod: new Date().toISOString().substring(0, 10),
         endPeriod: new Date().toISOString().substring(0, 10),
+        collectionsButton: false,
+        eventsButton: false
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -65,19 +67,69 @@ export default class StatisticLinesPage extends Component {
         this.setState({[field]: value})
     }
 
+    onButtonClick = (buttonName, state) => {
+        this.setState({[buttonName]: state})
+    }
+
+    collectionsButtonItems = (items, state) => {
+        if (!state) {
+            return items;
+        }
+        return items.filter((item) => {
+            return item.event === 3;
+        })
+    }
+
+    eventsButtonItems = (items, state) => {
+        if (!state) {
+            return items;
+        }
+        return items.filter((item) => {
+            return item.event !== 6 && item.event !== 3;
+        })
+    }
+
     render() {
         const { items, loading, avtomatAddress } = this.state;
-        const lineHeader = avtomatAddress ? avtomatAddress : "Select Avtomat and Period";
+        const { collectionsButton, eventsButton } = this.state;
+
+        const visibleItems = items ?
+                             this.collectionsButtonItems(
+                                 this.eventsButtonItems(items, eventsButton),
+                                 collectionsButton
+                             ) : []
+
+        const loadedLineHeader = (
+            <span>
+                { avtomatAddress }
+                <span className='badge badge-light ml-2'>
+                    Count&nbsp;{ visibleItems.length }
+                </span>
+                <span className='badge badge-warning ml-2'>
+                    Collections&nbsp;{ visibleItems.filter((item) => {
+                        return item.event === 3;
+                    }).length }
+                </span>
+                <span className="badge badge-info ml-2">
+                    Other Events&nbsp;{ visibleItems.filter((item) => {
+                        return item.event !== 6 && item.event !== 3;
+                    }).length }
+                </span>
+            </span>
+        )
+        
+        const lineHeader = avtomatAddress ? loadedLineHeader : 'Select Period and Avtomat Number'
 
         return (
             <div className="content">
                 <StatisticLinesFilters 
                     onFieldChange={this.onFieldChange}
+                    onButtonClick={this.onButtonClick}
                 />
                 
                 <ItemList
                     listHeader={lineHeader}
-                    items={items}
+                    items={visibleItems}
                     loading={loading}
                     renderItem={RenderStatisticLine}
                     onItemSelected={() => {}}

@@ -209,6 +209,10 @@ export default class VodomatService extends BaseService {
         return {
             id: statistic.id,
             avtomatNumber: statistic.avtomat_number,
+            city: statistic.city,
+            street: statistic.street,
+            house: statistic.house,
+            carNumber: statistic.car_number,
             time: statistic.time.replace('T', ' '),
             water: statistic.water / 100,
             isModified: statistic.isModified,

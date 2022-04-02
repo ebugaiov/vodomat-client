@@ -118,7 +118,7 @@ const RenderStatisticLine = (statisticLine, index) => {
             </span>
             <span>Bill <i className="fas fa-ban text-danger"></i>: {billNotWork}</span>
             <span>Coin <i className="fas fa-ban text-danger"></i>: {coinNotWork}</span>
-            <span><i className="fas fa-wifi">&nbsp;{gsm}</i></span>
+            <span>Register <i className="fas fa-ban text-danger"></i>: {timeToBlock}</span>
             <span>{ eventBadge }</span>
         </div>
     )

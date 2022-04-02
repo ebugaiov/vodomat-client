@@ -4,11 +4,12 @@ import './render-status-item.css';
 
 const RenderStatusItem = (status, index) => {
 
-    const { avtomatNumber, city, street, house, size } = status;
+    const { avtomatNumber, street, house, size } = status;
     const { carNumber } = status;
     const { lowWaterBalance } = status;
     const { errorVolt, errorBill, errorCounter, errorRegister } = status;
     const { time, water, money, price } = status;
+    const { billNotWork, coinNotWork } = status;
 
     const renderError = (status, errorName) => {
         if (status) {
@@ -26,7 +27,7 @@ const RenderStatusItem = (status, index) => {
         <div>
             <span className="mr-2">{index + 1}.</span>
             <span className='mr-3'>
-                { street }, { house } <small>{city ? `(${city})` : ''}</small>
+                { street }, { house }
             </span>
             <span className='text-info'>{ avtomatNumber }</span>
         </div>
@@ -51,7 +52,7 @@ const RenderStatusItem = (status, index) => {
     const paramDiv = (
         <div className='d-flex justify-content-between'>
             <span className={timeClassName}>
-                <i className="fas fa-hourglass"></i>&nbsp;{ time.slice(2) }
+                <i className="fas fa-hourglass"></i>&nbsp;{ time.slice(5) }
             </span>
             <span><i className="fas fa-water text-info"></i>&nbsp;
                 { water }&nbsp;<small>({size})</small>
@@ -59,15 +60,17 @@ const RenderStatusItem = (status, index) => {
             <span><i className="fas fa-coins text-warning"></i>&nbsp;
                 { money }&nbsp;<small>({price})</small>
             </span>
+            <span>Bill <i className="fas fa-ban text-danger"></i>: {billNotWork}</span>
+            <span>Coin <i className="fas fa-ban text-danger"></i>: {coinNotWork}</span>
         </div>
     )
 
     return (
         <div className='row'>
-            <div className="col-md-4">{ addressDiv }</div>
-            <div className="col-md-1">{ routeDiv }</div>
-            <div className="col-md-4">{ errorDiv }</div>
-            <div className="col-md-3">{ paramDiv }</div>
+            <div className="col-md-3 p-0">{ addressDiv }</div>
+            <div className="col-md-1 p-0">{ routeDiv }</div>
+            <div className="col-md-4 p-0">{ errorDiv }</div>
+            <div className="col-md-4 pl-0">{ paramDiv }</div>
         </div>
     )
 }

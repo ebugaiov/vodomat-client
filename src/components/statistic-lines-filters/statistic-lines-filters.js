@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
-export default class StatisticLinesFilters extends Component {
+class StatisticLinesFilters extends Component {
 
     state = {
-        avtomatNumber: '',
+        avtomatNumber: this.props.match.params.avtomatNumber,
         startPeriod: new Date().toISOString().substring(0, 10),
         endPeriod: new Date().toISOString().substring(0, 10),
         collectionsButton: false,
@@ -107,3 +108,5 @@ export default class StatisticLinesFilters extends Component {
     }
 
 }
+
+export default withRouter(StatisticLinesFilters);

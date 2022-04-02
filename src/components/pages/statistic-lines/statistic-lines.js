@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import './statistic-lines.css';
 
@@ -8,7 +9,7 @@ import RenderStatisticLine from '../../render-statistic-line';
 
 import VodomatService from '../../../services/vodomat-service';
 
-export default class StatisticLinesPage extends Component {
+class StatisticLinesPage extends Component {
 
     vodomatService = new VodomatService();
 
@@ -22,6 +23,16 @@ export default class StatisticLinesPage extends Component {
         endPeriod: new Date().toISOString().substring(0, 10),
         collectionsButton: false,
         eventsButton: false
+    }
+
+    componentDidMount() {
+        const avtomatNumber = this.props.match.params.avtomatNumber;
+        if (avtomatNumber) {
+            this.setState({
+                avtomatNumber,
+                updateData: true
+            })
+        }
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -138,3 +149,5 @@ export default class StatisticLinesPage extends Component {
         )
     }
 }
+
+export default withRouter(StatisticLinesPage);

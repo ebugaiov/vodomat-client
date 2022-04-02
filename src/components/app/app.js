@@ -41,7 +41,7 @@ function App()  {
                 {<CollectionsPage />}
             </Route>
 
-            <Route path="/statistic_lines">
+            <Route path="/statistic_lines/:avtomatNumber?">
                 {<StatisticLinesPage />}
             </Route>
 

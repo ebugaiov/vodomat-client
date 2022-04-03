@@ -112,7 +112,7 @@ export default class StatusesPage extends Component {
             return items;
         }
         return items.filter((item) => {
-            return item.errorVolt || item.errorBill || item.errorCounter || item.errorRegister;
+            return item.errorVolt || item.errorBill || item.errorCounter || item.errorRegister || item.cashBox;
         })
     }
 

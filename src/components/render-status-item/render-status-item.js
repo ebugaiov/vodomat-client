@@ -7,7 +7,7 @@ const RenderStatusItem = (status, index) => {
     const { avtomatNumber, street, house, size } = status;
     const { carNumber } = status;
     const { lowWaterBalance } = status;
-    const { errorVolt, errorBill, errorCounter, errorRegister } = status;
+    const { errorVolt, errorBill, errorCounter, errorRegister, cashBox } = status;
     const { time, water, money, price } = status;
     const { billNotWork, coinNotWork } = status;
 
@@ -50,7 +50,8 @@ const RenderStatusItem = (status, index) => {
             { renderError(errorVolt, 'Error Volt') }&nbsp;
             { renderError(errorBill, 'Error Bill') }&nbsp;
             { renderError(errorCounter, 'Error Counter') }&nbsp;
-            { renderError(errorRegister, 'Error Register') }
+            { renderError(errorRegister, 'Error Register') }&nbsp;
+            { renderError(cashBox, 'Cash Box') }
         </div>
     )
 

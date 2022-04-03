@@ -5,7 +5,7 @@ const RenderStatisticLine = (statisticLine, index) => {
     const { time } = statisticLine;
     const { lowWaterBalance, errorVolt, errorBill, errorCounter, errorRegister } = statisticLine;
     const { water, money, moneyApp, price, grn, kop } = statisticLine;
-    const { cashBox, gsm, event } = statisticLine;
+    const { cashBox, event } = statisticLine;
     const { billNotWork, coinNotWork, timeToBlock } = statisticLine;
     const { isModified } = statisticLine;
 
@@ -85,7 +85,8 @@ const RenderStatisticLine = (statisticLine, index) => {
             { renderError(errorVolt, 'Error Volt') }&nbsp;
             { renderError(errorBill, 'Error Bill') }&nbsp;
             { renderError(errorCounter, 'Error Counter') }&nbsp;
-            { renderError(errorRegister, 'Error Register') }
+            { renderError(errorRegister, 'Error Register') }&nbsp;
+            { renderError(cashBox, 'Cash Box') }
         </div>
     )
 

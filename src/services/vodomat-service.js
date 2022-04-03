@@ -147,7 +147,8 @@ export default class VodomatService extends BaseService {
             errorVolt: status.error_volt,
             errorBill: status.error_bill,
             errorCounter: status.error_counter,
-            errorRegister: status.error_register
+            errorRegister: status.error_register,
+            cashBox: status.cashbox
         }
     }
 
@@ -233,7 +234,7 @@ export default class VodomatService extends BaseService {
             errorBill: statistic.error_bill,
             errorCounter: statistic.error_counter,
             errorRegister: statistic.error_register,
-            cashBox: statistic.cash_box,
+            cashBox: statistic.cashbox,
             gsm: statistic.gsm,
             event: statistic.event
         }

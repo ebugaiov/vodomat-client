@@ -29,7 +29,12 @@ const RenderStatusItem = (status, index) => {
             <span className='mr-3'>
                 { street }, { house }
             </span>
-            <span className='text-info'>{ avtomatNumber }</span>
+            <a className='text-info'
+                target='_blank' rel='noopener noreferrer'
+                href={`/statistic_lines/${avtomatNumber}`}
+            >
+                { avtomatNumber }
+            </a>
         </div>
     )
 

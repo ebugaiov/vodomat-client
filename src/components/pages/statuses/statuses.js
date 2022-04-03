@@ -261,9 +261,7 @@ export default class StatusesPage extends Component {
                     loading={loading}
                     onAutoupdateChange={this.onAutoupdateChange}
                     renderItem={RenderStatusItem}
-                    onItemSelected={(avtomatNumber) => {
-                        window.open(`/statistic_lines/${avtomatNumber}`, '_blank');
-                    }}
+                    onItemSelected={() => {}}
                 />
             </div>
         )

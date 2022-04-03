@@ -3,9 +3,11 @@ import { withRouter } from 'react-router-dom';
 
 class StatisticLinesFilters extends Component {
 
+    threeDaysAgo = new Date() - 1000 * 60 * 60 * 24 * 2;
+
     state = {
         avtomatNumber: this.props.match.params.avtomatNumber,
-        startPeriod: new Date().toISOString().substring(0, 10),
+        startPeriod: new Date(this.threeDaysAgo).toISOString().substring(0, 10),
         endPeriod: new Date().toISOString().substring(0, 10),
         collectionsButton: false,
         eventsButton: false

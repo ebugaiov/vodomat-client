@@ -12,6 +12,7 @@ import VodomatService from '../../../services/vodomat-service';
 class StatisticLinesPage extends Component {
 
     vodomatService = new VodomatService();
+    threeDaysAgo = new Date() - 1000 * 60 * 60 * 24 * 2;
 
     state = {
         updateData: false,
@@ -19,7 +20,7 @@ class StatisticLinesPage extends Component {
         items: [],
         loading: false,
         avtomatNumber: '',
-        startPeriod: new Date().toISOString().substring(0, 10),
+        startPeriod: new Date(this.threeDaysAgo).toISOString().substring(0, 10),
         endPeriod: new Date().toISOString().substring(0, 10),
         collectionsButton: false,
         eventsButton: false

@@ -31,6 +31,10 @@ export default class StatusesPage extends Component {
         carNumber: '',
         withCarCheckBox: true,
         waterLevel: '',
+        sortByAddress: true,
+        sortByRoute: false,
+        sortByBillNotWork: false,
+        sortByCoinNotWork: false,
     }
 
     componentDidMount() {
@@ -186,9 +190,37 @@ export default class StatusesPage extends Component {
         const { withCarCheckBox } = this.state;
         const { avtomatNumber, street, city, carNumber } = this.state;
         const { waterLevel, waterLevelUp, waterLevelDown } = this.state;
+        const { sortByAddress, sortByRoute, sortByBillNotWork, sortByCoinNotWork } = this.state;
 
         const carNumbers = items ? [...new Set(items.map((item) => item.carNumber))].sort() : [];
         const cities = items ? [...new Set(items.map((item) => item.city))].sort() : [];
+
+        if (sortByAddress) {
+            items.sort((a, b) => {
+                const addressA = `${a.street} ${a.house}`.toUpperCase();
+                const addressB = `${b.street} ${b.house}`.toUpperCase();
+                return addressA < addressB ? -1 : addressA > addressB ? 1 : 0
+            })
+        }
+        if (sortByRoute) {
+            items.sort((a, b) => {
+                const routeA = `${a.carNumber} ${a.street} ${a.house}`.toUpperCase();
+                const routeB = `${b.carNumber} ${b.street} ${b.house}`.toUpperCase();
+                return routeA < routeB ? -1 : routeA > routeB ? 1 : 0
+            })
+        }
+
+        if (sortByBillNotWork) {
+            items.sort((a, b) => {
+                return b.billNotWork - a.billNotWork
+            })
+        }
+
+        if (sortByCoinNotWork) {
+            items.sort((a, b) => {
+                return b.coinNotWork - a.coinNotWork
+            })
+        }
 
         const visibleItems = items ?
                              this.avtomatNumberItems(

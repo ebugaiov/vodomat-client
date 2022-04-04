@@ -18,7 +18,11 @@ export default class StatusFilters extends Component {
         city: '',
         carNumber: '',
         withCarCheckBox: true,
-        waterLevel: ''
+        waterLevel: '',
+        sortByAddress: true,
+        sortByRoute: false,
+        sortByBillNotWork: false,
+        sortByCoinNotWork: false
     }
 
     onFieldChange = (event, field) => {
@@ -41,6 +45,17 @@ export default class StatusFilters extends Component {
         })
     }
 
+    onSortSelect = (selected) => {
+        Object.keys(this.state).forEach((key) => {
+            if (key.startsWith('sort')) {
+                this.setState({[key]: false})
+                this.props.onButtonClick(key, false)
+            }
+        })
+        this.setState({selected: true})
+        this.props.onButtonClick(selected, true)
+    }
+
     render() {
 
         const { avtomatNumber, street, city, carNumber } = this.state;
@@ -57,6 +72,36 @@ export default class StatusFilters extends Component {
 
         return (
             <div className="form-row mb-2 ml-2 mr-2">
+                {/* Sort By Filter */}
+                <div>
+                    <div className="dropdown">
+                        <button className='btn btn-secondary dropdown-toggle' type='button' data-toggle='dropdown'>
+                            Sort By&nbsp;
+                        </button>
+                        <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            <button className="dropdown-item" type="button"
+                                onClick={() => this.onSortSelect('sortByAddress')}
+                            >
+                                Address
+                            </button>
+                            <button className="dropdown-item" type="button"
+                                onClick={() => this.onSortSelect('sortByRoute')}
+                            >
+                                Route
+                            </button>
+                            <button className="dropdown-item" type="button"
+                                onClick={() => this.onSortSelect('sortByBillNotWork')}
+                            >
+                                Bill Not Work
+                            </button>
+                            <button className="dropdown-item" type="button"
+                                onClick={() => this.onSortSelect('sortByCoinNotWork')}
+                            >
+                                Coin Not Work
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 {/* Errors Buttons Panel */}
                 <div className='col btn-group status-errors-button'>
                     <button type="button"

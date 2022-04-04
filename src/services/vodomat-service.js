@@ -9,18 +9,7 @@ export default class VodomatService extends BaseService {
 
     getAllStatuses = async () => {
         const res = await this.getResource('/status')
-        return res.statuses.map(this._transformStatus)
-                           .sort((a,b) => {
-                               const nameA = `${a.street} ${a.house}`;
-                               const nameB = `${b.street} ${b.house}`;
-                               if (nameA < nameB) {
-                                   return -1;
-                               }
-                               if (nameA > nameB) {
-                                   return 1;
-                               }
-                               return 0;
-                           }) 
+        return res.statuses.map(this._transformStatus) 
     }
 
     getStatus = async (id) => {

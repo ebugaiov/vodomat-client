@@ -19,6 +19,10 @@ const RenderStatusItem = (status, index) => {
         }
     }
 
+    const notWorkClassName = (value) => {
+        return value > 12 ? 'fas fa-ban text-danger' : 'fas fa-ban';
+    }
+
     const now = new Date();
     const isOld = new Date(time).getTime() < now.setHours(now.getHours() - 2);
     const timeClassName = isOld ? 'text-danger' : null;
@@ -66,8 +70,12 @@ const RenderStatusItem = (status, index) => {
             <span><i className="fas fa-coins text-warning"></i>&nbsp;
                 { money }&nbsp;<small>({price})</small>
             </span>
-            <span>Bill <i className="fas fa-ban text-danger"></i>: {billNotWork}</span>
-            <span>Coin <i className="fas fa-ban text-danger"></i>: {coinNotWork}</span>
+            <span>
+                Bill <i className={notWorkClassName(billNotWork)}></i>: {billNotWork}
+            </span>
+            <span>
+                Coin <i className={notWorkClassName(coinNotWork)}></i>: {coinNotWork}
+            </span>
         </div>
     )
 

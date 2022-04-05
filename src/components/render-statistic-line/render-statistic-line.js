@@ -17,6 +17,10 @@ const RenderStatisticLine = (statisticLine, index) => {
         }
     }
 
+    const notWorkClassName = (value, maxHours=12) => {
+        return value > maxHours ? 'fas fa-ban text-danger' : 'fas fa-ban';
+    }
+
     let eventBadge
 
     switch(event) {
@@ -104,22 +108,22 @@ const RenderStatisticLine = (statisticLine, index) => {
                 <span>
                     <i className="fas fa-coins text-warning"></i>&nbsp;{ money }
                 </span>
+                &nbsp;<small>({price})</small>
+            </span>
+            <span>
+                <span><i className="fas fa-money-bill"></i>&nbsp;{grn}</span>
+                &nbsp;&nbsp;
+                <span><i className="fas fa-coins"></i>&nbsp;{kop * 50 / 100}</span>
                 &nbsp;&nbsp;
                 {
                     moneyApp ? 
                     <span><i className="fas fa-credit-card"></i>&nbsp;{moneyApp}</span>
                     : null
                 }
-                &nbsp;<small>({price})</small>
             </span>
-            <span>
-                <span><i className="fas fa-money-bill"></i>&nbsp;{grn}</span>
-                &nbsp;&nbsp;
-                <span><i className="fas fa-coins"></i>&nbsp;{kop}</span>
-            </span>
-            <span>Bill <i className="fas fa-ban text-danger"></i>: {billNotWork}</span>
-            <span>Coin <i className="fas fa-ban text-danger"></i>: {coinNotWork}</span>
-            <span>Register <i className="fas fa-ban text-danger"></i>: {timeToBlock}</span>
+            <span>Bill <i className={notWorkClassName(billNotWork)}></i>: {billNotWork}</span>
+            <span>Coin <i className={notWorkClassName(coinNotWork)}></i>: {coinNotWork}</span>
+            <span>Register <i className={notWorkClassName(timeToBlock)}></i>: {timeToBlock}</span>
             <span>{ eventBadge }</span>
         </div>
     )

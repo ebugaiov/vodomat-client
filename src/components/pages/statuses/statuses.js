@@ -35,6 +35,7 @@ export default class StatusesPage extends Component {
         sortByRoute: false,
         sortByBillNotWork: false,
         sortByCoinNotWork: false,
+        sortByRegisterNotWork: false,
     }
 
     componentDidMount() {
@@ -190,7 +191,8 @@ export default class StatusesPage extends Component {
         const { withCarCheckBox } = this.state;
         const { avtomatNumber, street, city, carNumber } = this.state;
         const { waterLevel, waterLevelUp, waterLevelDown } = this.state;
-        const { sortByAddress, sortByRoute, sortByBillNotWork, sortByCoinNotWork } = this.state;
+        const { sortByAddress, sortByRoute, sortByRegisterNotWork } = this.state;
+        const { sortByBillNotWork, sortByCoinNotWork } = this.state;
 
         const carNumbers = items ? [...new Set(items.map((item) => item.carNumber))].sort() : [];
         const cities = items ? [...new Set(items.map((item) => item.city))].sort() : [];
@@ -219,6 +221,12 @@ export default class StatusesPage extends Component {
         if (sortByCoinNotWork) {
             items.sort((a, b) => {
                 return b.coinNotWork - a.coinNotWork
+            })
+        }
+
+        if (sortByRegisterNotWork) {
+            items.sort((a, b) => {
+                return b.timeToBlock - a.timeToBlock
             })
         }
 

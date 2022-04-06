@@ -22,7 +22,8 @@ export default class StatusFilters extends Component {
         sortByAddress: true,
         sortByRoute: false,
         sortByBillNotWork: false,
-        sortByCoinNotWork: false
+        sortByCoinNotWork: false,
+        sortByRegisterNotWork: false,
     }
 
     onFieldChange = (event, field) => {
@@ -72,7 +73,7 @@ export default class StatusFilters extends Component {
 
         return (
             <div className="form-row mb-2 ml-2 mr-2">
-                {/* Sort By Filter */}
+                {/* Sort By Items */}
                 <div>
                     <div className="dropdown">
                         <button className='btn btn-secondary dropdown-toggle' type='button' data-toggle='dropdown'>
@@ -98,6 +99,11 @@ export default class StatusFilters extends Component {
                                 onClick={() => this.onSortSelect('sortByCoinNotWork')}
                             >
                                 Coin Not Work
+                            </button>
+                            <button className="dropdown-item" type="button"
+                                onClick={() => this.onSortSelect('sortByRegisterNotWork')}
+                            >
+                                Register Not Work
                             </button>
                         </div>
                     </div>

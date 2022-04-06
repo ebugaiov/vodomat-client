@@ -62,7 +62,7 @@ const RenderStatusItem = (status, index) => {
     const paramDiv = (
         <div className='d-flex justify-content-between'>
             <span className={timeClassName}>
-                { time.slice(5) }
+                <i className="fas fa-hourglass"></i>&nbsp;{ time.slice(5) }
             </span>
             <span><i className="fas fa-water text-info"></i>&nbsp;
                 { water }&nbsp;<small>({size})</small>

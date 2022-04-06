@@ -9,7 +9,7 @@ const RenderStatusItem = (status, index) => {
     const { lowWaterBalance } = status;
     const { errorVolt, errorBill, errorCounter, errorRegister, cashBox } = status;
     const { time, water, money, price } = status;
-    const { billNotWork, coinNotWork } = status;
+    const { billNotWork, coinNotWork, timeToBlock } = status;
 
     const renderError = (status, errorName) => {
         if (status) {
@@ -62,7 +62,7 @@ const RenderStatusItem = (status, index) => {
     const paramDiv = (
         <div className='d-flex justify-content-between'>
             <span className={timeClassName}>
-                <i className="fas fa-hourglass"></i>&nbsp;{ time.slice(5) }
+                { time.slice(5) }
             </span>
             <span><i className="fas fa-water text-info"></i>&nbsp;
                 { water }&nbsp;<small>({size})</small>
@@ -76,15 +76,20 @@ const RenderStatusItem = (status, index) => {
             <span>
                 Coin <i className={notWorkClassName(coinNotWork)}></i>: {coinNotWork}
             </span>
+            <span>
+                Reg <i className={notWorkClassName(timeToBlock)}></i>: {timeToBlock}
+            </span>
         </div>
     )
 
     return (
         <div className='row'>
-            <div className="col-md-3 p-0">{ addressDiv }</div>
-            <div className="col-md-1 p-0">{ routeDiv }</div>
-            <div className="col-md-4 p-0">{ errorDiv }</div>
-            <div className="col-md-4 pl-0">{ paramDiv }</div>
+            <div className='col-md-3 d-flex justify-content-between'>
+                <div className="">{ addressDiv }</div>
+                <div className="">{ routeDiv }</div>
+            </div>
+            <div className="col-md-4 pr-0">{ errorDiv }</div>
+            <div className="col-md-5 p-0">{ paramDiv }</div>
         </div>
     )
 }

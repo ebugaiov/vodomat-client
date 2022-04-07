@@ -206,8 +206,8 @@ export default class StatusesPage extends Component {
         }
         if (sortByRoute) {
             items.sort((a, b) => {
-                const routeA = `${a.carNumber} ${a.street} ${a.house}`.toUpperCase();
-                const routeB = `${b.carNumber} ${b.street} ${b.house}`.toUpperCase();
+                const routeA = `${a.routeName} ${a.street} ${a.house}`.toUpperCase();
+                const routeB = `${b.routeName} ${b.street} ${b.house}`.toUpperCase();
                 return routeA < routeB ? -1 : routeA > routeB ? 1 : 0
             })
         }

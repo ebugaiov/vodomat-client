@@ -5,7 +5,7 @@ import './render-status-item.css';
 const RenderStatusItem = (status, index) => {
 
     const { avtomatNumber, street, house, size } = status;
-    const { carNumber } = status;
+    const { carNumber, routeName } = status;
     const { lowWaterBalance } = status;
     const { errorVolt, errorBill, errorCounter, errorRegister, cashBox } = status;
     const { time, water, money, price } = status;
@@ -44,7 +44,10 @@ const RenderStatusItem = (status, index) => {
 
     const routeDiv = (
         <div>
-            <span><i className="fas fa-car"></i>&nbsp;{ carNumber }</span>
+            <span>
+                <i className="fas fa-car"></i>&nbsp;
+                { routeName }&nbsp;<small>({ carNumber })</small>
+            </span>
         </div>
     )
 

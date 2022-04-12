@@ -73,10 +73,10 @@ const RenderStatusItem = (status, index) => {
     const errorDiv = (
         <div>
             { renderError(lowWaterBalance, 'Low Water') }&nbsp;
-            { renderError(errorVolt, 'Error Volt') }&nbsp;
-            { renderError(errorBill, 'Error Bill') }&nbsp;
-            { renderError(errorCounter, 'Error Counter') }&nbsp;
-            { renderError(errorRegister, 'Error Register') }&nbsp;
+            { renderError(errorVolt, 'Volt') }&nbsp;
+            { renderError(errorBill, 'Bill') }&nbsp;
+            { renderError(errorCounter, 'Counter') }&nbsp;
+            { renderError(errorRegister, 'Register') }&nbsp;
             { renderError(cashBox, 'Cash Box') }
         </div>
     )
@@ -106,11 +106,11 @@ const RenderStatusItem = (status, index) => {
 
     return (
         <div className='row'>
-            <div className='col-md-3 d-flex justify-content-between'>
+            <div className='col-md-4 d-flex justify-content-between pl-0'>
                 <div className="">{ addressDiv }</div>
                 <div className="">{ routeDiv }</div>
             </div>
-            <div className="col-md-4 pr-0">{ errorDiv }</div>
+            <div className="col-md-3 pr-0">{ errorDiv }</div>
             <div className="col-md-5 p-0">{ paramDiv }</div>
         </div>
     )

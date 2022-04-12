@@ -23,6 +23,9 @@ export default class StatusesPage extends Component {
         noLowWaterButton: false,
         noConnectionButton: false,
         connectionButton: false,
+        stateNormalButton: false,
+        stateNoVoltButton: false,
+        stateCrashedButton: false,
         waterLevelUp: false,
         waterLevelDown: false,
         avtomatNumber: '',
@@ -185,7 +188,9 @@ export default class StatusesPage extends Component {
     }
 
     render() {
-        const { items, loading } = this.state;
+        let { items } = this.state;
+        const { loading } = this.state;
+        const { stateNormalButton, stateNoVoltButton, stateCrashedButton } = this.state;
         const { noErrorButton, errorButton, lowWaterButton, noLowWaterButton } = this.state;
         const { noConnectionButton, connectionButton } = this.state;
         const { withCarCheckBox } = this.state;
@@ -196,6 +201,22 @@ export default class StatusesPage extends Component {
 
         const carNumbers = items ? [...new Set(items.map((item) => item.carNumber))].sort() : [];
         const cities = items ? [...new Set(items.map((item) => item.city))].sort() : [];
+
+        if (stateNormalButton || stateNoVoltButton || stateCrashedButton) {
+            let stateNormalItems = []
+            if (stateNormalButton) {
+                stateNormalItems = items.filter((i) => i.avtomatState === 1)
+            }
+            let stateNoVoltItems = []
+            if (stateNoVoltButton) {
+                stateNoVoltItems = items.filter((i) => i.avtomatState === 2)
+            }
+            let stateCrashedItems = []
+            if (stateCrashedButton) {
+                stateCrashedItems = items.filter((i) => i.avtomatState === 3)
+            }
+            items = [...stateNormalItems, ...stateNoVoltItems, ...stateCrashedItems]
+        }
 
         if (sortByAddress) {
             items.sort((a, b) => {
@@ -230,41 +251,49 @@ export default class StatusesPage extends Component {
             })
         }
 
+        const errorButtonsItems = (items) => {
+            return this.noErrorItems(
+                this.errorItems(
+                    this.lowWaterItems(
+                        this.noLowWaterItems(
+                            this.noConnectionItems(
+                                this.connectionItems(items, connectionButton),
+                                noConnectionButton
+                            ),
+                            noLowWaterButton
+                        ),
+                        lowWaterButton
+                    ),
+                    errorButton
+                ),
+                noErrorButton
+            )
+        }
+
+        const inputFieldsItems = (items) => {
+            return this.avtomatNumberItems(
+                this.inputFieldItems(
+                    this.inputFieldItems(
+                        this.inputFieldItems(
+                            items, 'carNumber', carNumber
+                        ),
+                        'city', city
+                    ),
+                    'street', street
+                ),
+                avtomatNumber
+            )
+        }
+
         const visibleItems = items ?
-                             this.avtomatNumberItems(
-                                 this.inputFieldItems(
-                                    this.inputFieldItems(
-                                        this.inputFieldItems(
-                                            this.noErrorItems(
-                                                this.errorItems(
-                                                    this.lowWaterItems(
-                                                        this.noLowWaterItems(
-                                                            this.noConnectionItems(
-                                                                this.connectionItems(
-                                                                    this.withCarItems(
-                                                                        this.waterLevelItems(items, waterLevel, waterLevelUp, waterLevelDown),
-                                                                        withCarCheckBox
-                                                                        ),
-                                                                    connectionButton
-                                                                    ),
-                                                                noConnectionButton
-                                                                ),
-                                                            noLowWaterButton
-                                                            ),
-                                                        lowWaterButton
-                                                        ),
-                                                    errorButton
-                                                    ),
-                                                noErrorButton   
-                                                ),
-                                            'carNumber', carNumber
-                                            ),
-                                        'city', city
-                                        ),
-                                    'street', street
-                                    ),
-                                avtomatNumber
-                             ) : []
+                             inputFieldsItems(
+                                 errorButtonsItems(
+                                     this.withCarItems(
+                                         this.waterLevelItems(items, waterLevel, waterLevelUp, waterLevelDown),
+                                         withCarCheckBox
+                                     )
+                                 )
+                             ) : [];
 
         const countLowWaterItems = items.filter((item) => {
             return item.lowWaterBalance

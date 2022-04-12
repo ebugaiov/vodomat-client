@@ -11,6 +11,9 @@ export default class StatusFilters extends Component {
         noLowWaterButton: false,
         noConnectionButton: false,
         connectionButton: false,
+        stateNormalButton: false,
+        stateNoVoltButton: false,
+        stateCrashedButton: false,
         waterLevelUp: false,
         waterLevelDown: false,
         avtomatNumber: '',
@@ -60,6 +63,7 @@ export default class StatusFilters extends Component {
     render() {
 
         const { avtomatNumber, street, city, carNumber } = this.state;
+        const { stateNormalButton, stateNoVoltButton, stateCrashedButton } = this.state;
         const { noErrorButton, errorButton, lowWaterButton, noLowWaterButton } = this.state;
         const { noConnectionButton, connectionButton } = this.state;
         const { withCarCheckBox } = this.state;
@@ -74,7 +78,7 @@ export default class StatusFilters extends Component {
         return (
             <div className="form-row mb-2 ml-2 mr-2">
                 {/* Sort By Items */}
-                <div>
+                <div className='mr-1'>
                     <div className="dropdown">
                         <button className='btn btn-secondary dropdown-toggle' type='button' data-toggle='dropdown'>
                             Sort By&nbsp;
@@ -108,8 +112,32 @@ export default class StatusFilters extends Component {
                         </div>
                     </div>
                 </div>
+                {/* State Buttons Panel */}
+                <div className='col-auto btn-group status-errors-button'>
+                    <button type="button"
+                        className={setButtonClassName(stateNormalButton)}
+                        onClick={() => this.onButtonClick('stateNormalButton')}
+                        data-toggle="tooltip" title="Normal State"
+                    >
+                        <i className="fas fa-check text-success"></i>
+                    </button>
+                    <button type="button"
+                        className={setButtonClassName(stateNoVoltButton)}
+                        onClick={() => this.onButtonClick('stateNoVoltButton')}
+                        data-toggle="tooltip" title="No Volt State"
+                    >
+                        <i className="fas fa-bolt text-warning"></i>
+                    </button>
+                    <button type="button"
+                        className={setButtonClassName(stateCrashedButton)}
+                        onClick={() => this.onButtonClick('stateCrashedButton')}
+                        data-toggle="tooltip" title="Crashed State"
+                    >
+                        <i className="fas fa-trash text-danger"></i>
+                    </button>
+                </div>
                 {/* Errors Buttons Panel */}
-                <div className='col btn-group status-errors-button'>
+                <div className='col-auto btn-group status-errors-button'>
                     <button type="button"
                         className={setButtonClassName(noErrorButton)}
                         onClick={() => this.onButtonClick('noErrorButton', 'errorButton')}
@@ -145,7 +173,7 @@ export default class StatusFilters extends Component {
                     >
                         <i className="fas fa-bell-slash"></i>
                     </button>
-                    <button
+                    <button type='button'
                         className={setButtonClassName(connectionButton)}
                         onClick={() => this.onButtonClick('connectionButton', 'noConnectionButton')}
                         data-toggle="tooltip" title="Avtomat Online"
@@ -154,7 +182,7 @@ export default class StatusFilters extends Component {
                     </button>
                 </div>
                 {/* Set Min/Max in Litres */}
-                <div className="col input-group">
+                <div className="col-2 input-group">
                     <input type="number" className='form-control' placeholder='Litres'
                         value={waterLevel}
                         onChange={(event) => this.onFieldChange(event, 'waterLevel')}
@@ -200,19 +228,19 @@ export default class StatusFilters extends Component {
                     </div>
                 </div>
                 {/* Search Avtomat by Number, Stree, City */}
-                <div className='col'>
-                    <input type="number" className="form-control" placeholder="Avtomat Number"
+                <div className='col-1'>
+                    <input type="number" className="form-control" placeholder="Number"
                         value={avtomatNumber}
                         onChange={(event) => this.onFieldChange(event, 'avtomatNumber')}
                     />
                 </div>
-                <div className='col'>
+                <div className='col-1'>
                     <input type="text" className="form-control" placeholder="Street"
                         value={street}
                         onChange={(event) => this.onFieldChange(event, 'street')}
                     />
                 </div>
-                <div className="col">
+                <div className="col-1">
                     <select className='custom-select'
                         value={city}
                         onChange={(event) => this.onFieldChange(event, 'city')}

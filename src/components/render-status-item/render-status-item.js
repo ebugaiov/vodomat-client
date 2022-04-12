@@ -8,7 +8,7 @@ const RenderStatusItem = (status, index) => {
     const { carNumber, routeName } = status;
     const { lowWaterBalance } = status;
     const { errorVolt, errorBill, errorCounter, errorRegister, cashBox } = status;
-    const { time, water, money, price } = status;
+    const { time, water, money, price, avtomatState } = status;
     const { billNotWork, coinNotWork, timeToBlock } = status;
 
     const renderError = (status, errorName) => {
@@ -27,9 +27,28 @@ const RenderStatusItem = (status, index) => {
     const isOld = new Date(time).getTime() < now.setHours(now.getHours() - 2);
     const timeClassName = isOld ? 'text-danger' : null;
 
+    let avtomatStateEl = null;
+    switch (avtomatState) {
+        case 0:
+            avtomatStateEl = <i className='fas fa-question'></i>;
+            break;
+        case 1:
+            avtomatStateEl = <i className='fas fa-check text-success'></i>;
+            break;
+        case 2:
+            avtomatStateEl = <i className='fas fa-bolt text-warning'></i>;
+            break;
+        case 3:
+            avtomatStateEl = <i className='fas fa-trash text-danger'></i>;
+            break;
+        default:
+            break;
+    }
+
     const addressDiv = (
         <div>
-            <span className="mr-2">{index + 1}.</span>
+            { avtomatStateEl }
+            <span className="ml-2 mr-2">{index + 1}.</span>
             <span className='mr-3'>
                 { street }, { house }
             </span>

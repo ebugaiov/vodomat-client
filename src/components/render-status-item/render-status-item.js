@@ -4,6 +4,8 @@ import './render-status-item.css';
 
 const RenderStatusItem = (status, index) => {
 
+    const adminSiteDomain = process.env.REACT_APP_ADMIN_DOMAIN;
+
     const { avtomatNumber, street, house, size } = status;
     const { carNumber, routeName } = status;
     const { lowWaterBalance } = status;
@@ -52,11 +54,17 @@ const RenderStatusItem = (status, index) => {
             <span className='mr-3'>
                 { street }, { house }
             </span>
-            <a className='text-info'
+            <a className='text-info mr-3'
                 target='_blank' rel='noopener noreferrer'
                 href={`/statistic_lines/${avtomatNumber}`}
             >
                 { avtomatNumber }
+            </a>
+            <a className='text-info'
+                target='_blank' rel='noopener noreferrer'
+                href={`${adminSiteDomain}/admin_panel/avtomat/${avtomatNumber}`}
+            >
+                <i className="fas fa-edit"></i>
             </a>
         </div>
     )

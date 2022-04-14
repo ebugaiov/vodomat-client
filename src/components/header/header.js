@@ -1,20 +1,9 @@
-import React, { useEffect } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
+import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 import './header.css'
 
 const Header = ({ username, removeCookie }) => {
-
-    let location = useLocation();
-    const itemsPathes = ['/avtomat', '/city', '/street'];
-    
-    useEffect(() => {
-        if (itemsPathes.includes(location.pathname)) {
-            document.getElementById('itemsDropdown').classList.add('active')
-        } else {
-            document.getElementById('itemsDropdown').classList.remove('active')
-        }
-    })
 
     return (
         <header>
@@ -42,15 +31,8 @@ const Header = ({ username, removeCookie }) => {
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/issue">Issue</NavLink>
                         </li>
-                        <li className="nav-item dropdown" id="itemsDropdown">
-                            <a className="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
-                                Items
-                            </a>
-                            <ul className="dropdown-menu">
-                                <li><NavLink className="dropdown-item" to="/avtomat">Avtomat</NavLink></li>
-                                <li><NavLink className="dropdown-item" to="/street">Street</NavLink></li>
-                                <li><NavLink className="dropdown-item" to="/city">City</NavLink></li>
-                            </ul>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/avtomat">Avtomat-QR</NavLink>
                         </li>
                     </ul>
                     <span className="navbar-text">{ username }</span>

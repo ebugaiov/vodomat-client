@@ -84,7 +84,7 @@ export default class AvtomatDetail extends Component {
                         <DownloadQR id={id} paymentAppUrl={paymentAppUrl} />
                     </div>
                 </div>
-                { this.updateForm() }
+                
             </div>
         )
     }
@@ -141,7 +141,7 @@ export default class AvtomatDetail extends Component {
             <div className="avtomat-detail">
                 <div className="card">
                     <div className="card-header d-flex justify-content-between">
-                        Avtomat Detail
+                        Download QR
                         { spinner }
                     </div>
                     { cardBody }

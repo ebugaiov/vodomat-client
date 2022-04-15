@@ -11,6 +11,7 @@ export default class StatusFilters extends Component {
         noLowWaterButton: false,
         noConnectionButton: false,
         connectionButton: false,
+        stateUndefinedButton: false,
         stateNormalButton: false,
         stateNoVoltButton: false,
         stateCrashedButton: false,
@@ -63,7 +64,7 @@ export default class StatusFilters extends Component {
     render() {
 
         const { avtomatNumber, street, city, carNumber } = this.state;
-        const { stateNormalButton, stateNoVoltButton, stateCrashedButton } = this.state;
+        const { stateUndefinedButton, stateNormalButton, stateNoVoltButton, stateCrashedButton } = this.state;
         const { noErrorButton, errorButton, lowWaterButton, noLowWaterButton } = this.state;
         const { noConnectionButton, connectionButton } = this.state;
         const { withCarCheckBox } = this.state;
@@ -114,6 +115,13 @@ export default class StatusFilters extends Component {
                 </div>
                 {/* State Buttons Panel */}
                 <div className='col-auto btn-group status-errors-button'>
+                    <button type="button"
+                        className={setButtonClassName(stateUndefinedButton)}
+                        onClick={() => this.onButtonClick('stateUndefinedButton')}
+                        data-toggle="tooltip" title="Normal Undefined"
+                    >
+                        <i className="fas fa-question"></i>
+                    </button>
                     <button type="button"
                         className={setButtonClassName(stateNormalButton)}
                         onClick={() => this.onButtonClick('stateNormalButton')}

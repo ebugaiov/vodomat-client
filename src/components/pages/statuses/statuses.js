@@ -23,6 +23,7 @@ export default class StatusesPage extends Component {
         noLowWaterButton: false,
         noConnectionButton: false,
         connectionButton: false,
+        stateUndefindedButton: false,
         stateNormalButton: false,
         stateNoVoltButton: false,
         stateCrashedButton: false,
@@ -190,7 +191,7 @@ export default class StatusesPage extends Component {
     render() {
         let { items } = this.state;
         const { loading } = this.state;
-        const { stateNormalButton, stateNoVoltButton, stateCrashedButton } = this.state;
+        const { stateUndefinedButton, stateNormalButton, stateNoVoltButton, stateCrashedButton } = this.state;
         const { noErrorButton, errorButton, lowWaterButton, noLowWaterButton } = this.state;
         const { noConnectionButton, connectionButton } = this.state;
         const { withCarCheckBox } = this.state;
@@ -202,7 +203,11 @@ export default class StatusesPage extends Component {
         const carNumbers = items ? [...new Set(items.map((item) => item.carNumber))].sort() : [];
         const cities = items ? [...new Set(items.map((item) => item.city))].sort() : [];
 
-        if (stateNormalButton || stateNoVoltButton || stateCrashedButton) {
+        if (stateUndefinedButton || stateNormalButton || stateNoVoltButton || stateCrashedButton) {
+            let stateUndefindedItems = []
+            if (stateUndefinedButton) {
+                stateUndefindedItems = items.filter((i) => i.avtomatState === 0)
+            }
             let stateNormalItems = []
             if (stateNormalButton) {
                 stateNormalItems = items.filter((i) => i.avtomatState === 1)
@@ -215,7 +220,7 @@ export default class StatusesPage extends Component {
             if (stateCrashedButton) {
                 stateCrashedItems = items.filter((i) => i.avtomatState === 3)
             }
-            items = [...stateNormalItems, ...stateNoVoltItems, ...stateCrashedItems]
+            items = [...stateUndefindedItems, ...stateNormalItems, ...stateNoVoltItems, ...stateCrashedItems]
         }
 
         if (sortByAddress) {

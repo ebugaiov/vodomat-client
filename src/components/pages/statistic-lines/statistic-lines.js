@@ -56,7 +56,7 @@ class StatisticLinesPage extends Component {
             loading: false,
             updateData: false
         })
-    } 
+    }
 
     updateStatisticLines = () => {
         this.vodomatService
@@ -113,7 +113,11 @@ class StatisticLinesPage extends Component {
 
         const loadedLineHeader = (
             <span>
-                { avtomatAddress }
+                <span onClick={() => {
+                    navigator.clipboard.writeText(avtomatAddress)
+                }} className="copyAvtomatAddressSpan">
+                    { avtomatAddress }
+                </span>
                 <span className='badge badge-light ml-2'>
                     Count&nbsp;{ visibleItems.length }
                 </span>
@@ -129,16 +133,16 @@ class StatisticLinesPage extends Component {
                 </span>
             </span>
         )
-        
+
         const lineHeader = avtomatAddress ? loadedLineHeader : 'Select Period and Avtomat Number'
 
         return (
             <div className="content">
-                <StatisticLinesFilters 
+                <StatisticLinesFilters
                     onFieldChange={this.onFieldChange}
                     onButtonClick={this.onButtonClick}
                 />
-                
+
                 <ItemList
                     listHeader={lineHeader}
                     items={visibleItems}

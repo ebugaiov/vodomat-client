@@ -9,3 +9,8 @@
     overflow-y: auto;
     max-height: calc(100vh - 220px);
 }
+
+.copyAvtomatAddressSpan:hover {
+    cursor: copy;
+    color: #e7e7de;
+}

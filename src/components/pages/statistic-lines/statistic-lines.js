@@ -125,8 +125,15 @@ class StatisticLinesPage extends Component {
 
         const loadedLineHeader = (
             <span>
-                <span onClick={() => this.copyToClipboard(avtomatAddress)}
-                      className="copyAvtomatAddressSpan"
+                <span
+                    onMouseDown={(e) => {
+                        e.target.className = 'pressedAvtomatAddressSpan';
+                        this.copyToClipboard(avtomatAddress);
+                    }}
+                    onMouseUp={(e) => {
+                        setTimeout(() => e.target.className = 'avtomatAddressSpan', 500)
+                    }}
+                    className='avtomatAddressSpan'
                 >
                     { avtomatAddress }
                 </span>

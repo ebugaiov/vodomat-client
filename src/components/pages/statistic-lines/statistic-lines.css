@@ -10,7 +10,12 @@
     max-height: calc(100vh - 220px);
 }
 
-.copyAvtomatAddressSpan:hover {
-    cursor: copy;
+.avtomatAddressSpan:hover {
+    cursor: grab;
     color: #e7e7de;
+}
+
+.pressedAvtomatAddressSpan {
+    cursor: grabbing;
+    color: #f0ad4e;
 }

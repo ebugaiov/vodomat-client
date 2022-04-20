@@ -101,6 +101,18 @@ class StatisticLinesPage extends Component {
         })
     }
 
+    copyToClipboard = (str) => {
+        const el = document.createElement('textarea');
+        el.value = str;
+        el.setAttribute('readonly', '');
+        el.style.position = 'absolute';
+        el.style.left = '-9999px';
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+    };
+
     render() {
         const { items, loading, avtomatAddress } = this.state;
         const { collectionsButton, eventsButton } = this.state;
@@ -113,9 +125,9 @@ class StatisticLinesPage extends Component {
 
         const loadedLineHeader = (
             <span>
-                <span onClick={() => {
-                    navigator.clipboard.writeText(avtomatAddress)
-                }} className="copyAvtomatAddressSpan">
+                <span onClick={() => this.copyToClipboard(avtomatAddress)}
+                      className="copyAvtomatAddressSpan"
+                >
                     { avtomatAddress }
                 </span>
                 <span className='badge badge-light ml-2'>

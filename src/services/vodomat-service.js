@@ -9,7 +9,7 @@ export default class VodomatService extends BaseService {
 
     getAllStatuses = async () => {
         const res = await this.getResource('/status')
-        return res.statuses.map(this._transformStatus) 
+        return res.statuses.map(this._transformStatus)
     }
 
     getStatus = async (id) => {
@@ -113,7 +113,7 @@ export default class VodomatService extends BaseService {
         const options = this.createOptionsForRequest('POST', body, this.secureHeader)
         const res = await this.getResource('/city', options)
         return {city: res.city}
-    } 
+    }
 
     _transformStatus = (status) => {
         return {
@@ -127,6 +127,7 @@ export default class VodomatService extends BaseService {
             routeName: status.route_name,
             water: status.water / 100,
             money: status.money / 100,
+            moneyApp: status.money_app / 100,
             price: status.price / 100,
             size: status.size,
             grn: status.grn,

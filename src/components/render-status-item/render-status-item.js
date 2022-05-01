@@ -11,6 +11,7 @@ const RenderStatusItem = (status, index) => {
     const { lowWaterBalance } = status;
     const { errorVolt, errorBill, errorCounter, errorRegister, cashBox } = status;
     const { time, water, money, price, avtomatState } = status;
+    const { grn, kop, moneyApp } = status;
     const { billNotWork, coinNotWork, timeToBlock } = status;
 
     const renderError = (status, errorName) => {
@@ -80,12 +81,12 @@ const RenderStatusItem = (status, index) => {
 
     const errorDiv = (
         <div>
-            { renderError(lowWaterBalance, 'Low Water') }&nbsp;
+            { renderError(lowWaterBalance, 'Low W') }&nbsp;
             { renderError(errorVolt, 'Volt') }&nbsp;
             { renderError(errorBill, 'Bill') }&nbsp;
-            { renderError(errorCounter, 'Counter') }&nbsp;
-            { renderError(errorRegister, 'Register') }&nbsp;
-            { renderError(cashBox, 'Cash Box') }
+            { renderError(errorCounter, 'Co-r') }&nbsp;
+            { renderError(errorRegister, 'Reg') }&nbsp;
+            { renderError(cashBox, 'Cash B') }
         </div>
     )
 
@@ -101,13 +102,20 @@ const RenderStatusItem = (status, index) => {
                 { money }&nbsp;<small>({price})</small>
             </span>
             <span>
-                Bill <i className={notWorkClassName(billNotWork)}></i>: {billNotWork}
+                <span><i className="fas fa-money-bill"></i>&nbsp;{grn}</span>
+                &nbsp;&nbsp;
+                <span><i className="fas fa-coins"></i>&nbsp;{kop * 50 / 100}</span>
             </span>
             <span>
-                Coin <i className={notWorkClassName(coinNotWork)}></i>: {coinNotWork}
-            </span>
-            <span>
-                Reg <i className={notWorkClassName(timeToBlock)}></i>: {timeToBlock}
+                <span>
+                    Bill <i className={notWorkClassName(billNotWork)}></i>: {billNotWork}&nbsp;
+                </span>
+                <span>
+                    Coin <i className={notWorkClassName(coinNotWork)}></i>: {coinNotWork}&nbsp;
+                </span>
+                <span>
+                    Reg <i className={notWorkClassName(timeToBlock)}></i>: {timeToBlock}
+                </span>
             </span>
         </div>
     )
@@ -118,8 +126,8 @@ const RenderStatusItem = (status, index) => {
                 <div className="">{ addressDiv }</div>
                 <div className="">{ routeDiv }</div>
             </div>
-            <div className="col-md-3 pr-0">{ errorDiv }</div>
-            <div className="col-md-5 p-0">{ paramDiv }</div>
+            <div className="col-md-2 pr-0">{ errorDiv }</div>
+            <div className="col-md-6 p-0">{ paramDiv }</div>
         </div>
     )
 }

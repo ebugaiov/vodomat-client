@@ -108,13 +108,15 @@ const RenderStatusItem = (status, index) => {
             </span>
             <span>
                 <span>
-                    Bill <i className={notWorkClassName(billNotWork)}></i>: {billNotWork}&nbsp;
+                    Bill <i className={notWorkClassName(billNotWork)}></i> {billNotWork || '--'}
+                    &nbsp;&nbsp;
                 </span>
                 <span>
-                    Coin <i className={notWorkClassName(coinNotWork)}></i>: {coinNotWork}&nbsp;
+                    Coin <i className={notWorkClassName(coinNotWork)}></i> {coinNotWork || '--'}
+                    &nbsp;&nbsp;
                 </span>
                 <span>
-                    Reg <i className={notWorkClassName(timeToBlock)}></i>: {timeToBlock}
+                    Reg <i className={notWorkClassName(timeToBlock)}></i> {timeToBlock || '--'}
                 </span>
             </span>
         </div>

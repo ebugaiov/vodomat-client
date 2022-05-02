@@ -25,6 +25,8 @@ export default class StatusFilters extends Component {
         waterLevel: '',
         sortByAddress: true,
         sortByRoute: false,
+        sortByBills: false,
+        sortbyCoins: false,
         sortByBillNotWork: false,
         sortByCoinNotWork: false,
         sortByRegisterNotWork: false,
@@ -57,13 +59,16 @@ export default class StatusFilters extends Component {
                 this.props.onButtonClick(key, false)
             }
         })
-        this.setState({selected: true})
+        this.setState({[selected]: true})
         this.props.onButtonClick(selected, true)
     }
 
     render() {
 
         const { avtomatNumber, street, city, carNumber } = this.state;
+        const { sortByAddress, sortByRoute } = this.state;
+        const { sortByBills, sortByCoins } = this.state;
+        const { sortByBillNotWork, sortByCoinNotWork, sortByRegisterNotWork } = this.state;
         const { stateUndefinedButton, stateNormalButton, stateNoVoltButton, stateCrashedButton } = this.state;
         const { noErrorButton, errorButton, lowWaterButton, noLowWaterButton } = this.state;
         const { noConnectionButton, connectionButton } = this.state;
@@ -76,6 +81,11 @@ export default class StatusFilters extends Component {
             return !buttonState ? buttonClassName : buttonClassName + " active"
         }
 
+        const setSortItemClassName = (sortItemState) => {
+            const defaultClassName = "dropdown-item"
+            return !sortItemState ? defaultClassName : defaultClassName + " active"
+        }
+
         return (
             <div className="form-row mb-2 ml-2 mr-2">
                 {/* Sort By Items */}
@@ -85,27 +95,44 @@ export default class StatusFilters extends Component {
                             Sort By&nbsp;
                         </button>
                         <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <button className="dropdown-item" type="button"
+                            <button className={setSortItemClassName(sortByAddress)}
+                                type="button"
                                 onClick={() => this.onSortSelect('sortByAddress')}
                             >
                                 Address
                             </button>
-                            <button className="dropdown-item" type="button"
+                            <button className={setSortItemClassName(sortByRoute)}
+                                type="button"
                                 onClick={() => this.onSortSelect('sortByRoute')}
                             >
                                 Route
                             </button>
-                            <button className="dropdown-item" type="button"
+                            <button className={setSortItemClassName(sortByBills)}
+                                type="button"
+                                onClick={() => this.onSortSelect('sortByBills')}
+                            >
+                                Bills
+                            </button>
+                            <button className={setSortItemClassName(sortByCoins)}
+                                type="button"
+                                onClick={() => this.onSortSelect('sortByCoins')}
+                            >
+                                Coins
+                            </button>
+                            <button className={setSortItemClassName(sortByBillNotWork)}
+                                type="button"
                                 onClick={() => this.onSortSelect('sortByBillNotWork')}
                             >
                                 Bill Not Work
                             </button>
-                            <button className="dropdown-item" type="button"
+                            <button className={setSortItemClassName(sortByCoinNotWork)}
+                                type="button"
                                 onClick={() => this.onSortSelect('sortByCoinNotWork')}
                             >
                                 Coin Not Work
                             </button>
-                            <button className="dropdown-item" type="button"
+                            <button className={setSortItemClassName(sortByRegisterNotWork)}
+                                type="button"
                                 onClick={() => this.onSortSelect('sortByRegisterNotWork')}
                             >
                                 Register Not Work

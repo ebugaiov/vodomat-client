@@ -37,6 +37,8 @@ export default class StatusesPage extends Component {
         waterLevel: '',
         sortByAddress: true,
         sortByRoute: false,
+        sortByBills: false,
+        sortByCoins: false,
         sortByBillNotWork: false,
         sortByCoinNotWork: false,
         sortByRegisterNotWork: false,
@@ -197,8 +199,9 @@ export default class StatusesPage extends Component {
         const { withCarCheckBox } = this.state;
         const { avtomatNumber, street, city, carNumber } = this.state;
         const { waterLevel, waterLevelUp, waterLevelDown } = this.state;
-        const { sortByAddress, sortByRoute, sortByRegisterNotWork } = this.state;
-        const { sortByBillNotWork, sortByCoinNotWork } = this.state;
+        const { sortByAddress, sortByRoute } = this.state;
+        const { sortByBills, sortByCoins } = this.state;
+        const { sortByBillNotWork, sortByCoinNotWork, sortByRegisterNotWork } = this.state;
 
         const carNumbers = items ? [...new Set(items.map((item) => item.carNumber))].sort() : [];
         const cities = items ? [...new Set(items.map((item) => item.city))].sort() : [];
@@ -235,6 +238,18 @@ export default class StatusesPage extends Component {
                 const routeA = `${a.routeName} ${a.street} ${a.house}`.toUpperCase();
                 const routeB = `${b.routeName} ${b.street} ${b.house}`.toUpperCase();
                 return routeA < routeB ? -1 : routeA > routeB ? 1 : 0
+            })
+        }
+
+        if (sortByBills) {
+            items.sort((a, b) => {
+                return a.grn - b.grn
+            })
+        }
+
+        if (sortByCoins) {
+            items.sort((a, b) => {
+                return a.kop - b.kop
             })
         }
 
@@ -328,7 +343,7 @@ export default class StatusesPage extends Component {
                     carNumbers={carNumbers}
                     cities={cities}
                 />
-                
+
                 <ItemList
                     listHeader={listHeader}
                     items={visibleItems}

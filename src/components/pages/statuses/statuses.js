@@ -151,7 +151,7 @@ export default class StatusesPage extends Component {
         }
         return items.filter((item) => {
             const now = new Date();
-            return new Date(item.time).getTime() < now.setHours(now.getHours() - 2);
+            return new Date(item.time).getTime() < now.setHours(now.getHours() - 8);
         })
     }
 
@@ -161,7 +161,7 @@ export default class StatusesPage extends Component {
         }
         return items.filter((item) => {
             const now = new Date();
-            return new Date(item.time).getTime() > now.setHours(now.getHours() - 8);
+            return new Date(item.time).getTime() > now.setHours(now.getHours() - 2);
         })
     }
 

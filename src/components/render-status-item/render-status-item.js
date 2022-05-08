@@ -7,6 +7,7 @@ const RenderStatusItem = (status, index) => {
     const adminSiteDomain = process.env.REACT_APP_ADMIN_DOMAIN;
 
     const { avtomatNumber, street, house, size } = status;
+    const { latitude, longitude } = status;
     const { carNumber, routeName } = status;
     const { lowWaterBalance } = status;
     const { errorVolt, errorBill, errorCounter, errorRegister, cashBox } = status;
@@ -61,12 +62,22 @@ const RenderStatusItem = (status, index) => {
             >
                 { avtomatNumber }
             </a>
-            <a className='text-info'
+            <a className='text-info mr-3'
                 target='_blank' rel='noopener noreferrer'
                 href={`${adminSiteDomain}/admin_panel/avtomat/${avtomatNumber}`}
             >
                 <i className="fas fa-edit"></i>
             </a>
+            { (latitude && longitude) ? (
+                    <a className='text-info'
+                        target='_blank' rel='noopener noreferrer'
+                        href={`https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`}
+                    >
+                    <i className="fas fa-map-marker-alt"></i>
+                    </a>
+                ) : null
+            }
+
         </div>
     )
 

@@ -123,6 +123,8 @@ export default class VodomatService extends BaseService {
             city: status.city,
             street: status.street,
             house: status.house,
+            latitude: status.latitude,
+            longitude: status.longitude,
             carNumber: status.car_number,
             routeName: status.route_name,
             water: status.water / 100,

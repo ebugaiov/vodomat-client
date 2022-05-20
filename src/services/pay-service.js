@@ -54,14 +54,14 @@ export default class PayService extends BaseService {
     }
 
     getOrders = async (date) => {
-        const url = date ? `/orders?date=${date}` : '/orders';
+        const url = date ? `/portmone_order?date=${date}` : '/portmone_order';
         const res = await this.getResource(url);
         return res.orders.map(this._transformOrder)
                          .sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))
     }
 
     getOrder = async (id) => {
-        const order = await this.getResource(`/order/${id}`)
+        const order = await this.getResource(`/portmone_order/${id}`)
         return this._transformOrder(order)
     }
 
@@ -73,7 +73,7 @@ export default class PayService extends BaseService {
             address: issue.address,
             issue: issue.issue,
             email: issue.email,
-            comment: issue.comment 
+            comment: issue.comment
         }
     }
 

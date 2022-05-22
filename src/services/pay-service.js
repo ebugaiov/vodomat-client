@@ -65,6 +65,18 @@ export default class PayService extends BaseService {
         return this._transformOrder(order)
     }
 
+    getMonoOrders = async (date) => {
+        const url = date ? `/mono_order?date=${date}` : '/mono_order';
+        const res = await this.getResource(url);
+        return res.orders.map(this._transformMonoOrder)
+                         .sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))
+    }
+
+    getMonoOrder = async(id) => {
+        const order = await this.getResource(`/mono_order/${id}`)
+        return this._transformMonoOrder(order)
+    }
+
     _transformIssue = (issue) => {
         return {
             id: issue.id,
@@ -112,6 +124,28 @@ export default class PayService extends BaseService {
             gateType: order.gate_type,
             transaction: order.transaction,
             error: order.error
+        }
+    }
+
+    _transformMonoOrder = (order) => {
+        return {
+            id: order.purchase_id,
+            paymentGatewayId: order.payment_gateway_id,
+            serverId: order.server_id,
+            createdAt: order.created_at,
+            serverTime: order.time_server,
+            payGateTime: new Date(order.time_payment_gateway).toLocaleString(),
+            appStatus: order.status,
+            serverStatus: order.status_server,
+            appMoney: order.money_app,
+            payGateMoney: order.money_payment_gateway / 100,
+            serverMoney: order.money_server,
+            price: order.price,
+            avtomatNumber: order.avtomat_number,
+            address: order.address,
+            transaction: order.transaction,
+            paymentGatewayName: order.payment_gateway_name,
+            cardMask: order.card_mask
         }
     }
 

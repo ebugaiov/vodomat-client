@@ -10,10 +10,9 @@ import StatusesPage from '../pages/statuses';
 import CollectionsPage from '../pages/collections';
 import StatisticLinesPage from '../pages/statistic-lines';
 import OrdersPage from '../pages/orders';
+import MonoOrdersPage from '../pages/mono-orders';
 import IssuePage from '../pages/issue';
 import AvtomatPage from '../pages/avtomat';
-import CityPage from '../pages/city';
-import StreetPage from '../pages/street';
 
 import './app.css';
 
@@ -49,20 +48,16 @@ function App()  {
                 {<OrdersPage />}
             </Route>
 
+            <Route path="/mono_order">
+                {<MonoOrdersPage />}
+            </Route>
+
             <Route path="/issue">
                 {<IssuePage />}
             </Route>
 
             <Route path="/avtomat">
                 {<AvtomatPage />}
-            </Route>
-
-            <Route path="/city">
-                {<CityPage />}
-            </Route>
-
-            <Route path="/street">
-                {<StreetPage />}
             </Route>
 
             <Footer />

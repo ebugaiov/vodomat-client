@@ -26,7 +26,10 @@ const Header = ({ username, removeCookie }) => {
                             <NavLink className="nav-link" to="/statistic_lines">Statistic Lines</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/order">Order</NavLink>
+                            <NavLink className="nav-link" to="/order">Pormone</NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/mono_order">Monobank</NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/issue">Issue</NavLink>

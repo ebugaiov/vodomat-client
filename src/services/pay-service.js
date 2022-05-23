@@ -119,7 +119,7 @@ export default class PayService extends BaseService {
             serverMoney: order.money_server,
             price: order.price,
             avtomatNumber: order.avtomat_number,
-            address: order.address,
+            address: order.address ? order.address : '_ _ no address',
             cardMask: order.card_mask,
             gateType: order.gate_type,
             transaction: order.transaction,

@@ -37,6 +37,7 @@ export default class StatusesPage extends Component {
         waterLevel: '',
         sortByAddress: true,
         sortByRoute: false,
+        sortByWater: false,
         sortByBills: false,
         sortByCoins: false,
         sortByBillNotWork: false,
@@ -200,7 +201,7 @@ export default class StatusesPage extends Component {
         const { avtomatNumber, street, city, carNumber } = this.state;
         const { waterLevel, waterLevelUp, waterLevelDown } = this.state;
         const { sortByAddress, sortByRoute } = this.state;
-        const { sortByBills, sortByCoins } = this.state;
+        const { sortByWater, sortByBills, sortByCoins } = this.state;
         const { sortByBillNotWork, sortByCoinNotWork, sortByRegisterNotWork } = this.state;
 
         const carNumbers = items ? [...new Set(items.map((item) => item.carNumber))].sort() : [];
@@ -239,6 +240,12 @@ export default class StatusesPage extends Component {
                 const routeB = `${b.routeName} ${b.street} ${b.house}`.toUpperCase();
                 return routeA < routeB ? -1 : routeA > routeB ? 1 : 0
             })
+        }
+
+        if (sortByWater) {
+          items.sort((a, b) => {
+            return a.water - b.water
+          })
         }
 
         if (sortByBills) {

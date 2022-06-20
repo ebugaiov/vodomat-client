@@ -25,6 +25,7 @@ export default class StatusFilters extends Component {
         waterLevel: '',
         sortByAddress: true,
         sortByRoute: false,
+        sortByWater: false,
         sortByBills: false,
         sortbyCoins: false,
         sortByBillNotWork: false,
@@ -67,7 +68,7 @@ export default class StatusFilters extends Component {
 
         const { avtomatNumber, street, city, carNumber } = this.state;
         const { sortByAddress, sortByRoute } = this.state;
-        const { sortByBills, sortByCoins } = this.state;
+        const { sortByWater, sortByBills, sortByCoins } = this.state;
         const { sortByBillNotWork, sortByCoinNotWork, sortByRegisterNotWork } = this.state;
         const { stateUndefinedButton, stateNormalButton, stateNoVoltButton, stateCrashedButton } = this.state;
         const { noErrorButton, errorButton, lowWaterButton, noLowWaterButton } = this.state;
@@ -106,6 +107,12 @@ export default class StatusFilters extends Component {
                                 onClick={() => this.onSortSelect('sortByRoute')}
                             >
                                 Route
+                            </button>
+                            <button className={setSortItemClassName(sortByWater)}
+                                type="button"
+                                onClick={() => this.onSortSelect('sortByWater')}
+                            >
+                                Water
                             </button>
                             <button className={setSortItemClassName(sortByBills)}
                                 type="button"

@@ -115,7 +115,7 @@ export default class StatusesPage extends Component {
             return items;
         }
         return items.filter((item) => {
-            return !item.errorVolt && !item.errorBill && !item.errorCounter && !item.errorRegister;
+            return !item.errorVolt && !item.errorBill && !item.errorCounter && !item.errorRegister && !item.cashBox;
         })
     }
 
@@ -152,7 +152,7 @@ export default class StatusesPage extends Component {
         }
         return items.filter((item) => {
             const now = new Date();
-            return new Date(item.time).getTime() < now.setHours(now.getHours() - 8);
+            return new Date(item.time).getTime() <= now.setHours(now.getHours() - 8);
         })
     }
 
@@ -162,7 +162,7 @@ export default class StatusesPage extends Component {
         }
         return items.filter((item) => {
             const now = new Date();
-            return new Date(item.time).getTime() > now.setHours(now.getHours() - 2);
+            return new Date(item.time).getTime() > now.setHours(now.getHours() - 8);
         })
     }
 

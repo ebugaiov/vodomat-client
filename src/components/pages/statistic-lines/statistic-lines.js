@@ -16,6 +16,7 @@ class StatisticLinesPage extends Component {
 
     state = {
         updateData: false,
+        city: '',
         avtomatAddress: '',
         items: [],
         loading: false,
@@ -70,7 +71,8 @@ class StatisticLinesPage extends Component {
             .then((avtomat) => {
                 const address = `${avtomat.street} ${avtomat.house}`
                 this.setState({
-                    avtomatAddress: address
+                    avtomatAddress: address,
+                    city: avtomat.city
                 })
             })
     }
@@ -114,7 +116,7 @@ class StatisticLinesPage extends Component {
     };
 
     render() {
-        const { items, loading, avtomatAddress } = this.state;
+        const { items, loading, city, avtomatAddress } = this.state;
         const { collectionsButton, eventsButton } = this.state;
 
         const visibleItems = items ?
@@ -125,6 +127,7 @@ class StatisticLinesPage extends Component {
 
         const loadedLineHeader = (
             <span>
+                <small>{ city }</small>&nbsp;
                 <span
                     onMouseDown={(e) => {
                         e.target.className = 'pressedAvtomatAddressSpan';

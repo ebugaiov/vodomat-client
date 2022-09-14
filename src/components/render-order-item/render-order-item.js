@@ -6,6 +6,7 @@ const RenderOrderItem = (order) => {
 
     const { avtomatNumber, address, appStatus } = order;
     const { id, payGateMoney, payGateStatus, payGateTime } = order;
+    const { appId } = order;
     const { serverTime, serverStatus, serverMoney } = order;
 
     let statusAppSpan = <span>{appStatus}</span>
@@ -31,7 +32,7 @@ const RenderOrderItem = (order) => {
         default:
             break;
     }
-    
+
     let statusPayGateSpan = <span>{payGateStatus}</span>;
     switch (payGateStatus) {
         case 'PAYED':
@@ -91,16 +92,16 @@ const RenderOrderItem = (order) => {
                 <small className='mr-3'>{ serverMoney ? `(${serverMoney})` : null }</small>
             </div>
             <div>
-                <span className='font-weight-bold'>ID:</span>&nbsp;{ id }&nbsp;
+                <span className='font-weight-bold'>ID:</span>&nbsp;{ appId }&nbsp;
             </div>
         </div>
     )
 
     return (
         <div className={order.error ? 'row text-danger' : 'row'}>
-            <div className='col-md-4'>{ leftDiv }</div>
+            <div className='col-md-3'>{ leftDiv }</div>
             <div className='col-md-3'>{ centerDiv }</div>
-            <div className='col-md-5'>{ rightDiv }</div>
+            <div className='col-md-6'>{ rightDiv }</div>
         </div>
     )
 }

@@ -2,6 +2,8 @@ import React from 'react';
 
 import './render-order-item.css';
 
+import ReturnButton from '../return-button';
+
 const RenderOrderItem = (order) => {
 
     const { avtomatNumber, address, appStatus } = order;
@@ -69,7 +71,8 @@ const RenderOrderItem = (order) => {
     const leftDiv = (
         <div>
             <span className="mr-3 text-info">{ avtomatNumber }</span>
-            <span>{ address.split(' ').slice(2).join(' ') }</span>
+            <span className="mr-3">{ address.split(' ').slice(2).join(' ') }</span>
+            <span>{ order.error ? <ReturnButton itemsToReturn={[order, ]}/> : null }</span>
         </div>
     )
 

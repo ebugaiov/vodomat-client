@@ -14,6 +14,16 @@ const ReturnButton = ({ itemsToReturn }) => {
                             * 100)
                             / 100
 
+    const listOfOrdersToReturn = itemsToReturn.map((item, index) => {
+        const { id, address, appMoney } = item;
+        return (
+            <li key={id} className="list-group-item list-group-item-secondary d-flex justify-content-between">
+                <span>{ address }</span>
+                <span>{ appMoney }</span>
+            </li>
+        )
+    })
+
     const returnOrder = async (id) => {
         const rawResponse = await fetch(`${process.env.REACT_APP_PAY_DOMAIN}/payment/portmone/return`, {
             method: 'POST',
@@ -57,6 +67,11 @@ const ReturnButton = ({ itemsToReturn }) => {
                         <div className="modal-header text-danger d-flex justify-content-between">
                             <h5 className="modal-title">Return Error Orders?</h5>
                             {loader ? <Spinner /> : null}
+                        </div>
+                        <div className="modal-body">
+                            <ul className="list-group">
+                                { listOfOrdersToReturn }
+                            </ul>
                         </div>
                         <div className="modal-footer d-flex justify-content-between">
                             <button type="button" className="btn btn-danger" disabled={loader}

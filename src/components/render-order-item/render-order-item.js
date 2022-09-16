@@ -11,6 +11,35 @@ const RenderOrderItem = (order) => {
     const { appId } = order;
     const { serverTime, serverStatus, serverMoney } = order;
 
+    const copyToClipboard = (str) => {
+        const el = document.createElement('textarea');
+        el.value = str;
+        el.setAttribute('readonly', '');
+        el.style.position = 'absolute';
+        el.style.left = '-9999px';
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+    };
+
+    const divWithCopyToClipboard = (strToCopy, innerText) => {
+        return (
+            <div onMouseDown={(e) => {
+                    e.target.className = "elemGrabbed";
+                    copyToClipboard(strToCopy);
+                }}
+                onMouseUp={(e) => {
+                    setTimeout(() => e.target.className = "elemForGrab", 500)
+                }}
+                className="elemForGrab"
+                data-toggle="tooltip" title="Click Me to Copy"
+            >
+                { innerText }
+            </div>
+        )
+    }
+
     let statusAppSpan = <span>{appStatus}</span>
     switch (appStatus) {
         case 0:
@@ -88,14 +117,17 @@ const RenderOrderItem = (order) => {
         <div className='d-flex justify-content-between'>
             <div>
                 <span><i className="fas fa-hourglass"></i>&nbsp;{ payGateTime.split(' ')[1] }</span>&nbsp;
-                <small className='mr-3'>{ serverTime ? `(${serverTime.split('T')[1]})` : null }</small>
+                <small>{ serverTime ? `(${serverTime.split('T')[1]})` : null }</small>
             </div>
             <div>
                 <span><i className="fas fa-coins"></i>&nbsp;{payGateMoney}</span>&nbsp;
-                <small className='mr-3'>{ serverMoney ? `(${serverMoney})` : null }</small>
+                <small>{ serverMoney ? `(${serverMoney})` : null }</small>
             </div>
-            <div>
-                <span className='font-weight-bold'>ID:</span>&nbsp;{ appId }&nbsp;
+            <div className="d-flex">
+                <span className="font-weight-bold mr-1">IDs:</span>
+                { divWithCopyToClipboard(id, id) }
+                <span className="font-weight-bold mr-1 ml-1">/</span>
+                { divWithCopyToClipboard(appId, `${appId.slice(0, 6)}...`) }
             </div>
         </div>
     )

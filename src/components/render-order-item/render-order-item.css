@@ -4,3 +4,13 @@
     line-height: .6;
     border-radius: .2rem;
 }
+
+.elemForGrab:hover {
+    cursor: grab;
+    color: #5bc0de;
+}
+
+.elemGrabbed {
+    cursor: grabbing;
+    color: #f0ad4e;
+}

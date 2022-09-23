@@ -137,6 +137,8 @@ export default class VodomatService extends BaseService {
             avtomatState: status.state,
             billNotWork: status.bill_not_work,
             coinNotWork: status.coin_not_work,
+            billNotWorkMoney: status.bill_not_work_money,
+            coinNotWorkMoney: status.coin_not_work_money,
             timeToBlock: status.time_to_block,
             lowWaterBalance: status.low_water_balance,
             errorVolt: status.error_volt,

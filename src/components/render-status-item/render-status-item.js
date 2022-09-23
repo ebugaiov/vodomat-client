@@ -14,6 +14,7 @@ const RenderStatusItem = (status, index) => {
     const { time, water, money, price, avtomatState } = status;
     const { grn, kop, moneyApp } = status;
     const { billNotWork, coinNotWork, timeToBlock } = status;
+    const { billNotWorkMoney, coinNotWorkMoney } = status;
 
     const renderError = (status, errorName) => {
         if (status) {
@@ -118,13 +119,13 @@ const RenderStatusItem = (status, index) => {
                 <span><i className="fas fa-coins"></i>&nbsp;{kop * 50 / 100}</span>
             </span>
             <span>
-                <span>
-                    Bill <i className={notWorkClassName(billNotWork)}></i> {billNotWork || '--'}
-                    &nbsp;&nbsp;
+                <span className="mr-2">
+                    Bill <i className={notWorkClassName(billNotWork)}></i> {billNotWork || '--'}&nbsp;
+                    <small>{ billNotWorkMoney ? `(${billNotWorkMoney})` : null }</small>
                 </span>
-                <span>
-                    Coin <i className={notWorkClassName(coinNotWork)}></i> {coinNotWork || '--'}
-                    &nbsp;&nbsp;
+                <span className="mr-2">
+                    Coin <i className={notWorkClassName(coinNotWork)}></i> {coinNotWork || '--'}&nbsp;
+                    <small>{ coinNotWorkMoney ? `(${coinNotWorkMoney})` : null }</small>
                 </span>
                 <span>
                     Reg <i className={notWorkClassName(timeToBlock)}></i> {timeToBlock || '--'}

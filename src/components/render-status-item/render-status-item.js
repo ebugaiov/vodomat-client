@@ -28,6 +28,10 @@ const RenderStatusItem = (status, index) => {
         return value > 12 ? 'fas fa-ban text-danger' : 'fas fa-ban';
     }
 
+    const notWorkMoneyClassName = (value) => {
+        return value > 70 ? 'text-danger' : 'text-info';
+    }
+
     const now = new Date();
     const isOld = new Date(time).getTime() < now.setHours(now.getHours() - 2);
     const timeClassName = isOld ? 'text-danger' : null;
@@ -121,11 +125,15 @@ const RenderStatusItem = (status, index) => {
             <span>
                 <span className="mr-2">
                     Bill <i className={notWorkClassName(billNotWork)}></i> {billNotWork || '--'}&nbsp;
-                    <small>{ billNotWorkMoney ? `(${billNotWorkMoney})` : null }</small>
+                    <small className={ notWorkMoneyClassName(billNotWorkMoney) }>
+                        { billNotWorkMoney ? `(${billNotWorkMoney})` : null }
+                    </small>
                 </span>
                 <span className="mr-2">
                     Coin <i className={notWorkClassName(coinNotWork)}></i> {coinNotWork || '--'}&nbsp;
-                    <small>{ coinNotWorkMoney ? `(${coinNotWorkMoney})` : null }</small>
+                    <small className={ notWorkMoneyClassName(coinNotWorkMoney) }>
+                        { coinNotWorkMoney ? `(${coinNotWorkMoney})` : null }
+                    </small>
                 </span>
                 <span>
                     Reg <i className={notWorkClassName(timeToBlock)}></i> {timeToBlock || '--'}

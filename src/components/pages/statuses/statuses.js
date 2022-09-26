@@ -43,6 +43,8 @@ export default class StatusesPage extends Component {
         sortByCoins: false,
         sortByBillNotWork: false,
         sortByCoinNotWork: false,
+        sortByBillNotWorkMoney: false,
+        sortByCoinNotWorkMoney: false,
         sortByRegisterNotWork: false,
     }
 
@@ -204,6 +206,7 @@ export default class StatusesPage extends Component {
         const { sortByAddress, sortByRoute } = this.state;
         const { sortByWater, sortByDatetime, sortByBills, sortByCoins } = this.state;
         const { sortByBillNotWork, sortByCoinNotWork, sortByRegisterNotWork } = this.state;
+        const { sortByBillNotWorkMoney, sortByCoinNotWorkMoney } = this.state;
 
         const carNumbers = items ? [...new Set(items.map((item) => item.carNumber))].sort() : [];
         const cities = items ? [...new Set(items.map((item) => item.city))].sort() : [];
@@ -276,6 +279,18 @@ export default class StatusesPage extends Component {
         if (sortByCoinNotWork) {
             items.sort((a, b) => {
                 return b.coinNotWork - a.coinNotWork
+            })
+        }
+
+        if (sortByBillNotWorkMoney) {
+            items.sort((a, b) => {
+                return b.billNotWorkMoney - a.billNotWorkMoney
+            })
+        }
+
+        if (sortByCoinNotWorkMoney) {
+            items.sort((a, b) => {
+                return b.coinNotWorkMoney - a.coinNotWorkMoney
             })
         }
 

@@ -31,6 +31,8 @@ export default class StatusFilters extends Component {
         sortbyCoins: false,
         sortByBillNotWork: false,
         sortByCoinNotWork: false,
+        sortByBillNotWorkMoney: false,
+        sortByCoinNotWorkMoney: false,
         sortByRegisterNotWork: false,
     }
 
@@ -71,6 +73,7 @@ export default class StatusFilters extends Component {
         const { sortByAddress, sortByRoute } = this.state;
         const { sortByWater, sortByDatetime, sortByBills, sortByCoins } = this.state;
         const { sortByBillNotWork, sortByCoinNotWork, sortByRegisterNotWork } = this.state;
+        const { sortByBillNotWorkMoney, sortByCoinNotWorkMoney } = this.state;
         const { stateUndefinedButton, stateNormalButton, stateNoVoltButton, stateCrashedButton } = this.state;
         const { noErrorButton, errorButton, lowWaterButton, noLowWaterButton } = this.state;
         const { noConnectionButton, connectionButton } = this.state;
@@ -137,13 +140,25 @@ export default class StatusFilters extends Component {
                                 type="button"
                                 onClick={() => this.onSortSelect('sortByBillNotWork')}
                             >
-                                Bill Not Work
+                                Bill Not Work <i className="fa fa-clock"></i>
                             </button>
                             <button className={setSortItemClassName(sortByCoinNotWork)}
                                 type="button"
                                 onClick={() => this.onSortSelect('sortByCoinNotWork')}
                             >
-                                Coin Not Work
+                                Coin Not Work <i className="fa fa-clock"></i>
+                            </button>
+                            <button className={setSortItemClassName(sortByBillNotWorkMoney)}
+                                type="button"
+                                onClick={() => this.onSortSelect('sortByBillNotWorkMoney')}
+                            >
+                                Bill Not Work <i className="fa fa-hryvnia"></i>
+                            </button>
+                            <button className={setSortItemClassName(sortByCoinNotWorkMoney)}
+                                type="button"
+                                onClick={() => this.onSortSelect('sortByCoinNotWorkMoney')}
+                            >
+                                Coin Not Work <i className="fa fa-hryvnia"></i>
                             </button>
                             <button className={setSortItemClassName(sortByRegisterNotWork)}
                                 type="button"

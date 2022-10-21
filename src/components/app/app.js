@@ -14,6 +14,8 @@ import MonoOrdersPage from '../pages/mono-orders';
 import IssuePage from '../pages/issue';
 import AvtomatPage from '../pages/avtomat';
 
+import TestPage from '../pages/test';
+
 import './app.css';
 
 function App()  {
@@ -58,6 +60,10 @@ function App()  {
 
             <Route path="/avtomat">
                 {<AvtomatPage />}
+            </Route>
+
+            <Route path="/test">
+                {<TestPage />}
             </Route>
 
             <Footer />

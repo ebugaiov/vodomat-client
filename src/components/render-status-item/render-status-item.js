@@ -12,7 +12,7 @@ const RenderStatusItem = (status, index) => {
     const { lowWaterBalance } = status;
     const { errorVolt, errorBill, errorCounter, errorRegister, cashBox } = status;
     const { time, water, money, price, avtomatState } = status;
-    const { grn, kop, moneyApp } = status;
+    const { grn, kop } = status;
     const { billNotWork, coinNotWork, timeToBlock } = status;
     const { billNotWorkMoney, coinNotWorkMoney } = status;
 

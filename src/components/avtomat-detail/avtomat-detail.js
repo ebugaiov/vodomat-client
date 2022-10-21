@@ -4,7 +4,6 @@ import VodomatService from '../../services/vodomat-service';
 
 import Spinner from '../spinner';
 import DownloadQR from '../download-qr';
-import AvtomatDelete from '../avtomat-delete';
 
 import './avtomat-detail.css';
 
@@ -14,7 +13,6 @@ export default class AvtomatDetail extends Component {
 
     state = {
         avtomatDetail: {},
-        streets: [],
         loading: true
     }
 
@@ -35,18 +33,7 @@ export default class AvtomatDetail extends Component {
             .then(this.onAvtomatLoaded)
     }
 
-    downloadStreets = () => {
-        this.vodomatService
-            .getAllStreets()
-            .then((streets) => {
-                this.setState({
-                    streets
-                })
-            })
-    }
-
     componentDidMount() {
-        this.downloadStreets()
         this.updateAvtomat()
     }
 
@@ -55,18 +42,6 @@ export default class AvtomatDetail extends Component {
             this.setState({loading: true})
         }
         this.updateAvtomat()
-    }
-
-    onSubmitUpdateForm = (event) => {
-        event.prevent.default()
-
-        setTimeout(this.props.onUpdateAvtomat, 1000)
-    }
-
-    onChangeFormField = (event, field) => {
-        this.setState(({avtomatDetail}) => {
-            return {avtomatDetail: {...avtomatDetail, [field]: event.target.value}}
-        })
     }
 
     cardBody = () => {
@@ -84,37 +59,8 @@ export default class AvtomatDetail extends Component {
                         <DownloadQR id={id} paymentAppUrl={paymentAppUrl} />
                     </div>
                 </div>
-                
+
             </div>
-        )
-    }
-
-    updateForm = () => {
-
-        const { street, house } = this.state.avtomatDetail;
-        const { streets } = this.state;
-
-        return (
-            <form onSubmit={this.onSubmitUpdateForm}>
-                <div className="row">
-                    <div className="col-lg-8">
-                        <select className="form-control mb-3" value={street} onChange={() => this.onChangeFormField('street')}>
-                            { streets.map((street) => {
-                                return <option key={street.id} value={street.street}>{street.street}</option>
-                            })}
-                        </select>
-                    </div>
-                    <div className="col-lg-4">
-                        <input type="text" className="form-control mb-3" value={house}
-                               onChange={() => this.onChangeFormField('house')}
-                        />
-                    </div>
-                </div>
-                <div className="d-flex justify-content-between">
-                    <button type="submit" className="btn btn-outline-secondary" disabled>Update</button>
-                    <AvtomatDelete avtomatNumber={this.props.avtomatNumber} />
-                </div>
-            </form>
         )
     }
 

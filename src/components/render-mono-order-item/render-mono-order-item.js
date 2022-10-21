@@ -5,8 +5,8 @@ import './render-mono-order-item.css';
 const RenderMonoOrderItem = (order) => {
 
     const { id, paymentGatewayId, serverId } = order;
-    const { avtomatNumber, address, appStatus, createdAt, appMoney, price } = order;
-    const { serverTime, serverStatus, serverMoney, transaction } = order;
+    const { avtomatNumber, address, appStatus, createdAt, appMoney } = order;
+    const { serverTime, serverStatus, serverMoney } = order;
 
     let statusAppSpan = <span>{appStatus}</span>
     switch (appStatus) {

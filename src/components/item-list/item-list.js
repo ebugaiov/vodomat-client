@@ -17,12 +17,12 @@ const ItemList = ({ listHeader, items, loading, renderItem, onAutoupdateChange, 
         onItemSelected(id)
         if (document.querySelector('.item-list ul li.selected-item') !== null ) {
             document.querySelector('.item-list ul li.selected-item').classList.remove('selected-item')
-        } 
+        }
         event.target.closest('li').classList.add('selected-item')
     }
 
     const elements = items.map((item, index) => {
-        
+
         const { id } = item;
         const label = renderItem(item, index)
 
@@ -43,7 +43,7 @@ const ItemList = ({ listHeader, items, loading, renderItem, onAutoupdateChange, 
             <div className="card-header d-flex justify-content-between">
                 { listHeader }
                 { spinner }
-                { onAutoupdateChange ? 
+                { onAutoupdateChange ?
                     (<div className="custom-control custom-switch">
                         <input type="checkbox"
                             className="custom-control-input"
@@ -60,6 +60,10 @@ const ItemList = ({ listHeader, items, loading, renderItem, onAutoupdateChange, 
             </ul>
         </div>
     );
+}
+
+ItemList.defaultProps = {
+    onItemSelected: () => {}
 }
 
 export default ItemList;

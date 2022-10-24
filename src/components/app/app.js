@@ -5,6 +5,8 @@ import { useCookies } from 'react-cookie'
 import Header from '../header';
 import Footer from '../footer';
 
+import ErrorBoundary from '../error-boundary';
+
 import LoginPage from '../pages/login';
 import StatusesPage from '../pages/statuses';
 import CollectionsPage from '../pages/collections';
@@ -12,7 +14,6 @@ import StatisticLinesPage from '../pages/statistic-lines';
 import OrdersPage from '../pages/orders';
 import MonoOrdersPage from '../pages/mono-orders';
 import IssuePage from '../pages/issue';
-import AvtomatPage from '../pages/avtomat';
 
 import TestPage from '../pages/test';
 
@@ -27,47 +28,45 @@ function App()  {
     }
 
     return (
-        <Router>
-            <Header username={cookies.username} removeCookie={removeCookie}/>
+        <ErrorBoundary>
+            <Router>
+                <Header username={cookies.username} removeCookie={removeCookie}/>
 
-            <Route path="/" exact>
-                {<Redirect to="/status" />}
-            </Route>
+                    <Route path="/" exact>
+                        {<Redirect to="/status" />}
+                    </Route>
 
-            <Route path="/status">
-                {<StatusesPage />}
-            </Route>
+                    <Route path="/status">
+                        {<StatusesPage />}
+                    </Route>
 
-            <Route path="/collection">
-                {<CollectionsPage />}
-            </Route>
+                    <Route path="/collection">
+                        {<CollectionsPage />}
+                    </Route>
 
-            <Route path="/statistic_lines/:avtomatNumber?">
-                {<StatisticLinesPage />}
-            </Route>
+                    <Route path="/statistic_lines/:avtomatNumber?">
+                        {<StatisticLinesPage />}
+                    </Route>
 
-            <Route path="/order">
-                {<OrdersPage />}
-            </Route>
+                    <Route path="/order">
+                        {<OrdersPage />}
+                    </Route>
 
-            <Route path="/mono_order">
-                {<MonoOrdersPage />}
-            </Route>
+                    <Route path="/mono_order">
+                        {<MonoOrdersPage />}
+                    </Route>
 
-            <Route path="/issue">
-                {<IssuePage />}
-            </Route>
+                    <Route path="/issue">
+                        {<IssuePage />}
+                    </Route>
 
-            <Route path="/avtomat">
-                {<AvtomatPage />}
-            </Route>
+                    <Route path="/test">
+                        {<TestPage />}
+                    </Route>
 
-            <Route path="/test">
-                {<TestPage />}
-            </Route>
-
-            <Footer />
-        </Router>
+                <Footer />
+            </Router>
+        </ErrorBoundary>
     )
 }
 

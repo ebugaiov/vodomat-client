@@ -7,6 +7,8 @@ import VodomatService from '../../services/vodomat-service';
 import CollectionFilters from '../collection-filters';
 import RenderCollectionItem from '../render-collection-item';
 
+import ErrorBoundry from '../error-boundry';
+
 export default class TestPage extends Component {
 
     vodomatService = new VodomatService();
@@ -136,7 +138,6 @@ export default class TestPage extends Component {
                     loading={loading}
                     onAutoupdateChange={this.onAutoupdateChange}
                     renderItem={RenderCollectionItem}
-                    onItemSelected={() => {}}
                 />
             </div>
         )

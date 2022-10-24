@@ -7,7 +7,7 @@ import VodomatService from '../../services/vodomat-service';
 import CollectionFilters from '../collection-filters';
 import RenderCollectionItem from '../render-collection-item';
 
-import ErrorBoundry from '../error-boundry';
+import ErrorBoundry from '../error-boundary';
 
 export default class TestPage extends Component {
 

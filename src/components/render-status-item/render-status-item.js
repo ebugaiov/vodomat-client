@@ -69,7 +69,7 @@ const RenderStatusItem = (status, index) => {
             </a>
             <a className='text-info mr-3'
                 target='_blank' rel='noopener noreferrer'
-                href={`${adminSiteDomain}/admin_panel/avtomat/${avtomatNumber}`}
+                href={`${adminSiteDomain}/server_panel/avtomat/${avtomatNumber}`}
             >
                 <i className="fas fa-edit"></i>
             </a>

@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 import './header.css'
 
-const Header = ({ username, removeCookie }) => {
+const Header = ({ username, permission, removeCookie }) => {
 
     return (
         <header>
@@ -16,24 +16,31 @@ const Header = ({ username, removeCookie }) => {
 
                 <div className="collapse navbar-collapse" id="navbarColor01">
                     <ul className="navbar-nav mr-auto">
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/status">Status</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/collection">Collection</NavLink>
-                        </li>
-                        <li className='nav-item'>
-                            <NavLink className="nav-link" to="/statistic_lines">Statistic Lines</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/order">Pormone</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/mono_order">Monobank</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/issue">Issue</NavLink>
-                        </li>
+                        {['administrator', 'admin', 'api'].includes(permission)
+                            ?
+                            <>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/status">Status</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/collection">Collection</NavLink>
+                            </li>
+                            <li className='nav-item'>
+                                <NavLink className="nav-link" to="/statistic_lines">Statistic Lines</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/order">Pormone</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/mono_order">Monobank</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/issue">Issue</NavLink>
+                            </li>
+                            </>
+                            :
+                            null
+                        }
                     </ul>
                     <span className="navbar-text">{ username }</span>
                     <button className="logout-btn btn btn-dark" onClick={() => {

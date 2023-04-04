@@ -21,7 +21,7 @@ import './app.css';
 
 function App()  {
 
-    const [ cookies, setCookie, removeCookie ] = useCookies(['token', 'username'])
+    const [ cookies, setCookie, removeCookie ] = useCookies(['token', 'username', 'permission'])
 
     if (!cookies.token) {
         return <LoginPage setCookie={setCookie} />
@@ -30,7 +30,7 @@ function App()  {
     return (
         <ErrorBoundary>
             <Router>
-                <Header username={cookies.username} removeCookie={removeCookie}/>
+                <Header username={cookies.username} permission={cookies.permission} removeCookie={removeCookie}/>
 
                     <Route path="/" exact>
                         {<Redirect to="/status" />}

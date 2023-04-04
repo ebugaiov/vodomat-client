@@ -55,7 +55,7 @@ export default class BaseService {
         }
         const options = this.createOptionsForRequest('POST', formData)
         const res = await this.getResource('/api_key', options)
-        return res.api_key
+        return { token: res.api_key, permission: res.permission }
     }
 
 }

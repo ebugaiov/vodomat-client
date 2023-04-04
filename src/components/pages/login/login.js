@@ -18,12 +18,13 @@ export default function LoginPage({setCookie}) {
     const handleSubmit = async e => {
         e.preventDefault()
         try {
-            const token = await baseService.getApiKey({
+            const { token , permission} = await baseService.getApiKey({
                 username,
                 password
             });
-            setCookie("token", token, { path: "/", maxAge: TTL});
-            setCookie("username", username, { path: "/"})
+            setCookie("token", token, { path: "/", maxAge: TTL });
+            setCookie("username", username, { path: "/" })
+            setCookie("permission", permission, { path: "/" })
         } catch (error) {
             setError(error.message)
         }

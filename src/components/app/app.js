@@ -33,15 +33,15 @@ function App()  {
                 <Header username={cookies.username} permission={cookies.permission} removeCookie={removeCookie}/>
 
                     <Route path="/" exact>
-                        {<Redirect to="/status" />}
+                        {<Redirect to={cookies.permission === 'operator' ? "/statistic_lines" : "/status"} />}
                     </Route>
 
                     <Route path="/status">
-                        {<StatusesPage />}
+                        {cookies.permission !== 'operator' ? <StatusesPage /> : <Redirect to="/statistic_lines" /> }
                     </Route>
 
                     <Route path="/collection">
-                        {<CollectionsPage />}
+                        {cookies.permission !== 'operator' ? <CollectionsPage /> : <Redirect to="/statistic_lines" /> }
                     </Route>
 
                     <Route path="/statistic_lines/:avtomatNumber?">
@@ -49,7 +49,7 @@ function App()  {
                     </Route>
 
                     <Route path="/order">
-                        {<OrdersPage />}
+                        {cookies.permission !== 'operator' ? <OrdersPage /> : <Redirect to="/statistic_lines" /> }
                     </Route>
 
                     <Route path="/mono_order">
@@ -57,7 +57,7 @@ function App()  {
                     </Route>
 
                     <Route path="/issue">
-                        {<IssuePage />}
+                        {cookies.permission !== 'operator' ? <IssuePage /> : <Redirect to="/statistic_lines" /> }
                     </Route>
 
                     <Route path="/test">

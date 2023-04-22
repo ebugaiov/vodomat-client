@@ -2,22 +2,22 @@ import React from 'react'
 import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 
-import Header from '../header';
-import Footer from '../footer';
+import Header from './components/header';
+import Footer from './components/footer';
 
-import ErrorBoundary from '../error-boundary';
+import ErrorBoundary from './components/error-boundary';
 
-import LoginPage from '../pages/login';
-import StatusesPage from '../pages/statuses';
-import CollectionsPage from '../pages/collections';
-import StatisticLinesPage from '../pages/statistic-lines';
-import OrdersPage from '../pages/orders';
-import MonoOrdersPage from '../pages/mono-orders';
-import IssuePage from '../pages/issue';
+import LoginPage from './components/pages/login';
+import StatusesPage from './components/pages/statuses';
+import CollectionsPage from './components/pages/collections';
+import StatisticLinesPage from './components/pages/statistic-lines';
+import OrdersPage from './components/pages/orders';
+import MonoOrdersPage from './components/pages/mono-orders';
+import IssuePage from './components/pages/issue';
 
-import TestPage from '../pages/test';
+import StatusPage from './pages/StatusPage';
 
-import './app.css';
+import './index.css';
 
 function App()  {
 
@@ -61,7 +61,7 @@ function App()  {
                     </Route>
 
                     <Route path="/test">
-                        {<TestPage />}
+                        {<StatusPage />}
                     </Route>
 
                 <Footer />

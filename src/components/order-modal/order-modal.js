@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button } from 'react-bootstrap';
 
-import PayService from "../../services/pay-service";
+import VodomatService from "../../services/vodomat-service";
+
 import Spinner from '../spinner';
 
 const OrderModal = ({ id, closeOrderModal }) => {
 
-    const payService = new PayService();
+    const vodomatService = new VodomatService();
     const [order, setOrder] = useState({});
     const [loading, setLoading] = useState(true);
 
@@ -16,7 +17,7 @@ const OrderModal = ({ id, closeOrderModal }) => {
 
     useEffect(() => {
         let cancelled = false;
-        payService.getOrder(id)
+        vodomatService.getOrder(id)
             .then(res => {
                 !cancelled && setOrder(res);
                 setLoading(false);
@@ -117,8 +118,12 @@ const OrderModal = ({ id, closeOrderModal }) => {
                         <span>{order.createdAt}</span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between">
-                        <span>Pay Gate <i className="far fa-clock"></i>&nbsp;{order.payGateTime ? order.payGateTime.split(' ')[1] : ''}</span>
-                        <span>Server <i className="far fa-clock"></i>&nbsp;{order.serverTime ? order.serverTime.split('T')[1]: ''}</span>
+                        <span>Pay Gate <i className="far fa-clock"></i>&nbsp;
+                            {order.payGateTime ? order.payGateTime.split('T')[1] : ''}
+                        </span>
+                        <span>Server <i className="far fa-clock"></i>&nbsp;
+                            {order.serverTime ? order.serverTime.split('T')[1]: ''}
+                        </span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between">
                         <span>Pay Gate <i className="fas fa-hryvnia"></i>&nbsp;{order.payGateMoney}</span>

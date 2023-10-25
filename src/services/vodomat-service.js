@@ -3,8 +3,17 @@ import BaseService from "./base-service";
 export default class VodomatService extends BaseService {
 
     constructor() {
-        super()
-        this._apiBase = process.env.REACT_APP_VODOMAT_API_URL;
+        super(process.env.REACT_APP_API_DOMAIN)
+    }
+
+    getDateRange = (startDate, endDate) => {
+        let dateRange = [];
+        let currentDate = new Date(startDate);
+        while (currentDate <= new Date(endDate)) {
+            dateRange.push(currentDate.toISOString().substring(0,10))
+            currentDate.setDate(currentDate.getDate() + 1)
+        }
+        return dateRange;
     }
 
     getAvtomat = async (number) => {
@@ -17,26 +26,10 @@ export default class VodomatService extends BaseService {
         return res.statuses.map(this._transformStatus)
     }
 
-    getStatus = async (id) => {
-        const status = await this.getResource(`/status/${id}`)
-        return this._transformStatus(status)
-    }
-
     getCollections = async (date) => {
         const url = date ? `/statistic/collections?date=${date}` : '/statistic/collections'
         const res = await this.getResource(url)
         return res.collections.map(this._transformStatistic)
-                              .sort((a, b) => {
-                                  const addressA = `${a.street} ${a.house}`;
-                                  const addressB = `${b.street} ${b.house}`;
-                                  if (addressA < addressB) {
-                                      return -1
-                                  }
-                                  if (addressA > addressB) {
-                                      return 1
-                                  }
-                                  return 0
-                              })
     }
 
     getStatisticLines = async (avtomatNumber, startPeriod, endPeriod) => {
@@ -49,16 +42,49 @@ export default class VodomatService extends BaseService {
             }
         }
         return statisticLines.map(this._transformStatistic)
-                                 .sort((a, b) => {
-                                     return new Date(b.time) - new Date(a.time)
-                                 })
     }
 
-        _transformAvtomat = (avtomat) => {
+    getIssuesPeriod = async (startDate, endDate) => {
+        let res = [];
+        const dateRange = this.getDateRange(startDate, endDate);
+        for (let i=0; i < dateRange.length; i++) {
+            let url = `/issue?created_at=${dateRange[i]}`
+            let resp = await this.getResource(url)
+            res = [...res, ...resp.issues.map(this._transformIssue)]
+        }
+        return res.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))
+    }
+
+    getIssue = async (id) => {
+        const issue = await this.getResource(`/issue/${id}`)
+        return this._transformIssue(issue)
+    }
+
+    commentIssue = async (id, comment) => {
+        const headers = {...this.secureHeader, 'Content-Type': 'application/json'}
+        const body = JSON.stringify({'comment': comment})
+        const options = this.createOptionsForRequest('PUT', body, headers)
+        const res = await this.getResource(`/issue/${id}`, options)
+        return this._transformIssue(res)
+    }
+
+    getOrders = async (date) => {
+        const url = date ? `/order?start_period=${date}&end_period=${date}` : '/order';
+        const res = await this.getResource(url);
+        return res.orders.map(this._transformOrder)
+                         .sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))
+    }
+
+    getOrder = async (id) => {
+        const order = await this.getResource(`/order/${id}`)
+        return this._transformOrder(order)
+    }
+
+    _transformAvtomat = (avtomat) => {
         return {
             id: avtomat.avtomat_number,
-            city: avtomat.city,
-            street: avtomat.street,
+            city: avtomat.city_name,
+            street: avtomat.street_name,
             house: avtomat.house,
             carNumber: avtomat.car_number,
             latitude: avtomat.latitude,
@@ -85,7 +111,7 @@ export default class VodomatService extends BaseService {
             house: status.house,
             latitude: status.latitude,
             longitude: status.longitude,
-            carNumber: status.car_number,
+            carNumber: status.route_car_number,
             routeName: status.route_name,
             water: status.water / 100,
             money: status.money / 100,
@@ -95,10 +121,10 @@ export default class VodomatService extends BaseService {
             grn: status.grn,
             kop: status.kop,
             avtomatState: status.state,
-            billNotWork: status.bill_not_work,
-            coinNotWork: status.coin_not_work,
-            billNotWorkMoney: status.bill_not_work_money,
-            coinNotWorkMoney: status.coin_not_work_money,
+            billNotWork: status.bill_not_work_hours,
+            coinNotWork: status.coin_not_work_hours,
+            billNotWorkMoney: status.bill_not_work_coins,
+            coinNotWorkMoney: status.coin_not_work_bills,
             timeToBlock: status.time_to_block,
             lowWaterBalance: status.low_water_balance,
             errorVolt: status.error_volt,
@@ -109,27 +135,6 @@ export default class VodomatService extends BaseService {
         }
     }
 
-    _transformDeposit = (deposit) => {
-        return {
-            id: deposit.purchase_id,
-            purchaseId: deposit.purchase_id,
-            serverId: deposit.server_id,
-            paymentGatewayId: deposit.bill_id,
-            avtomatNumber: deposit.avtomat_number,
-            timeServer: deposit.time_server,
-            timePaymentGateway: deposit.time_payment_gateway,
-            city: deposit.city,
-            street: deposit.street,
-            house: deposit.house,
-            price: deposit.price ? deposit.price / 100 : null,
-            statusServer: deposit.status_server,
-            statusPaymentGateway: deposit.status_payment_gateway,
-            cardMask: deposit.card_mask,
-            billAmount: deposit.bill_amount,
-            gateType: deposit.gate_type
-        }
-    }
-
     _transformStatistic = (statistic) => {
         return {
             id: statistic.id,
@@ -137,7 +142,7 @@ export default class VodomatService extends BaseService {
             city: statistic.city,
             street: statistic.street,
             house: statistic.house,
-            carNumber: statistic.car_number,
+            carNumber: statistic.route_car_number,
             time: statistic.time.replace('T', ' '),
             water: statistic.water / 100,
             isModified: statistic.isModified,
@@ -157,6 +162,42 @@ export default class VodomatService extends BaseService {
             cashBox: statistic.cashbox,
             gsm: statistic.gsm,
             event: statistic.event
+        }
+    }
+
+    _transformIssue = (issue) => {
+        return {
+            id: issue.id,
+            createdAt: issue.created_at.replace('T', ' '),
+            avtomatNumber: issue.avtomat_number,
+            address: issue.address,
+            issue: issue.issue,
+            email: issue.email,
+            comment: issue.comment
+        }
+    }
+
+    _transformOrder = (order) => {
+        return {
+            id: order.id_payment_gateway,
+            appId: order.id_purchase,
+            serverId: order.id_server,
+            createdAt: order.created_at,
+            payGateTime: order.time_payment_gateway,
+            serverTime: order.time_server,
+            appStatus: order.status_purchase,
+            payGateStatus: order.status_payment_gateway,
+            serverStatus: order.status_server,
+            appMoney: Number(order.money_purchase),
+            payGateMoney: Number(order.money_payment_gateway),
+            serverMoney: Number(order.money_server),
+            price: order.price,
+            avtomatNumber: order.avtomat_number,
+            address: order.address ? order.address : '_ _ no address',
+            cardMask: order.card_mask,
+            gateType: order.gate_type,
+            transaction: order.transaction,
+            error: order.error
         }
     }
 }

@@ -13,12 +13,12 @@ export default function LoginPage({setCookie}) {
     const [password, setPassword] = useState()
     const [error, setError] = useState()
 
-    const baseService = new BaseService(process.env.REACT_APP_VODOMAT_API_URL)
+    const baseService = new BaseService(process.env.REACT_APP_API_DOMAIN)
 
     const handleSubmit = async e => {
         e.preventDefault()
         try {
-            const { token , permission} = await baseService.getApiKey({
+            const { token , permission } = await baseService.getApiKey({
                 username,
                 password
             });

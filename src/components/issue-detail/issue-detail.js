@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 import './issue-detail.css'
 
 import Spinner from '../spinner';
-import PayService from '../../services/pay-service';
+
+import VodomatService from "../../services/vodomat-service";
 
 export default class IssueDetail extends Component {
 
-    payService = new PayService()
+    vodomatService = new VodomatService()
 
     state = {
         issueDetail: {},
@@ -41,7 +42,7 @@ export default class IssueDetail extends Component {
         if (!issueId) {
             return;
         }
-        this.payService
+        this.vodomatService
             .getIssue(issueId)
             .then(this.onIssueLoaded)
     }
@@ -56,7 +57,7 @@ export default class IssueDetail extends Component {
         event.preventDefault();
         const { id } = this.state.issueDetail;
         const { comment } = this.state;
-        this.payService.commentIssue(id, comment)
+        this.vodomatService.commentIssue(id, comment)
             .then((issueDetail) => {
                 this.onIssueLoaded(issueDetail)
             })

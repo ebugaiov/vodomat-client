@@ -5,7 +5,7 @@ import ItemList from '../item-list';
 import IssueFilters from '../issue-filters';
 import IssueDetail from '../issue-detail';
 
-import PayService from '../../services/pay-service';
+import VodomatService from "../../services/vodomat-service";
 
 export default class IssuePage extends Component {
 
@@ -21,7 +21,7 @@ export default class IssuePage extends Component {
         commented: false
     }
 
-    payService = new PayService();
+    vodomatService = new VodomatService();
     updateInterval = 5 * 60 * 1000;
 
     onItemsLoaded = (items) => {
@@ -35,7 +35,7 @@ export default class IssuePage extends Component {
     }
 
     updateIssue = () => {
-        this.payService
+        this.vodomatService
             .getIssuesPeriod(this.state.startPeriod, this.state.endPeriod)
             .then(this.onItemsLoaded)
     }
@@ -85,7 +85,7 @@ export default class IssuePage extends Component {
                 <div>
                     <span className="pr-4 text-info">{avtomatNumber}</span>
                     <span className="pr-4">{ address }</span>
-                    <small>{createdAt.slice(4, 25)}</small>
+                    <small>{createdAt}</small>
                 </div>
                 <div>
                     <span>{ processedIcon } { issueStr }</span>

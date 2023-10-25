@@ -12,10 +12,7 @@ import StatusesPage from './components/pages/statuses';
 import CollectionsPage from './components/pages/collections';
 import StatisticLinesPage from './components/pages/statistic-lines';
 import OrdersPage from './components/pages/orders';
-import MonoOrdersPage from './components/pages/mono-orders';
 import IssuePage from './components/pages/issue';
-
-import StatusPage from './pages/StatusPage';
 
 import './index.css';
 
@@ -52,16 +49,8 @@ function App()  {
                         {cookies.permission !== 'operator' ? <OrdersPage /> : <Redirect to="/statistic_lines" /> }
                     </Route>
 
-                    <Route path="/mono_order">
-                        {<MonoOrdersPage />}
-                    </Route>
-
                     <Route path="/issue">
                         {cookies.permission !== 'operator' ? <IssuePage /> : <Redirect to="/statistic_lines" /> }
-                    </Route>
-
-                    <Route path="/test">
-                        {<StatusPage />}
                     </Route>
 
                 <Footer />

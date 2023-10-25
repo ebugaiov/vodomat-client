@@ -7,11 +7,11 @@ import ItemList from '../../item-list';
 import RenderOrderItem from '../../render-order-item';
 import ReturnButton from '../../return-button';
 
-import PayService from '../../../services/pay-service';
+import VodomatService from "../../../services/vodomat-service";
 
 export default class OrdersPage extends Component {
 
-    payService = new PayService();
+    vodomatService = new VodomatService();
     updateInterval = 5 * 60 * 1000;  // 5 min
 
     state = {
@@ -64,7 +64,7 @@ export default class OrdersPage extends Component {
     }
 
     updateOrders = () => {
-        this.payService
+        this.vodomatService
             .getOrders(this.state.date)
             .then(this.onItemsLoaded)
     }

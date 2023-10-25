@@ -116,7 +116,7 @@ const RenderOrderItem = (order) => {
     const rightDiv = (
         <div className='d-flex justify-content-between'>
             <div>
-                <span><i className="fas fa-hourglass"></i>&nbsp;{ payGateTime.split(' ')[1] }</span>&nbsp;
+                <span><i className="fas fa-hourglass"></i>&nbsp;{ payGateTime.split('T')[1] }</span>&nbsp;
                 <small>{ serverTime ? `(${serverTime.split('T')[1]})` : null }</small>
             </div>
             <div>

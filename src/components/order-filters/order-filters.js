@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 
 import OrderModal from '../order-modal';
 
-import PayService from '../../services/pay-service';
+import VodomatService from "../../services/vodomat-service";
 
 export default class OrderFilters extends Component {
 
-    payService = new PayService();
+    vodomatService = new VodomatService();
 
     state = {
         date: new Date().toISOString().substring(0, 10),

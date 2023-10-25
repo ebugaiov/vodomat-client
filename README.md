@@ -1,7 +1,7 @@
 <img src="docs/client.roganska.com_2.png" />
 
 ## Vodomat Client
-UI client for [Vodomat API](http://api.roganska.com/redoc).<br>
+UI client for [Vodomat API](http://api.roganska.com).<br>
 It use for display states of water vending machines.
 
 ### [Site](http://client.roganska.com)

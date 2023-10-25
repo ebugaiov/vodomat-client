@@ -14,7 +14,7 @@ export default class BaseService {
 
     token = this.getCookie('token')
 
-    secureHeader = { "HTTP-X-API-KEY": this.token }
+    secureHeader = { "Authorization": `Bearer ${this.token}` };
 
     createOptionsForRequest = (method='GET', body=null, headers=this.secureHeader) => {
         return {
@@ -26,26 +26,23 @@ export default class BaseService {
 
     getResource = async (url, options=this.createOptionsForRequest()) => {
 
-        const res = await fetch(`${this._apiBase}${url}`, options)
+        const res = await fetch(`${this._apiBase}${url}`, options );
+        const res_data = await res.json()
 
-        if ( res.status === 400) {
-            const error = await res.json()
-            if (error.error === 'wrong api key') {
-                this.deleteCookie('token')
-                window.location.reload()
-                return
+        if ( res.status === 401) {
+            if ( res_data.detail === 'Incorrect username or password' ) {
+                throw new Error(`${res_data.detail}`)
             }
-            throw new Error (`${error.error}`)
-        }
-
-        if (res.status === 404) {
-            return {}
+            this.deleteCookie('token')
+            window.location.reload()
+            return
         }
 
         if (!res.ok) {
             throw new Error(`Could not fetch ${url}, received ${res.status}`)
         }
-        return await res.json()
+
+        return res_data
     }
 
     getApiKey = async (credentials) => {
@@ -53,9 +50,9 @@ export default class BaseService {
         for (const name in credentials) {
             formData.append(name, credentials[name])
         }
-        const options = this.createOptionsForRequest('POST', formData)
-        const res = await this.getResource('/api_key', options)
-        return { token: res.api_key, permission: res.permission }
+        const options = this.createOptionsForRequest('POST', formData, {})
+        const res = await this.getResource('/security/token', options)
+        return { token: res.access_token, permission: res.permission }
     }
 
 }

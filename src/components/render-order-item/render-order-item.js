@@ -11,6 +11,12 @@ const RenderOrderItem = (order) => {
     const { appId } = order;
     const { serverTime, serverStatus, serverMoney } = order;
 
+    const _payGateTime = new Date(payGateTime);
+    const startPeriod = new Date(_payGateTime.getTime()
+        + (- 15 - _payGateTime.getTimezoneOffset()) * 60000).toISOString();
+    const endPeriod = new Date(_payGateTime.getTime()
+        + (15 - _payGateTime.getTimezoneOffset()) * 60000).toISOString();
+
     const copyToClipboard = (str) => {
         const el = document.createElement('textarea');
         el.value = str;
@@ -99,7 +105,13 @@ const RenderOrderItem = (order) => {
 
     const leftDiv = (
         <div>
-            <span className="mr-3 text-info">{ avtomatNumber }</span>
+            <a className='text-info mr-3'
+                target='_blank' rel='noopener noreferrer'
+                href={`/statistic_lines/${avtomatNumber}?start_period=${startPeriod}&end_period=${endPeriod}`}
+            >
+                { avtomatNumber }
+            </a>
+            {/*<span className="mr-3 text-info">{ avtomatNumber }</span>*/}
             <span className="mr-3">{ address.split(' ').slice(2).join(' ') }</span>
             <span>{ order.error ? <ReturnButton itemsToReturn={[order, ]}/> : null }</span>
         </div>

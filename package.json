@@ -10,6 +10,7 @@
     "http-proxy-middleware": "^0.19.1",
     "prop-types": "^15.7.2",
     "qrcode.react": "^1.0.1",
+    "query-string": "^6.14.1",
     "react": "^17.0.1",
     "react-bootstrap": "^2.1.1",
     "react-cookie": "^4.0.3",

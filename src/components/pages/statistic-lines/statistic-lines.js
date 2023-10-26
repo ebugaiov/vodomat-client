@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import queryString from 'query-string';
 
 import './statistic-lines.css';
 
@@ -32,6 +33,13 @@ class StatisticLinesPage extends Component {
             this.setState({
                 avtomatNumber,
                 updateData: true
+            })
+        }
+        const query_params = queryString.parse(this.props.location.search);
+        if (query_params.start_period && query_params.end_period) {
+            this.setState({
+                startPeriod: query_params.start_period,
+                endPeriod: query_params.end_period
             })
         }
     }
@@ -102,6 +110,7 @@ class StatisticLinesPage extends Component {
     }
 
     copyToClipboard = (str) => {
+        console.log(this.props.location)
         const el = document.createElement('textarea');
         el.value = str;
         el.setAttribute('readonly', '');

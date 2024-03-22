@@ -111,7 +111,6 @@ const RenderOrderItem = (order) => {
             >
                 { avtomatNumber }
             </a>
-            {/*<span className="mr-3 text-info">{ avtomatNumber }</span>*/}
             <span className="mr-3">{ address.split(' ').slice(2).join(' ') }</span>
             <span>{ order.error ? <ReturnButton itemsToReturn={[order, ]}/> : null }</span>
         </div>

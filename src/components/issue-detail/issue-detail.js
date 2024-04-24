@@ -72,7 +72,11 @@ export default class IssueDetail extends Component {
             <div className="card-body">
                 <h6 className="card-title">{ address }</h6>
                 <p className="card-text text-muted">
-                    <i className="card-icon fas fa-shopping-cart"></i>&nbsp;{ avtomatNumber }
+                    <i className="card-icon fas fa-shopping-cart"></i>&nbsp;
+                    <a target='_blank' rel='noopener noreferrer'
+                       href={`/order?avtomat_number=${avtomatNumber}&date=${createdAt.split(' ')[0]}`}>
+                        { avtomatNumber }
+                    </a>
                 </p>
                 <p className="card-text text-muted">
                     <i className="card-icon fas fa-clock"></i>&nbsp;{ createdAt }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import queryString from "query-string";
 
 import './orders.css';
 
@@ -26,6 +27,17 @@ export default class OrdersPage extends Component {
     }
 
     componentDidMount() {
+        const params = queryString.parse(this.props.location.search);
+        if (params.avtomat_number) {
+            this.setState({
+                avtomatNumber: params.avtomat_number
+            })
+        }
+        if (params.date) {
+            this.setState({
+                date: params.date
+            })
+        }
         this.updateOrders()
         if (this.state.autoupdate) {
             this.intervalId = setInterval(this.updateOrders, this.updateInterval)

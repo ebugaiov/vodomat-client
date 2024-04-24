@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 
 import './statistic-lines.css';
@@ -10,7 +9,7 @@ import RenderStatisticLine from '../../render-statistic-line';
 
 import VodomatService from '../../../services/vodomat-service';
 
-class StatisticLinesPage extends Component {
+export default class StatisticLinesPage extends Component {
 
     vodomatService = new VodomatService();
     threeDaysAgo = new Date() - 1000 * 60 * 60 * 24 * 2;
@@ -182,5 +181,3 @@ class StatisticLinesPage extends Component {
         )
     }
 }
-
-export default withRouter(StatisticLinesPage);

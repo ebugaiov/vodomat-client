@@ -28,33 +28,26 @@ function App()  {
         <ErrorBoundary>
             <Router>
                 <Header username={cookies.username} permission={cookies.permission} removeCookie={removeCookie}/>
-
-                    <Route path="/" exact>
-                        {<Redirect to={cookies.permission === 'operator' ? "/statistic_lines" : "/status"} />}
-                    </Route>
-
-                    <Route path="/status">
-                        {cookies.permission !== 'operator' ? <StatusesPage /> : <Redirect to="/statistic_lines" /> }
-                    </Route>
-
-                    <Route path="/collection">
-                        {cookies.permission !== 'operator' ? <CollectionsPage /> : <Redirect to="/statistic_lines" /> }
-                    </Route>
-
-                    <Route path="/statistic_lines/:avtomatNumber?">
-                        {<StatisticLinesPage />}
-                    </Route>
-
-                    <Route path="/order">
-                        {cookies.permission !== 'operator' ? <OrdersPage /> : <Redirect to="/statistic_lines" /> }
-                    </Route>
-
-                    <Route path="/issue">
-                        {cookies.permission !== 'operator' ? <IssuePage /> : <Redirect to="/statistic_lines" /> }
-                    </Route>
-
-                <Footer />
+                {
+                    ['administrator', 'api'].includes(cookies.permission)
+                    ?
+                    <>
+                        <Route path="/" exact>
+                            <Redirect to="/status" />
+                        </Route>
+                        <Route path="/status" component={StatusesPage} />
+                        <Route path="/collection" component={CollectionsPage} />
+                        <Route path="/statistic_lines/:avtomatNumber?" component={StatisticLinesPage} />
+                        <Route path="/order" component={OrdersPage} />
+                        <Route path="/issue" component={IssuePage} />
+                    </>
+                    :
+                    <>
+                        <Route path="/" component={StatisticLinesPage} />
+                    </>
+                }
             </Router>
+            <Footer />
         </ErrorBoundary>
     )
 }

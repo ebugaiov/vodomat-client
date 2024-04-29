@@ -14,30 +14,20 @@ export default class OrdersPage extends Component {
 
     vodomatService = new VodomatService();
     updateInterval = 5 * 60 * 1000;  // 5 min
+    params = queryString.parse(this.props.location.search);
 
     state = {
         items: [],
         loading: true,
         autoupdate: true,
-        date: new Date().toISOString().substring(0, 10),
-        avtomatNumber: '',
+        date: !this.params.date ? new Date().toISOString().substring(0, 10) : this.params.date,
+        avtomatNumber: !this.params.avtomat_number ? '' : this.params.avtomat_number,
         address: '',
         errorButton: false,
         returnButton: false
     }
 
     componentDidMount() {
-        const params = queryString.parse(this.props.location.search);
-        if (params.avtomat_number) {
-            this.setState({
-                avtomatNumber: params.avtomat_number
-            })
-        }
-        if (params.date) {
-            this.setState({
-                date: params.date
-            })
-        }
         this.updateOrders()
         if (this.state.autoupdate) {
             this.intervalId = setInterval(this.updateOrders, this.updateInterval)
@@ -183,6 +173,7 @@ export default class OrdersPage extends Component {
                 <OrderFilters
                     onFieldChange={this.onFieldChange}
                     onButtonClick={this.onButtonClick}
+                    date={this.state.date}
                 />
                 <ItemList
                     listHeader={listHeader}

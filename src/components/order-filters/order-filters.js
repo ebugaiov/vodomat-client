@@ -9,7 +9,7 @@ export default class OrderFilters extends Component {
     vodomatService = new VodomatService();
 
     state = {
-        date: new Date().toISOString().substring(0, 10),
+        date: this.props.date,
         avtomatNumber: '',
         address: '',
         id: '',

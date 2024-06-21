@@ -15,6 +15,7 @@ export default class OrderFilters extends Component {
         id: '',
         errorButton: false,
         returnButton: false,
+        doneButton: false,
         showModal: false
     }
 
@@ -45,6 +46,13 @@ export default class OrderFilters extends Component {
         })
     }
 
+    onDoneButtonClick = () => {
+        this.setState(({doneButton}) => {
+            this.props.onButtonClick('doneButton', !doneButton)
+            return { doneButton: !doneButton }
+        })
+    }
+
     showOrderModal = () => {
         if (this.state.id.length < 10) {
             return
@@ -64,12 +72,13 @@ export default class OrderFilters extends Component {
     render() {
 
         const { date, avtomatNumber, address, id } = this.state;
-        const {errorButton, returnButton } = this.state;
+        const {errorButton, returnButton, doneButton } = this.state;
 
         const buttonClassName = "btn btn-outline-secondary";
         const activeButtonClassName = buttonClassName + ' active';
         const errorButtonClassName = errorButton ? activeButtonClassName : buttonClassName;
         const returnButtonClassName = returnButton ? activeButtonClassName : buttonClassName;
+        const doneButtonClassName = doneButton ? activeButtonClassName : buttonClassName;
 
         return (
             <div className="form-row mb-2 ml-2 mr-2">
@@ -85,6 +94,12 @@ export default class OrderFilters extends Component {
                             onClick={this.onReturnButtonClick}
                     >
                         Return
+                    </button>
+                    <button type='button'
+                            className={doneButtonClassName}
+                            onClick={this.onDoneButtonClick}
+                    >
+                        Done
                     </button>
                 </div>
                 <div className="col">

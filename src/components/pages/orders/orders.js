@@ -24,7 +24,8 @@ export default class OrdersPage extends Component {
         avtomatNumber: !this.params.avtomat_number ? '' : this.params.avtomat_number,
         address: '',
         errorButton: false,
-        returnButton: false
+        returnButton: false,
+        doneButton: false
     }
 
     componentDidMount() {
@@ -121,8 +122,18 @@ export default class OrdersPage extends Component {
         })
     }
 
+    doneItems = (items , state) => {
+        if (!state) {
+            return items;
+        }
+        return items.filter((item) => {
+            return item.payGateStatus === 'PAYED' && item.serverStatus === 1 && item.appStatus === 2;
+        })
+    }
+
     render() {
-        const { items, loading, avtomatNumber, address, errorButton, returnButton } = this.state;
+        const { items, loading, avtomatNumber, address,
+            errorButton, returnButton, doneButton } = this.state;
 
         const countOrders = items.filter((item) => {
             return item.payGateStatus === 'PAYED'
@@ -160,12 +171,15 @@ export default class OrdersPage extends Component {
                              this.avtomatNumberItems(
                                  this.addressItems(
                                      this.errorItems(
-                                         this.returnItems(items, returnButton),
-                                         errorButton
+                                         this.returnItems(
+                                             this.doneItems(items, doneButton),
+                                             returnButton
+                                         ),
+                                        errorButton
                                      ),
-                                 address
+                                    address
                                  ),
-                             avtomatNumber
+                                avtomatNumber
                              ) : []
 
         return (

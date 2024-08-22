@@ -15,6 +15,15 @@ const OrderModal = ({ id, closeOrderModal }) => {
         closeOrderModal()
     }
 
+    const handleSetDone = () => {
+        setLoading(true)
+        vodomatService.setDoneOrder(id)
+            .then((updatedOrder) => {
+                setOrder(updatedOrder)
+                setLoading(false)
+            })
+    }
+
     useEffect(() => {
         let cancelled = false;
         vodomatService.getOrder(id)
@@ -139,7 +148,12 @@ const OrderModal = ({ id, closeOrderModal }) => {
                     </li>
                 </ul>
             </Modal.Body>
-            <Modal.Footer>
+            <Modal.Footer className="d-flex justify-content-between">
+                { payGateStatus === 'PAYED' && appStatus === 5 && serverStatus === 2
+                ?
+                    <Button variant="secondary" onClick={handleSetDone} disabled={loading}>Set DONE</Button>
+                :
+                    <div /> }
                 <Button variant="secondary" onClick={handleClose}>Close</Button>
             </Modal.Footer>
         </Modal>

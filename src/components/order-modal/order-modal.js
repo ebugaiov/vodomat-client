@@ -149,7 +149,7 @@ const OrderModal = ({ id, closeOrderModal }) => {
                 </ul>
             </Modal.Body>
             <Modal.Footer className="d-flex justify-content-between">
-                { payGateStatus === 'PAYED' && appStatus === 5 && serverStatus === 2
+                { payGateStatus === 'PAYED' && appStatus === 5 && serverStatus !== 1
                 ?
                     <Button variant="secondary" onClick={handleSetDone} disabled={loading}>Set DONE</Button>
                 :

@@ -19,7 +19,7 @@ export default class OrdersPage extends Component {
     state = {
         items: [],
         loading: true,
-        autoupdate: true,
+        autoupdate: false,
         date: !this.params.date ? new Date().toISOString().substring(0, 10) : this.params.date,
         avtomatNumber: !this.params.avtomat_number ? '' : this.params.avtomat_number,
         address: '',

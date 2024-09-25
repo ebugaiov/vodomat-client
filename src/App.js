@@ -1,5 +1,6 @@
 import React from 'react'
-import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
+import {BrowserRouter, Switch, Redirect} from 'react-router-dom'
+import { CompatRouter, CompatRoute } from 'react-router-dom-v5-compat';
 import { useCookies } from 'react-cookie'
 
 import Header from './components/header';
@@ -26,27 +27,31 @@ function App()  {
 
     return (
         <ErrorBoundary>
-            <Router>
-                <Header username={cookies.username} permission={cookies.permission} removeCookie={removeCookie}/>
-                {
-                    ['administrator', 'api'].includes(cookies.permission)
-                    ?
-                    <>
-                        <Route path="/" exact>
-                            <Redirect to="/status" />
-                        </Route>
-                        <Route path="/status" component={StatusesPage} />
-                        <Route path="/collection" component={CollectionsPage} />
-                        <Route path="/statistic_lines/:avtomatNumber?" component={StatisticLinesPage} />
-                        <Route path="/order" component={OrdersPage} />
-                        <Route path="/issue" component={IssuePage} />
-                    </>
-                    :
-                    <>
-                        <Route path="/" component={StatisticLinesPage} />
-                    </>
-                }
-            </Router>
+            <BrowserRouter>
+                <CompatRouter>
+                    <Header username={cookies.username} permission={cookies.permission} removeCookie={removeCookie}/>
+                    <Switch>
+                    {
+                        ['administrator', 'api'].includes(cookies.permission)
+                        ?
+                        <>
+                            <CompatRoute path="/" exact>
+                                <Redirect to="/status" />
+                            </CompatRoute>
+                            <CompatRoute path="/status" component={StatusesPage} />
+                            <CompatRoute path="/collection" component={CollectionsPage} />
+                            <CompatRoute path="/statistic_lines/:avtomatNumber?" component={StatisticLinesPage} />
+                            <CompatRoute path="/order" component={OrdersPage} />
+                            <CompatRoute path="/issue" component={IssuePage} />
+                        </>
+                        :
+                        <>
+                            <CompatRoute path="/" component={StatisticLinesPage} />
+                        </>
+                    }
+                    </Switch>
+                </CompatRouter>
+            </BrowserRouter>
             <Footer />
         </ErrorBoundary>
     )

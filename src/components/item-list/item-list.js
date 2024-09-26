@@ -4,9 +4,9 @@ import './item-list.css';
 
 import Spinner from '../spinner';
 
-const ItemList = ({ listHeader, items, loading, renderItem, onAutoupdateChange, onItemSelected }) => {
+const ItemList = ({ listHeader, items, loading, renderItem, autoupdateStatus = true, onAutoupdateChange, onItemSelected }) => {
 
-    const [autoupdate, setAutoupdate] = useState(true)
+    const [autoupdate, setAutoupdate] = useState(autoupdateStatus);
 
     const autoupdateSwitchChange = ({ target: {checked} }) => {
         setAutoupdate(checked)

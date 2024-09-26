@@ -132,7 +132,7 @@ export default class OrdersPage extends Component {
     }
 
     render() {
-        const { items, loading, avtomatNumber, address,
+        const { items, loading, autoupdate, avtomatNumber, address,
             errorButton, returnButton, doneButton } = this.state;
 
         const countOrders = items.filter((item) => {
@@ -193,6 +193,7 @@ export default class OrdersPage extends Component {
                     listHeader={listHeader}
                     items={visibleItems}
                     loading={loading}
+                    autoupdateStatus={autoupdate}
                     onAutoupdateChange={this.onAutoupdateChange}
                     renderItem={RenderOrderItem}
                     onItemSelected={() => {}}

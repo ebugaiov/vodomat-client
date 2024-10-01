@@ -3,7 +3,7 @@ import BaseService from "./base-service";
 export default class VodomatService extends BaseService {
 
     constructor() {
-        super(process.env.REACT_APP_API_DOMAIN)
+        super(process.env.REACT_APP_API_DOMAIN + '/v1')
     }
 
     getDateRange = (startDate, endDate) => {
@@ -179,6 +179,7 @@ export default class VodomatService extends BaseService {
             address: issue.address,
             issue: issue.issue,
             email: issue.email,
+            phoneNumber: issue.phone_number,
             comment: issue.comment
         }
     }

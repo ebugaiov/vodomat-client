@@ -65,7 +65,7 @@ export default class IssueDetail extends Component {
     }
 
     cardBody = () => {
-        const { address, avtomatNumber, createdAt, email, issue } = this.state.issueDetail;
+        const { address, avtomatNumber, createdAt, email, phoneNumber, issue } = this.state.issueDetail;
         const { comment } = this.state;
 
         return (
@@ -83,6 +83,9 @@ export default class IssueDetail extends Component {
                 </p>
                 <p className="card-text text-muted">
                     <i className="card-icon fas fa-at"></i>&nbsp;{ email }
+                </p>
+                <p className="card-text text-muted">
+                    <i className="card-icon fas fa-phone"></i>&nbsp;{phoneNumber}
                 </p>
                 <p>{ issue }</p>
                 <form onSubmit={this.onSubmitComment}>

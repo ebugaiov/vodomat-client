@@ -16,6 +16,7 @@ export default class OrderFilters extends Component {
         errorButton: false,
         returnButton: false,
         doneButton: false,
+        serverFailButton: false,
         showModal: false
     }
 
@@ -53,6 +54,13 @@ export default class OrderFilters extends Component {
         })
     }
 
+    onServerFailButtonClick = () => {
+        this.setState(({serverFailButton}) => {
+            this.props.onButtonClick('serverFailButton', !serverFailButton)
+            return { serverFailButton: !serverFailButton }
+        })
+    }
+
     showOrderModal = () => {
         if (this.state.id.length < 10) {
             return
@@ -72,13 +80,14 @@ export default class OrderFilters extends Component {
     render() {
 
         const { date, avtomatNumber, address, id } = this.state;
-        const {errorButton, returnButton, doneButton } = this.state;
+        const {errorButton, returnButton, doneButton, serverFailButton } = this.state;
 
         const buttonClassName = "btn btn-outline-secondary";
         const activeButtonClassName = buttonClassName + ' active';
         const errorButtonClassName = errorButton ? activeButtonClassName : buttonClassName;
         const returnButtonClassName = returnButton ? activeButtonClassName : buttonClassName;
         const doneButtonClassName = doneButton ? activeButtonClassName : buttonClassName;
+        const serverFailButtonClassName = serverFailButton ? activeButtonClassName : buttonClassName;
 
         return (
             <div className="form-row mb-2 ml-2 mr-2">
@@ -100,6 +109,12 @@ export default class OrderFilters extends Component {
                             onClick={this.onDoneButtonClick}
                     >
                         Done
+                    </button>
+                    <button type='button'
+                            className={serverFailButtonClassName}
+                            onClick={this.onServerFailButtonClick}
+                    >
+                        Fail
                     </button>
                 </div>
                 <div className="col">

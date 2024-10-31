@@ -25,7 +25,8 @@ export default class OrdersPage extends Component {
         address: '',
         errorButton: false,
         returnButton: false,
-        doneButton: false
+        doneButton: false,
+        serverFailButton: false
     }
 
     componentDidMount() {
@@ -118,7 +119,7 @@ export default class OrdersPage extends Component {
             return items;
         }
         return items.filter((item) => {
-            return item.payGateStatus === 'RETURN';
+            return item.payGateStatus === 'RETURN' || item.payGateStatus === 'REJECTED';
         })
     }
 
@@ -131,9 +132,20 @@ export default class OrdersPage extends Component {
         })
     }
 
+    serverFailItems = (items, state) => {
+        if (!state) {
+            return items;
+        }
+        return items.filter((item) => {
+            return item.serverStatus === 2;
+        })
+    }
+
     render() {
-        const { items, loading, autoupdate, avtomatNumber, address,
-            errorButton, returnButton, doneButton } = this.state;
+        const {
+            items, loading, autoupdate, avtomatNumber, address,
+            errorButton, returnButton, doneButton, serverFailButton
+        } = this.state;
 
         const countOrders = items.filter((item) => {
             return item.payGateStatus === 'PAYED'
@@ -172,14 +184,19 @@ export default class OrdersPage extends Component {
                                  this.addressItems(
                                      this.errorItems(
                                          this.returnItems(
-                                             this.doneItems(items, doneButton),
+                                             this.doneItems(
+                                                 this.serverFailItems(
+                                                     items, serverFailButton
+                                                 ),
+                                                 doneButton
+                                             ),
                                              returnButton
                                          ),
-                                        errorButton
+                                         errorButton
                                      ),
-                                    address
+                                     address
                                  ),
-                                avtomatNumber
+                                 avtomatNumber
                              ) : []
 
         return (

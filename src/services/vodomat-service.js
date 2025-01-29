@@ -86,6 +86,11 @@ export default class VodomatService extends BaseService {
         return this._transformOrder(doneOrder)
     }
 
+    refundOrder = async (payGateId) => {
+        const options = this.createOptionsForRequest('PUT');
+        return await this.getResource(`/order/refund/${payGateId}`, options);
+    }
+
     _transformAvtomat = (avtomat) => {
         return {
             id: avtomat.avtomat_number,

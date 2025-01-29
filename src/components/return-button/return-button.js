@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-
+import VodomatService from "../../services/vodomat-service";
 import Spinner from '../spinner';
 
 const ReturnButton = ({ itemsToReturn }) => {
 
+    const vodomatService = new VodomatService();
     const [showReturnModal, setShowReturnModal] = useState(false);
     const [showAfterReturnModal, setShowAfterReturnModal] = useState(false);
     const [loader, setLoader] = useState(false);
@@ -25,20 +26,8 @@ const ReturnButton = ({ itemsToReturn }) => {
     })
 
     const returnOrder = async (id) => {
-        const rawResponse = await fetch(`${process.env.REACT_APP_PAY_DOMAIN}/payment/portmone/return`, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({payGateId: id})
-        })
-        const content = await rawResponse.json();
-        if (content[id] === 'success') {
-            return true;
-        } else {
-            return false;
-        }
+        const refundStatus = await vodomatService.refundOrder(id);
+        return refundStatus[id] === "success";
     }
 
     const returnAllOrders = async () => {
